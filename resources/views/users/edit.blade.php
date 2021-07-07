@@ -284,8 +284,10 @@
                                     {{-- <option @if ($userRole[0] == 'Admin') return selected @endif value="Admin">Admin</option>
                                     <option @if ($userRole[0] == 'User') return selected @endif value="User">User</option> --}}
 
-                                    @foreach ( $userPermissions as $userPermission )
-                                        <option  value="{{ $userPermission}}">{{ $userPermission }}</option>                                            
+                                    @foreach ( $permissions as $permission )
+                                        <input type="checkbox" id="{{ $permission->name}}" name="{{ $permission->name}}" value="{{ $permission->name}}">
+                                        <label for="vehicle1">{{ $permission->name}}</label><br>
+                                        {{-- <option  value="{{ $permission->name}}">{{ $permission->name }}</option>                                             --}}
                                     @endforeach
                             </select>
                             </div>
