@@ -61,7 +61,7 @@
             data-attr="{{ route('users.edit', $user->id) }}" title="edit">
             <i class="fas fa-user-tag fa-lg" style="color: orange"></i>
             </a>
-
+            {{-- <a href="{{ route('users.edit', $user->id) }}"><i class="fas fa-user-tag fa-lg" style="color: orange"></i></a> --}}
             {{-- <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-edit fa-lg"></i></a> --}}
 
 
@@ -76,7 +76,7 @@
             <i class="fas fa-user-tag fa-lg" style="color: orange"></i>
             </a> --}}
             
-            <a class="myBtn" href="#" ><i class="fas fa-user-cog fa-lg" ></i></a>
+            {{-- <a class="myBtn" href="#" ><i class="fas fa-user-cog fa-lg" ></i></a> --}}
 
 
             
