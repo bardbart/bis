@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Complaint Form') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('home') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>

@@ -58,11 +58,10 @@
 		<div class="body">
 			<p>TO WHOM IT MAY CONCERN: 
 			<br><br>
-			This is to certify that <b><u>{{ $data['lastName'] }}, {{ $data['firstName'] }}</u></b>, of legal age, {{ $data['civilStatus'] }}, {{ $data['citizenship'] }} citizen, and resident of {{ $data['houseNo'] }}, (barangay), {{ $data['city'] }}, {{ $data['province'] }}.
-			<br><br>
-			Further certify that the above-named person belongs to the <b>Indigent Family</b> in this Barangay.
-			<br><br>
-			This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a {{ $trans_data->purpose }} requirement.
+			This is to certify that <b><u>{{ $data['lastName'] }}, {{ $data['firstName'] }}</u></b>, of legal age, {{ $data['civilStatus'] }}, and resident of {{ $data['houseNo'] }}, (barangay), {{ $data['city'] }}, {{ $data['province'] }}.
+			He/She is a law-abiding citizen and has NO DEROGATORY record/s in this offcie up to this date
+            <br><br>
+			This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a <b><u>{{ $trans_data->purpose }}</u></b> requirement.
 			<br><br>
 			Issued on this date {{ $trans_data->date }}, from the Barangay Information System, (barangay), {{ $data['province'] }}, Philippines.
 			</p>

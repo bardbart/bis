@@ -31,18 +31,20 @@
         </tr>
     </thead>
     @foreach ($data as $trans)
-        <td>{{ $trans->id }}</td>
-        <td>{{ $trans->name}}</td>
-        <td>{{ $trans->email }}</td>
-        <td>{{ $trans->docType }}</td>
-        <td>{{ $trans->transMode }}</td>
-        <td>{{ $trans->purpose }}</td>
-        <td>{{ $trans->paymentMode }}</td>
-        <td>{{ $trans->status }}</td>
-        <td>
-            <a class="btn btn-outline-danger" href="view-pdf/{{ $trans->userId }}">View</a>
-            <a class="btn btn-outline-success" href="generate-pdf/{{ $trans->userId }}">Save PDF</a>
-        </td>
+        <tr>
+            <td>{{ $trans->id }}</td>
+            <td>{{ $trans->name}}</td>
+            <td>{{ $trans->email }}</td>
+            <td>{{ $trans->docType }}</td>
+            <td>{{ $trans->transMode }}</td>
+            <td>{{ $trans->purpose }}</td>
+            <td>{{ $trans->paymentMode }}</td>
+            <td>{{ $trans->status }}</td>
+            <td>
+                <a class="btn btn-outline-danger" href="view-pdf/{{ $trans->userId }}">View</a>
+                <a class="btn btn-outline-success" href="generate-pdf/{{ $trans->userId }}">Save PDF</a>
+            </td>
+        </tr>
     @endforeach
 </table>
 

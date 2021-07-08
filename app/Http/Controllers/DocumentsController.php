@@ -37,7 +37,7 @@ class DocumentsController extends Controller
         $users = User::find($id);
 
         $td = DB::select(
-            'select a.id, date(a.created_at) as "date", d.`docType` from `transactions`a 
+            'select a.id, date(a.created_at) as "date", a.purpose, d.`docType` from `transactions`a 
             inner join `availed_services`c on a.`availedServiceId` = c.`id`
             inner join `service_maintenances`d on c.`smId` = d.`id`
             inner join `users`b on b.`id` = c.`userId` 
@@ -53,10 +53,13 @@ class DocumentsController extends Controller
             'city' => $users->city,
             'province' => $users->province
         ];
-
-        // dd(compact('data'),compact('td'), $td);
-             
-        return view('documents.indigency', compact('data', 'td'));
+        
+        foreach($td as $trans_data){
+            if($trans_data->docType == "Indigency")
+                return view('documents.indigency', compact('data', 'td'));
+            elseif ($trans_data->docType == "Clearance")
+                return view('documents.clearance', compact('data', 'td'));
+        }
     }
 
     public function pdfSave($id) 
@@ -65,7 +68,7 @@ class DocumentsController extends Controller
         $users = User::find($id);
 
         $td = DB::select(
-            'select a.id, date(a.created_at) as "date", d.`docType` from `transactions`a 
+            'select a.id, date(a.created_at) as "date", a.purpose, d.`docType` from `transactions`a 
             inner join `availed_services`c on a.`availedServiceId` = c.`id`
             inner join `service_maintenances`d on c.`smId` = d.`id`
             inner join `users`b on b.`id` = c.`userId` 
@@ -81,10 +84,17 @@ class DocumentsController extends Controller
             'city' => $users->city,
             'province' => $users->province
         ];
-          
-        $pdf = PDF::loadView('documents.indigency', compact('data', 'td'));
-    
-        return $pdf->download('document.pdf');
+        
+        foreach($td as $trans_data){
+            if($trans_data->docType == "Indigency"){
+                $pdf = PDF::loadView('documents.indigency', compact('data', 'td'));
+                return $pdf->download('indigencyDocument.pdf');
+            }
+            elseif ($trans_data->docType == "Clearance"){
+                $pdf = PDF::loadView('documents.clearance', compact('data', 'td'));
+                return $pdf->download('clearanceDocument.pdf');
+            }    
+        }   
     }
 
     /**
@@ -125,7 +135,7 @@ class DocumentsController extends Controller
         ]);
     
         $input = $request->all();
-        $user = Transactions::create($input);
+        $transaction = Transactions::create($input);
         return redirect()->route('home')
                         ->with('success','Document Requested successfully');
     }
