@@ -32,6 +32,24 @@ class CreateAdminUserSeeder extends Seeder
             'civilStatus' => 'Single',
             'citizenship' => 'Filipino',
         ]);
+
+        $user2 = User::create([
+            'lastName' => 'Bartolome',
+            'firstName' => 'Jon Jeremiah',
+            'middleName' => 'Espina',
+            'email' => 'bartolomejonjeremiah@gmail.com',
+        	'password' => bcrypt('password'),
+            'contactNo' => 9760014639,
+            'houseNo' => 'Unit 322 Bldg A6 Urban Deca Homes',
+            'street' => 'McArthur Hwy',
+            'zipCode' => '3019',
+            'province' => 'Bulacan',
+            'city' => 'Marilao City',
+            'dob' => '1999-11-14',
+            'gender' => 'Male',
+            'civilStatus' => 'Single',
+            'citizenship' => 'Filipino',
+        ]);
   
         $role = Role::create(['name' => 'Admin']);
         Role::create(['name' => 'User']);
@@ -41,5 +59,8 @@ class CreateAdminUserSeeder extends Seeder
    
         $user->assignRole([$role->id]);
         $user->syncPermissions($permissions);
+
+        $user2->assignRole([$role->id]);
+        $user2->syncPermissions($permissions);
     }
 }

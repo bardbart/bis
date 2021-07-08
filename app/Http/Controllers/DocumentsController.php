@@ -21,17 +21,28 @@ class DocumentsController extends Controller
     public function index()
     {
         $data = DB::select(
-            'select a.`id`, concat(b.`firstName`, " ", b.`lastName`) as "name", b.`email`, a.`transMode`, a.`purpose`, a.`paymentMode`, a.`status`, c.`userId` FROM `transactions`a
+            'select a.`id`, concat(b.`firstName`, " ", b.`lastName`) as "name", b.`email`, a.`transMode`, a.`purpose`, a.`paymentMode`, a.`status`, c.`userId`, d.`docType` 
+            FROM `transactions`a
             inner join `availed_services`c on a.`availedServiceId` = c.`id`
+            inner join `service_maintenances`d on c.`smId` = d.`id`
             inner join `users`b on b.`id` = c.`userId`
-            where c.serviceId = 1'
+            where d.serviceId = 1'
         );
+
         return view('documents.index', compact('data'));
     }
 
     public function pdfView($id) 
     {
         $users = User::find($id);
+
+        $td = DB::select(
+            'select a.id, date(a.created_at) as "date", d.`docType` from `transactions`a 
+            inner join `availed_services`c on a.`availedServiceId` = c.`id`
+            inner join `service_maintenances`d on c.`smId` = d.`id`
+            inner join `users`b on b.`id` = c.`userId` 
+            where b.id = ?', [$id]
+        );
 
         $data = [
             'lastName' => $users->lastName,
@@ -42,14 +53,24 @@ class DocumentsController extends Controller
             'city' => $users->city,
             'province' => $users->province
         ];
+
+        // dd(compact('data'),compact('td'), $td);
              
-        return view('documents.indigency', compact('data'));
+        return view('documents.indigency', compact('data', 'td'));
     }
 
     public function pdfSave($id) 
     {
 
         $users = User::find($id);
+
+        $td = DB::select(
+            'select a.id, date(a.created_at) as "date", d.`docType` from `transactions`a 
+            inner join `availed_services`c on a.`availedServiceId` = c.`id`
+            inner join `service_maintenances`d on c.`smId` = d.`id`
+            inner join `users`b on b.`id` = c.`userId` 
+            where b.id = ?', [$id]
+        );
 
         $data = [
             'lastName' => $users->lastName,
@@ -61,7 +82,7 @@ class DocumentsController extends Controller
             'province' => $users->province
         ];
           
-        $pdf = PDF::loadView('documents.indigency', ['data'=>$data]);
+        $pdf = PDF::loadView('documents.indigency', compact('data', 'td'));
     
         return $pdf->download('document.pdf');
     }
@@ -73,7 +94,10 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        //
+        $data = DB::select(
+            'select id, docType from service_maintenances'
+        );
+        return view('documents.create', compact('data'));
     }
 
     /**
@@ -84,7 +108,26 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'lastName' => ['required', 'string', 'max:255'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'middleName' => ['required', 'string', 'max:255'],
+            'houseNo' => ['required', 'string'],
+            'street' => ['required', 'string'],
+            'province' => ['required', 'string'],
+            'city' => ['required', 'string'],
+            'civilStatus' => ['required', 'string'],
+            'citizenship' => ['required', 'string'],
+            'docType' => ['required', 'string'],
+            'purpose' => ['required', 'string'],
+            'transMode' => ['required', 'string'],
+            'paymentMode' => ['required', 'string']
+        ]);
+    
+        $input = $request->all();
+        $user = Transactions::create($input);
+        return redirect()->route('home')
+                        ->with('success','Document Requested successfully');
     }
 
     /**

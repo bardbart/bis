@@ -17,27 +17,31 @@
 @endif
 
 <table class="table table-bordered" >
-    <tr>
+    <thead class="thead-dark">
+        <tr>
         <th>Transaction No.</th>
-        <th>Requested By</th>
+        <th>Name</th>
         <th>Email</th>
         <th>Transaction Mode</th>
+        <th>Document</th>
         <th>Purpose</th>
         <th>Payment Mode</th>
         <th>Status</th>
         <th width="280px">Action</th>
-    </tr>
+        </tr>
+    </thead>
     @foreach ($data as $trans)
         <td>{{ $trans->id }}</td>
         <td>{{ $trans->name}}</td>
         <td>{{ $trans->email }}</td>
+        <td>{{ $trans->docType }}</td>
         <td>{{ $trans->transMode }}</td>
         <td>{{ $trans->purpose }}</td>
         <td>{{ $trans->paymentMode }}</td>
         <td>{{ $trans->status }}</td>
         <td>
-            <a class="btn btn-info" href="view-pdf/{{ $trans->userId }}">View</a>
-            <a class="btn btn-primary" href="generate-pdf/{{ $trans->userId }}">Save PDF</a>
+            <a class="btn btn-outline-danger" href="view-pdf/{{ $trans->userId }}">View</a>
+            <a class="btn btn-outline-success" href="generate-pdf/{{ $trans->userId }}">Save PDF</a>
         </td>
     @endforeach
 </table>

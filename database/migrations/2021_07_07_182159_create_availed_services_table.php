@@ -16,16 +16,16 @@ class CreateAvailedServicesTable extends Migration
         Schema::create('availed_services', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('userId');
-            $table->unsignedInteger('serviceId');
+            $table->unsignedInteger('smId');
             $table->timestamps();
             $table->foreign('userId')
-            ->references('id')
-            ->on('users')
-            ->onDelete('cascade');
-            $table->foreign('serviceId')
-            ->references('id')
-            ->on('services')
-            ->onDelete('cascade');
+                ->references('id') 
+                ->on('users') 
+                ->onDelete('cascade');
+            $table->foreign('smId')
+                ->references('id') 
+                ->on('service_maintenances') 
+                ->onDelete('cascade');
         });
     }
 

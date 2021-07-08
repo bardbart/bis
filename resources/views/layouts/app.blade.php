@@ -63,7 +63,7 @@
                                 </a>
                                 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Request Document</a>
+                                    <a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a>
                                     <a class="dropdown-item" href="#">File Complaint</a>
                                     <a class="dropdown-item" href="#">File Blotter</a>
                                 </div>   
@@ -104,7 +104,7 @@
                                     
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="nav-link" href="{{ route('users.index') }}">Manage Users</a>
-                                        
+        
                                     </div> 
                                     
                                 </li>

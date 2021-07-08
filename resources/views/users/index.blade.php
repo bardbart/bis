@@ -40,7 +40,7 @@
 
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $user->firstName . ' ' . $user->lastName }}</td>
+            <td>{{ $user->lastName. ', ' .$user->firstName. ' ' .$user->middleName  }}</td>
             <td>{{ $user->email }}</td>
             <td>
             @if(!empty($user->getRoleNames()))
