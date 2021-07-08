@@ -9,10 +9,20 @@
             width: 100%;
             text-align: center;
         }
-        /* .container div 
-        {
-            margin: 10px;
-        } */
+
+        .container-3{
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            border: 1px solid black;
+            justify-content: space-around;
+            padding: 10px;
+
+        }
+
+        .container-3 div{
+
+        }
         .container div label
         {
             cursor: pointer;
@@ -68,7 +78,7 @@
         @csrf
         @method('PUT')
         
-        {{-- <div class="form-group row">
+        <div class="form-group row">
             <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
             
             <div class="col-md-6">
@@ -82,31 +92,27 @@
                 </select>
             </div>
             
-        </div> --}}
+        </div>
 
-        {{-- <div class="form-group row"> --}}
-            {{-- <label for="permissions" class="col-md-4 col-form-label text-md-right">{{ __('Permissions') }}</label> --}}
             
-            {{-- <div class="col-md-6"> --}}
+    
                 
-               
-                    {{-- <option @if ($userRole[0] == 'Admin') return selected @endif value="Admin">Admin</option>
-                    <option @if ($userRole[0] == 'User') return selected @endif value="User">User</option> --}}
-
                     
-                        {{-- <label class="checkbox-inline"><input type="checkbox" value="{{ $permission->name}}"><span class="badge">{{ $permission->name}}</span></label> --}}
-                      
 
-                            <div>
-                                @foreach ( $permissions as $permission )
-                                <label>
-                                    
-                                    <input type="checkbox">
-                                    <span>{{ $permission->name}}</span>
-                                    
-                                </label>
-                                @endforeach
-                            </div>
+                      
+                <div class="container-3">
+                    <div>
+                        @foreach ( $permissions as $permission )
+                        <label>
+                            
+                            <input type="checkbox">
+                            <span>{{ $permission->name}}</span>
+                            
+                        </label>
+                        @endforeach
+                    </div>
+                </div>
+                            
 
 
                        
