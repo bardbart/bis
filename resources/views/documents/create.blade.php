@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Complaint Form') }}</div>
+                    <div class="card-header">{{ __('Document Request Form') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('home') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
@@ -33,6 +33,10 @@
                                     <div class="col-md-6">
                                         <input disabled id="middleName" type="text" class="form-control" name="middleName" value="{{ Auth::user()->middleName }}" autofocus>
                                     </div>
+                                </div>
+                            @else
+                                <div class="form-group row">
+                                    <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('No Middle Name') }}</label>
                                 </div>
                             @endif
 
@@ -89,11 +93,12 @@
                                 <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Document Type') }}</label>
                                 
                                 <div class="col-md-6">
+                                    <select class="form-select" name="docType" id="docType" autofocus>
+                                        <option>--Select Document Type--</option>
                                     @foreach ($data as $type)
-                                        <select class="form-select" name="docType" id="docType" autofocus>
                                             <option value="{{ $type->id }}">{{ $type->docType }}</option>
-                                        </select>
                                     @endforeach
+                                </select>
                                 </div>
                             </div>
 
@@ -102,12 +107,14 @@
                                 
                                 <div class="col-md-6">
                                     <select class="form-select" name="purpose" id="purpose" autofocus>
+                                        <option>--Select Purpose--</option>
                                         <option>Personal Identification and Residence Status</option>
                                         <option>Good Standing in the Community</option>
                                         <option>No pending case filed in the barangay</option>
                                         <option>Employment (Local)</option>
                                         <option>Employment (Abroad)</option>
                                         <option>Enrollment</option>
+                                        <option>Indigency</option>
                                         <option>Senior Citizens & Solo Parent</option>
                                         <option>Marriage (Local)</option>
                                         <option>Marriage (Abroad)</option>
@@ -140,7 +147,7 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" value="{{ Auth::user()->id }}">
+                            <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
                             
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4 ">

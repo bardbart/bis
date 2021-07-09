@@ -81,7 +81,7 @@
                                 
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('documents.index') }}">Requested Documents</a>
-                                    <a class="dropdown-item" href="#">Filed Complaints</a>
+                                    <a class="dropdown-item" href="{{ route('complaints.index') }}">Filed Complaints</a>
                                     <a class="dropdown-item" href="#">Filed Blotters</a>
                                 </div>   
                             </li>
@@ -97,18 +97,8 @@
                                 </div>   
 
                             </li>
-                                <li class="nav-item dropdown d-inline-flex" >
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        User Management
-                                    </a>
-                                    
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link" href="{{ route('users.index') }}">Manage Users</a>
-        
-                                    </div> 
-                                    
-                                </li>
-                                <li><a class="nav-link" href="">Reports</a></li>
+                            <li><a class="nav-link" href="{{ route('users.index') }}">User Management</a></li>
+                            <li><a class="nav-link" href="">Reports</a></li>
                             @endif
                                 
 
@@ -117,7 +107,7 @@
                             
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->firstName . ' ' . Auth::user()->lastName }} <span class="caret"></span>
+                                    Account <span class="caret"></span>
                                 </a>
 
 

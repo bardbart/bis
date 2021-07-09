@@ -41,8 +41,8 @@
             <td>{{ $trans->paymentMode }}</td>
             <td>{{ $trans->status }}</td>
             <td>
-                <a class="btn btn-outline-danger" href="view-pdf/{{ $trans->userId }}">View</a>
-                <a class="btn btn-outline-success" href="generate-pdf/{{ $trans->userId }}">Save PDF</a>
+                <a class="btn btn-outline-danger" href="view-document-pdf/{{ $trans->userId }}">View</a>
+                <a class="btn btn-outline-success" href="generate-document-pdf/{{ $trans->userId }}">Save PDF</a>
             </td>
         </tr>
     @endforeach

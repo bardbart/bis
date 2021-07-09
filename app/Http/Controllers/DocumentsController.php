@@ -28,11 +28,11 @@ class DocumentsController extends Controller
             inner join `users`b on b.`id` = c.`userId`
             where d.serviceId = 1'
         );
-
+   
         return view('documents.index', compact('data'));
     }
 
-    public function pdfView($id) 
+    public function pdfViewDocument($id) 
     {
         $users = User::find($id);
 
@@ -41,7 +41,7 @@ class DocumentsController extends Controller
             inner join `availed_services`c on a.`availedServiceId` = c.`id`
             inner join `service_maintenances`d on c.`smId` = d.`id`
             inner join `users`b on b.`id` = c.`userId` 
-            where b.id = ?', [$id]
+            where d.serviceId = 1 and b.id = ?', [$id]
         );
 
         $data = [
@@ -62,9 +62,8 @@ class DocumentsController extends Controller
         }
     }
 
-    public function pdfSave($id) 
+    public function pdfSaveDocument($id) 
     {
-
         $users = User::find($id);
 
         $td = DB::select(
@@ -84,7 +83,7 @@ class DocumentsController extends Controller
             'city' => $users->city,
             'province' => $users->province
         ];
-        
+
         foreach($td as $trans_data){
             if($trans_data->docType == "Indigency"){
                 $pdf = PDF::loadView('documents.indigency', compact('data', 'td'));
@@ -105,7 +104,7 @@ class DocumentsController extends Controller
     public function create()
     {
         $data = DB::select(
-            'select id, docType from service_maintenances'
+            'select id, docType from service_maintenances where serviceId = 1'
         );
         return view('documents.create', compact('data'));
     }
@@ -123,21 +122,27 @@ class DocumentsController extends Controller
             'firstName' => ['required', 'string', 'max:255'],
             'middleName' => ['required', 'string', 'max:255'],
             'houseNo' => ['required', 'string'],
-            'street' => ['required', 'string'],
             'province' => ['required', 'string'],
             'city' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],
             'citizenship' => ['required', 'string'],
-            'docType' => ['required', 'string'],
+            'docType' => ['required', 'integer'],
             'purpose' => ['required', 'string'],
             'transMode' => ['required', 'string'],
-            'paymentMode' => ['required', 'string']
+            'paymentMode' => ['required', 'string'],
+            'userId' => ['required', 'integer']
         ]);
     
-        $input = $request->all();
-        $transaction = Transactions::create($input);
-        return redirect()->route('home')
-                        ->with('success','Document Requested successfully');
+        // $input = $request->all();
+        $availedService = AvailedServices::create([
+            'userId' => $request->userId,
+            'smId' => $request->docType
+        ]);
+
+        $transaction = Transactions::create([
+            ''
+        ]);
+        return redirect('/home'); 
     }
 
     /**
