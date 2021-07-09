@@ -60,7 +60,7 @@
                 <label for="role" >{{ __('Role') }}</label>
                 <div class="flex-box-container-1">
                     <div>
-                        <select name="roles" multiple="multiple">
+                        <select name="roles" multiple="multiple" class="custom-select custom-select-md mb-3">
                             @foreach ( $roles as $role )
                                 <option @if ($userRole[0] == $role) return selected @endif value="{{ $role }}">{{ $role }}</option>                                            
                             @endforeach

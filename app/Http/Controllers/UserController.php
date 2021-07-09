@@ -138,6 +138,7 @@ class UserController extends Controller
 
     
         $user = User::find($id);
+        // $permission = Permission::get();
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->assignRole($request->input('roles'));
@@ -145,6 +146,11 @@ class UserController extends Controller
 
         // dd($request->input('permission'));
         // exit();
+
+        // if(empty($request->input('permission'))){
+        //     $user->revokePermissionTo($permission);
+        // }
+       
         $user->syncPermissions($request->input('permission'));
 
         // dd($role[0]);

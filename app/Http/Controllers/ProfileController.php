@@ -72,9 +72,9 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'lastName' => ['required', 'string', 'max:255'],
-            'firstName' => ['required', 'string', 'max:255'],
-            // 'middleName' => ['required', 'string', 'max:255'],
+            'lastName' => ['regex:/^[\p{L}\s-]+$/','required', 'string', 'max:255'],
+            'firstName' => ['regex:/^[\p{L}\s-]+$/','required', 'string', 'max:255'],
+            'middleName' => ['regex:/^[\p{L}\s-]+$/', 'string', 'max:255'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'contactNo' => ['integer'],
@@ -82,11 +82,11 @@ class ProfileController extends Controller
             'street' => ['required', 'string'],
             'zipCode' => ['required', 'integer'],
             'province' => ['required', 'string'],
-            'city' => ['required', 'string'],
+            'city' => ['regex:/^[\p{L}\s-]+$/','required', 'string'],
             'dob' => ['required', 'date'],  
-            'gender' => ['required', 'string'],
+            // 'gender' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],
-            'citizenship' => ['required', 'string'],
+            // 'citizenship' => ['required', 'string'],
 
         ]);
     
