@@ -1,139 +1,99 @@
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
     <style>
-        .container 
-        {
-            /* max-width:1200px; */
+        .container-1, .container-2, .container-3{
             margin: 0 auto;
-            /* display: flex; */
-            border: 5px solid black;
-            width: 100%;
+            border: 1px solid black;
+            width: 75%;
             text-align: center;
         }
-
-        .container-3{
+        .flex-box-container-1, .flex-box-container-2, .flex-box-container-3{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             flex-wrap: wrap;
             border: 1px solid black;
             justify-content: space-around;
             padding: 10px;
-
         }
-
-        .container-3 div{
-
-        }
-        .container div label
-        {
+        .flex-box-container-2 div label {
             cursor: pointer;
-            
-
+            margin: 10px;
         }
-        .container div label input[type=checkbox]
-        {
-
+        .flex-box-container-2 div label input[type=checkbox] {
             display: none;
-            
         }
-
-        .container div label span
-        {
-            
-            /* position: relative;
-            display: inline-block; */
+        .flex-box-container-2 div label span {
             background: white;
             padding: 5px 5px;
             color: #555;
-            /* text-shadow: 0 1px 4px rgba(0,0,0,.5); */
             border-radius: 20px;
             transition: 0.5s;
             user-select:none;
             overflow: hidden;
             border: 2px solid rgb(56, 193, 114);
+            
         }
-        .container div label span:before
-        {
-            /* content: ''; */
-            position: absolute;
-            top: 0;
-            left: 0;
+        .flex-box-container-2 div label span:before {
             width: 100%; 
             height: 50%;
             background: rgba(184, 179, 179, 0.1);
         }
-        .container div label input[type=checkbox]:checked ~ span
-        {
+        .flex-box-container-2 div label input[type=checkbox]:checked ~ span {
             background: rgb(56, 193, 114);
             color: white;
-
+            
         }
-
     </style>
 </head>
-
-
 <body>
-<div class="container">
-    <form method="POST" action="{{ route('users.update', $user->id) }}" >
-        @csrf
-        @method('PUT')
-        
-        <div class="form-group row">
-            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
-            
-            <div class="col-md-6">
-                <select name="roles" multiple="multiple" class="custom-select custom-select-md mb-3">
-               
+    <div class="wrap-container">
+        <form method="POST" action="{{ route('users.update', $user->id) }}" >
+            @csrf
+            @method('PUT')
 
-
-                        @foreach ( $roles as $role )
-                            <option @if ($userRole[0] == $role) return selected @endif value="{{ $role }}">{{ $role }}</option>                                            
-                        @endforeach
-                </select>
-            </div>
-            
-        </div>
-
-            
-    
-                
-                    
-
-                      
-                <div class="container-3">
+            <div class="container-1">
+                <label for="role" >{{ __('Role') }}</label>
+                <div class="flex-box-container-1">
                     <div>
-                        @foreach ( $permissions as $permission )
-                        <label>
-                            
-                            <input type="checkbox">
-                            <span>{{ $permission->name}}</span>
-                            
-                        </label>
+                        <select name="roles" multiple="multiple">
+                            @foreach ( $roles as $role )
+                                <option @if ($userRole[0] == $role) return selected @endif value="{{ $role }}">{{ $role }}</option>                                            
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-2">
+                <label for="permission" >{{ __('Permissions') }}</label>
+                <div class="flex-box-container-2">
+                    <div>
+                        @foreach ( $permission as $permission )
+                            <label>
+                                <input @if(in_array($permission->name,$userPermissions)) return checked @endif value="{{$permission->name}}" name="permission[]" type="checkbox">
+                                <span>{{ $permission->name}}</span>
+                            </label>
                         @endforeach
                     </div>
                 </div>
-                            
-
-
-                       
-                    
-
-            {{-- </div>
-            
-        </div> --}}
-
-        <div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4 ">
-                <button  type="submit" class="btn btn-primary" >
-                    {{ __('Submit') }}
-                </button>
             </div>
-        </div>
 
+            <div class="container-3">
+                <div class="flex-box-container-3">
+                    <div>
+                        <button  type="submit" class="btn btn-primary" >
+                            {{ __('Submit') }}
+                        </button>
+                    </div>
+                </div>
+            </div>
         
-    </form>
-</div>
+        </form>
+    </div>
 </body>
-
-                    
-
+</html>

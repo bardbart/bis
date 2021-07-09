@@ -109,20 +109,15 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name')->all();
 
-        $permissions = Permission::get();
-        $userPermissions= DB::table("model_has_permissions")->where("model_has_permissions.model_id",$id)
-        ->pluck('model_has_permissions.permission_id', 'model_has_permissions.permission_id')
-        ->all();
-        // $userPermissions = $user->getDirectPermissions();
+        $permission = Permission::get();
+        // $userPermissions= DB::table("model_has_permissions")->where("model_has_permissions.model_id",$id)
+        // ->pluck('model_has_permissions.permission_id', 'model_has_permissions.permission_id')
+        // ->all();
+        $userPermissions = $user->getPermissionNames()->all();
         // dd($userPermissions);
         // exit();
-        // $userPermissions= DB::table("model_has_permissions")->where("model_has_permissions.role_id",$id)
-        //     ->pluck('model_has_permissions.permission_id', 'model_has_permissions.permission_id')
-        //     ->all();
 
-
-
-        return view('users.edit',compact('user','roles','userRole','permissions', 'userPermissions'));
+        return view('users.edit',compact('user','roles','userRole','permission', 'userPermissions'));
     }
 
     /**
@@ -136,7 +131,8 @@ class UserController extends Controller
     {
         $this->validate($request, [
 
-            'roles' => 'required'
+            'roles' => 'required',
+            'permission' => 'required'
         ]);
     
 
@@ -144,9 +140,12 @@ class UserController extends Controller
         $user = User::find($id);
 
         DB::table('model_has_roles')->where('model_id',$id)->delete();
-    
         $user->assignRole($request->input('roles'));
-        $role = $user->getRoleNames();
+
+
+        // dd($request->input('permission'));
+        // exit();
+        $user->syncPermissions($request->input('permission'));
 
         // dd($role[0]);
 
