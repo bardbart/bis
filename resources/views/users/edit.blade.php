@@ -8,7 +8,7 @@
     <style>
         .container-1, .container-2, .container-3{
             margin: 0 auto;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             width: 75%;
             text-align: center;
         }
@@ -16,13 +16,16 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             justify-content: space-around;
             padding: 10px;
         }
+        .flex-box-container-1{
+            flex-direction: column;
+        }
         .flex-box-container-2 div label {
             cursor: pointer;
-            margin: 10px;
+            margin-bottom: 20px;
         }
         .flex-box-container-2 div label input[type=checkbox] {
             display: none;
@@ -57,7 +60,7 @@
             @method('PUT')
 
             <div class="container-1">
-                <label for="role" >{{ __('Role') }}</label>
+                <h2 for="role" >{{ __('Role') }}</h2>
                 <div class="flex-box-container-1">
                     <div>
                         <select name="roles" multiple="multiple" class="custom-select custom-select-md mb-3">
@@ -70,7 +73,7 @@
             </div>
 
             <div class="container-2">
-                <label for="permission" >{{ __('Permissions') }}</label>
+                <h2 for="permission" >{{ __('Permissions') }}</h2>
                 <div class="flex-box-container-2">
                     <div>
                         @foreach ( $permission as $permission )
