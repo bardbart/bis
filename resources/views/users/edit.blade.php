@@ -8,7 +8,7 @@
     <style>
         .container-1, .container-2, .container-3{
             margin: 0 auto;
-            /* border: 1px solid black; */
+            border: 1px solid black;
             width: 75%;
             text-align: center;
         }
@@ -16,7 +16,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            /* border: 1px solid black; */
+            border: 1px solid black;
             justify-content: space-around;
             padding: 10px;
         }

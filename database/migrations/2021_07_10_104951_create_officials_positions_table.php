@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBarangayOfficialsTable extends Migration
+class CreateOfficialsPositionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateBarangayOfficialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('barangay_officials', function (Blueprint $table) {
+        Schema::create('officials_positions', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('opId');
-            $table->string('lastName');
-            $table->string('firstName');
-            $table->string('middleName')->nullable();
-            $table->string('activeStatus')->default(1);
+            $table->unsignedInteger('boId');
+            $table->string('positionName');
             $table->timestamps();
-            $table->foreign('opId')
+            $table->foreign('boId')
                 ->references('id')
-                ->on('officials_positions')
+                ->on('barangay_officials')
                 ->onDelete('cascade');
         });
     }
@@ -35,6 +32,6 @@ class CreateBarangayOfficialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('barangay_officials');
+        Schema::dropIfExists('officials_positions');
     }
 }
