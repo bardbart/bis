@@ -39,7 +39,7 @@ class BarangayOfficialsController extends Controller
         $request->validate([
             'lastName' => 'required',
             'firstName' => 'required',
-            'middleName' => 'required',
+            // 'middleName' => 'required',
             // 'position' => 'required',
             'description' => 'required',
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
@@ -82,7 +82,7 @@ class BarangayOfficialsController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('officials.edit');
     }
 
     /**
@@ -103,8 +103,11 @@ class BarangayOfficialsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BarangayOfficials $official)
     {
-        //
+                //
+        // $car = Car::find($id);
+        $official->delete();
+        return redirect('/officials');
     }
 }
