@@ -10,8 +10,6 @@ class AvailedServices extends Model
     use HasFactory;
 
     public function services() {
-        return $this->hasManyThrough(
-            
-        );
+        return $this->hasManyThrough();
     }
 }

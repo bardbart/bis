@@ -46,7 +46,7 @@
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
 
-                            <li><a class="nav-link" href="">Barangay Officials</a></li>
+                            <li><a class="nav-link" href="{{ route('officials.index') }}">Barangay Officials</a></li>
 
                             @if (Auth::user()->hasRole('User'))
 

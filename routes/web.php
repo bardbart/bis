@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComplaintsController;
-
+use App\Http\Controllers\BarangayOfficialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +47,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('profiles', ProfileController::class);
     Route::resource('documents', DocumentsController::class);
     Route::resource('complaints', ComplaintsController::class);
+    Route::resource('officials', BarangayOfficialsController::class);
 });
