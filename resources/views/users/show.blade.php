@@ -33,9 +33,9 @@
                 @if(!empty($user->getRoleNames()))
                     @forelse($user->getRoleNames() as $v)
 
-                        <label class="badge badge-success">{{ $v }}</label>
+                        <label class="badge bg-success">{{ $v }}</label>
                     @empty
-                        <label class="badge badge-secondary">No Role</label>
+                        <label class="badge bg-secondary">No Role</label>
                     @endforelse
               
                     
@@ -49,9 +49,9 @@
                 @if(!empty($user->getPermissionNames()))
                     @forelse($user->getPermissionNames() as $p)
 
-                        <label class="badge badge-success">{{ $p }}</label>
+                        <label class="badge bg-success">{{ $p }}</label>
                     @empty
-                        <label class="badge badge-secondary">No permissions</label>
+                        <label class="badge bg-secondary">No permissions</label>
                     @endforelse
               
                     

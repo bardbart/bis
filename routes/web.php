@@ -25,7 +25,7 @@ use App\Http\Controllers\BarangayOfficialsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes(['verify' => true]);

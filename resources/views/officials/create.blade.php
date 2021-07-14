@@ -1,6 +1,5 @@
-@extends('layouts.app')
+<x-layout>
 
-@section('content')
     <div class="wrap-container">
         <div class="container-1">
             <h1>Create Official</h1>
@@ -91,4 +90,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-layout>

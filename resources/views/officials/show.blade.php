@@ -1,1 +1,4 @@
-show
+<x-layout>
+    show
+
+</x-layout>

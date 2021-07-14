@@ -9,8 +9,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    {{-- <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css"> --}}
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
@@ -26,7 +26,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="#">
                     Barangay Information System
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,31 +67,31 @@
 
                             @if (Auth::user()->hasRole('Admin'))
 
-                            <li class="nav-item dropdown d-inline-flex" >
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Transactions
-                                </a>
+                                <li class="nav-item dropdown d-inline-flex" >
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Transactions
+                                    </a>
+                                    
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('documents.index') }}">Requested Documents</a>
+                                        <a class="dropdown-item" href="{{ route('complaints.index') }}">Filed Complaints</a>
+                                        <a class="dropdown-item" href="#">Filed Blotters</a>
+                                    </div>   
+                                </li>
                                 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('documents.index') }}">Requested Documents</a>
-                                    <a class="dropdown-item" href="{{ route('complaints.index') }}">Filed Complaints</a>
-                                    <a class="dropdown-item" href="#">Filed Blotters</a>
-                                </div>   
-                            </li>
-                            
-                            <li class="nav-item dropdown d-inline-flex" >
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Service Maintenance
-                                </a>
-                                
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Add Document Type</a>
-                                    <a class="dropdown-item" href="#">Add Complaint Type</a>
-                                </div>   
+                                <li class="nav-item dropdown d-inline-flex" >
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Service Maintenance
+                                    </a>
+                                    
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="#">Add Document Type</a>
+                                        <a class="dropdown-item" href="#">Add Complaint Type</a>
+                                    </div>   
 
-                            </li>
-                            <li><a class="nav-link" href="{{ route('users.index') }}">User Management</a></li>
-                            <li><a class="nav-link" href="">Reports</a></li>
+                                </li>
+                                <li><a class="nav-link" href="{{ route('users.index') }}">User Management</a></li>
+                                <li><a class="nav-link" href="">Reports</a></li>
                             @endif
                                 
 
