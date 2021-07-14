@@ -1,12 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use App\Models\BarangayOfficials;
 use Illuminate\Http\Request;
 
 class BarangayOfficialsController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+        $this->middleware('permission:barangay-official-list|barangay-official-create|barangay-official-edit|barangay-official-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:barangay-official-create', ['only' => ['create','store']]);
+        $this->middleware('permission:barangay-official-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:barangay-official-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
