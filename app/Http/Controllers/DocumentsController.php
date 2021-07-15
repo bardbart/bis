@@ -111,13 +111,19 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'docType' => ['required', 'integer'],
-            'transMode' => ['required', 'string'],
-            'purpose' => ['required', 'string'],
-            'paymentMode' => ['required', 'string'],
-            'userId' => ['required', 'integer']
+            'docType' => 'required', 'integer',
+            'transMode' => 'required', 'string',
+            'purpose' => 'required', 'string',
+            'paymentMode' => 'required', 'string',
+            'userId' => 'required', 'integer',
+            'image' => 'required|mimes:jpg,png,jpeg|max:5048',
         ]);
-    
+        
+        $newImageName = time() . '-' . $request->lastName . '.' . $request->firstName . '.' . $request->middleName . '.' .$request->image->extension();
+        
+        $request->image->move(public_path('images/barangayId'), $newImageName);
+        
+        // dd($request->firstName);
         $availedService = AvailedServices::create([
             'userId' => $request->userId,
             'smId' => $request->docType
@@ -128,10 +134,11 @@ class DocumentsController extends Controller
             'transMode' => $request->transMode,
             'purpose' => $request->purpose,
             'paymentMode' => $request->paymentMode,
-            'status' => 'Unpaid'
+            'status' => 'Unpaid',
+            'barangayIdPath' => $newImageName
         ]);
 
-        return redirect()->route('documents.create')->with('success', 'Document requested successfully!');
+        return redirect('/documents/create')->with('success', 'Document requested successfully!');
     }
 
     /**

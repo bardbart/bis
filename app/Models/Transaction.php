@@ -14,7 +14,7 @@ class Transaction extends Model
         'transMode',
         'purpose',
         'paymentMode',
-        'complaintDetails',
+        'complainDetails',
         'respondents',
         'respondentsAdd',
         'blotterDetails',

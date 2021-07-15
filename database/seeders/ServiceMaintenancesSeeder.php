@@ -39,5 +39,15 @@ class ServiceMaintenancesSeeder extends Seeder
             'serviceId' => '2',
             'complainType' => 'Roadworks/Environment/Cleanliness'
         ]);
+
+        $sm6 = $sm5 = ServiceMaintenances::create([
+            'serviceId' => '2',
+            'complainType' => 'Roadworks/Environment/Cleanliness'
+        ]);
+
+        $sm6 = $sm5 = ServiceMaintenances::create([
+            'serviceId' => '3',
+            'complainType' => 'Report'
+        ]);
     }
 }

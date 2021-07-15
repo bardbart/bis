@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\AvailedServices;
+use App\Models\ServiceMaintenances;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade;
@@ -93,7 +94,8 @@ class ComplaintsController extends Controller
      */
     public function create()
     {
-        //
+        $data = ServiceMaintenances::all()->where('serviceId', 2);
+        return view('complaints.create', ['data' => $data]);
     }
 
     /**
@@ -104,7 +106,34 @@ class ComplaintsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'complainType' => 'required', 'integer',
+            'complainDetails' => 'required', 'string',
+            // 'respondents' => 'required', 'string',
+            // 'respondentsAdd' => 'required', 'string',
+            'userId' => 'required', 'integer',
+
+        ]);
+
+
+        // dd($request->complainDetails);
+        
+        $availedService = AvailedServices::create([
+            'userId' => $request->userId,
+            'smId' => $request->complainType
+        ]);
+
+        Transaction::create([
+            
+            'complainDetails' => $request->complainDetails,
+            'respondents' => $request->respondents,
+            'respondentsAdd' => $request->respondentsAdd,
+            'status' => 'Unsettled',
+            'availedServiceId' => $availedService->id,
+
+        ]);
+
+        return redirect('/complaints/create')->with('success', 'Complaint filed successfully!');
     }
 
     /**

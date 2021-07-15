@@ -12,13 +12,28 @@
                     <div class="card-header" style="background-color: gray; color: white">{{ __('Document Request Form') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('documents.store')}}" enctype="multipart/form-data">
                             @csrf
+
+                            <div class="form-group row">
+                                <label for="Image" class="col-sm-4 col-form-label text-md-right">{{ __('Barangay ID') }}</label>
+                                
+                                <div class="col-md-6">
+                                    <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
+                                    
+                                    @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="lastName" type="text" class="form-control" name="lastName" value="{{ Auth::user()->lastName }}" autofocus>
+                                    <input id="lastName" type="text" class="form-control" name="lastName" value="{{ Auth::user()->lastName }}" autofocus>
                                 </div>
                             </div>
 
@@ -26,7 +41,7 @@
                                 <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="firstName" type="text" class="form-control" name="firstName" value="{{ Auth::user()->firstName }}" autofocus>
+                                    <input id="firstName" type="text" class="form-control" name="firstName" value="{{ Auth::user()->firstName }}" autofocus>
                                 </div>
                             </div>
 
@@ -35,7 +50,7 @@
                                     <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <input disabled id="middleName" type="text" class="form-control" name="middleName" value="{{ Auth::user()->middleName }}" autofocus>
+                                        <input id="middleName" type="text" class="form-control" name="middleName" value="{{ Auth::user()->middleName }}" autofocus>
                                     </div>
                                 </div>
                             @else
@@ -48,7 +63,7 @@
                                 <label for="houseNo" class="col-md-4 col-form-label text-md-right">{{ __('House Number') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
+                                    <input id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
                                 </div>
                             </div>
 
@@ -56,7 +71,7 @@
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="province" type="text" class="form-control" name="province" value="{{ Auth::user()->province }}" autofocus>
+                                    <input id="province" type="text" class="form-control" name="province" value="{{ Auth::user()->province }}" autofocus>
                                 </div>
                             </div>
 
@@ -64,7 +79,7 @@
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
+                                    <input id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
                                 </div>
                             </div>
 
@@ -89,7 +104,7 @@
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
+                                    <input id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
                                 </div>
                             </div>
 
@@ -132,7 +147,7 @@
                                 <label for="transMode" class="col-md-4 col-form-label text-md-right">{{ __('Transaction Mode') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <select disabled class="form-select" name="transMode" id="transMode" autofocus>
+                                    <select class="form-select" name="transMode" id="transMode" autofocus>
                                         <option>Pick-Up</option>
                                     </select>
                                 </div>
@@ -142,7 +157,7 @@
                                 <label for="paymentMode" class="col-md-4 col-form-label text-md-right">{{ __('Payment Mode') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <select disabled class="form-select" name="paymentMode" id="paymentMode" autofocus>
+                                    <select class="form-select" name="paymentMode" id="paymentMode" autofocus>
                                         <option>Over the Counter</option>
                                         {{-- <option>Gcash</option> --}}
                                     </select>
@@ -158,7 +173,7 @@
                                     </button>
                                 </div>
                             </div>
-
+                        </form>
                     </div>
                 </div>
             </div>

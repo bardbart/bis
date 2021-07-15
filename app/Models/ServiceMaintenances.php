@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceMaintenances extends Model
 {
     use HasFactory;
+
+    protected $fillables = [
+        'serviceId',
+        'docType',
+        'complainType'
+    ];
 }
