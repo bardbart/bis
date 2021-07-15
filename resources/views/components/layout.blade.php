@@ -46,7 +46,7 @@
                             <li><a class="nav-link ms-3" href="#">{{ __('Home') }}</a></li>
                             <li><a class="nav-link ms-3" href="{{ route('officials.index') }}">Barangay Officials</a></li>
                         
-                            @if (Auth::user()->hasRole('User'))
+                            {{-- @if (Auth::user()->hasRole('User')) --}}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                       Services
@@ -55,9 +55,10 @@
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
                                       <li><a class="dropdown-item" href="#">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="#">File Blotter</a></li>
+                                      <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="#">Service Maintenance</a></li>
                                     </ul>
                                   </li>
-                            @endif
+                            {{-- @endif --}}
                         
                             @if (Auth::user()->hasRole('Admin'))
                             
@@ -72,7 +73,7 @@
                                     </ul>
                                   </li>
                                 
-                                <li class="nav-item dropdown">
+                                {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                       Service Maintenance
                                     </a>
@@ -80,7 +81,7 @@
                                         <li><a class="dropdown-item" href="#">Add Document Type</a></li>
                                         <li><a class="dropdown-item" href="#">Add Complaint Type</a></li>
                                     </ul>
-                                  </li>
+                                </li> --}}
 
                                 <li><a class="nav-link ms-3" href="{{ route('users.index') }}">User Management</a></li>
                                 <li><a class="nav-link ms-3" href="">Reports</a></li>
