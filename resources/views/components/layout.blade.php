@@ -27,9 +27,10 @@
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               
-                <a class="navbar-brand" href="#">
-                <img class="ms-auto" src="{{ asset('images/PUPLogo.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
-                  Barangay Online Report and Document Request Integrated with QR Code
+                <img class="float-start" src="{{ asset('images/PUPLogo.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
+                <a class="ms-3 navbar-brand" href="#">
+                    Barangay Online Report and Document Request
+                  <br>Integrated with QR Code 
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,8 +96,11 @@
                     </ul>
                 </div>
             </div>
+            
         </nav>
+
     </header>
+    
     
     <main class="py-4">
         <div class="container" style="margin-top: 130px">
