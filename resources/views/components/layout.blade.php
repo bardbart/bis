@@ -48,7 +48,7 @@
                         
 
                                 <li class="nav-item ">
-                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" aria-expanded="false">
                                       Services
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -63,7 +63,7 @@
                             @if (Auth::user()->hasRole('Admin'))
                             
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" aria-expanded="false">
                                       Transactions
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -78,14 +78,13 @@
                             @endif
                         
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle me-5 ms-5" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
+                                <a class="nav-link dropdown-toggle me-5 ms-5" href="#" id="navbarDarkDropdownMenuLink" role="button" aria-expanded="false">
                                 Account
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="{{ route('profiles.edit', Auth::user()->id) }}">{{ __('Edit Profile') }}</a></li>
                                     <li><a class="dropdown-item" href="{{ route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
-                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
