@@ -18,7 +18,7 @@ class CreateBarangayOfficialsTable extends Migration
             $table->string('lastName');
             $table->string('firstName');
             $table->string('middleName')->nullable();
-            $table->longText('description')->nullable();
+            $table->longText('position')->nullable();
             $table->string('imagePath')->nullable();
             $table->string('activeStatus')->default(1);
             $table->timestamps();

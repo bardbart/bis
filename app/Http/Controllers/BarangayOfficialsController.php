@@ -54,8 +54,7 @@ class BarangayOfficialsController extends Controller
             'lastName' => 'required',
             'firstName' => 'required',
             // 'middleName' => 'required',
-            // 'position' => 'required',
-            'description' => 'required',
+            'position' => 'required',
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
 
         ]);
@@ -68,8 +67,7 @@ class BarangayOfficialsController extends Controller
             'lastName' => $request->input('lastName'),
             'firstName' => $request->input('firstName'),
             'middleName' => $request->input('middleName'),
-            // 'position' => $request->input('position'),
-            'description' => $request->input('description'),
+            'position' => $request->input('position'),
             'imagePath' => $newImageName,
             // 'user_id' => auth()->user()->id
 

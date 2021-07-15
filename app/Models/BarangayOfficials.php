@@ -15,7 +15,7 @@ class BarangayOfficials extends Model
 
     public $timestamps = 'true';
 
-    protected $fillable = ['firstName', 'lastName', 'middleName', 'description', 'imagePath'];
+    protected $fillable = ['firstName', 'lastName', 'middleName', 'position', 'imagePath'];
     
     //use to hide certain attribute that is returned as an array
     //it is like a black list
@@ -23,10 +23,6 @@ class BarangayOfficials extends Model
 
     //This is the opposite of the above 
     // whitelist
-    protected $visible = ['firsName', 'lastName', 'middleName', 'description', 'created_at'];
+    protected $visible = ['firsName', 'lastName', 'middleName', 'position', 'created_at'];
 
-    public function position()
-    {
-        return $this->hasOne(OfficialsPositions::class);
-    }
 }

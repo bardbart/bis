@@ -6,10 +6,13 @@
         <div class="container-1">
             <div class="flex-box-container-1">
                 <h1>Barangay Officials</h1>
-                <div style="padding-bottom: 10px">
-                    <a href="{{ route('officials.create') }}">Add a new official &rarr;</a>
-                </div>
-                
+                @if (Auth::user()->hasRole('Admin'))
+                    <div style="padding-bottom: 10px">
+                        <a class="@if (!Auth::user()->can('barangay-official-create'))
+                            return btn disabled
+                        @endif" href="{{ route('officials.create') }}">Add a new official &rarr;</a>
+                    </div>
+                @endif
                 
                 {{-- <div style="border: 2px solid black"> --}}
                     @foreach ( $officials as $official)
@@ -29,23 +32,29 @@
                                         </a>
                                     </h4>
                                     <span >
-                                        {{ $official->description }}
+                                        {{ $official->position }}
                                     </span>
                                 </div>
-                    
+                                
                             </div>
-    
-                            <div class="float-end"> 
-                                <a style="margin-left: 13px" href="{{ route('officials.edit',$official->id) }}">
-                                Edit &rarr;
-                                </a>
-    
-                                <form action="{{ route('officials.destroy', $official->id) }}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button style="color:red" class="btn btn-link" type="submit"> Delete &rarr;</button>
-                                </form>
-                            </div>
+                            
+                            @if (Auth::user()->hasRole('Admin'))
+                                <div class="float-end"> 
+                                    <a class="@if (!Auth::user()->can('barangay-official-edit'))
+                                        return btn disabled
+                                    @endif" style="margin-left: 13px" href="{{ route('officials.edit',$official->id) }}">
+                                    Edit &rarr;
+                                    </a>
+        
+                                    <form action="{{ route('officials.destroy', $official->id) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button style="color:red" class="btn btn-link @if (!Auth::user()->can('barangay-official-delete'))
+                                            return disabled
+                                        @endif" type="submit"> Delete &rarr;</button>
+                                    </form>
+                                </div> 
+                            @endif
     
                             
     
@@ -59,5 +68,6 @@
             </div>
         </div>
     </div>
+
 </x-layout>
     
