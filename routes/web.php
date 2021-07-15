@@ -30,13 +30,6 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('users', UserController::class);
-    Route::resource('profiles', ProfileController::class);
-    Route::resource('documents', DocumentsController::class);
-    Route::resource('complaints', ComplaintsController::class);
-});
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('view-document-pdf/{id}',[DocumentsController::class, 'pdfViewDocument']);

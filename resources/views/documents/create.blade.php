@@ -1,10 +1,15 @@
 <x-layout>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+        <p>{{ $message }}</p>
+        </div>
+    @endif
 
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Document Request Form') }}</div>
+                    <div class="card-header" style="background-color: gray; color: white">{{ __('Document Request Form') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">

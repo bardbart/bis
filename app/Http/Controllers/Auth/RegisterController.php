@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'street' => ['required', 'string'],
             'zipCode' => ['required', 'integer'],
             'province' => ['required', 'string'],
-            'city' => ['required','regex:/^[\p{L}\s-]+$/', 'string'],
+            'city' => ['required', 'string'],
             'dob' => ['required', 'date'],  
             'gender' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],

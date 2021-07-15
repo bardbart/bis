@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Services;
 use App\Models\ServiceMaintenances;
+use App\Models\Services;
 
 class ServiceMaintenancesSeeder extends Seeder
 {
@@ -27,17 +27,17 @@ class ServiceMaintenancesSeeder extends Seeder
 
         $sm3 = ServiceMaintenances::create([
             'serviceId' => '2',
-            'docType' => 'Barangay Personnel'
+            'complainType' => 'Barangay Personnel'
         ]);
 
         $sm4 = ServiceMaintenances::create([
             'serviceId' => '2',
-            'docType' => 'Neighbor/Accused'
+            'complainType' => 'Neighbor/Accused'
         ]);
 
         $sm5 = ServiceMaintenances::create([
             'serviceId' => '2',
-            'docType' => 'Roadworks/Environment/Cleanliness'
+            'complainType' => 'Roadworks/Environment/Cleanliness'
         ]);
     }
 }

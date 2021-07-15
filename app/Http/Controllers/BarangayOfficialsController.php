@@ -94,7 +94,8 @@ class BarangayOfficialsController extends Controller
      */
     public function edit($id)
     {
-        return view('officials.edit');
+        $officials = BarangayOfficials::find($id);
+        return view('officials.edit')->with('officials', $officials);
     }
 
     /**
@@ -106,7 +107,36 @@ class BarangayOfficialsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'lastName' => 'required',
+            'firstName' => 'required',
+            'position' => 'required',
+        ]);
+
+        if($request->image)
+        {
+            $newImageName = time() . '-' . $request->lastName . ',' . $request->firstName . '.' . $request->middleName . $request->image->extension() ;   
+            $request->image->move(public_path('images/officials'), $newImageName);
+            
+            $car = BarangayOfficials::where('id',$id)->update([
+                'lastName' => $request->input('lastName'),
+                'firstName' => $request->input('firstName'),
+                'middleName' => $request->input('middleName'),
+                'position' => $request->input('position'),
+                'imagePath' => $newImageName
+            ]);
+        } 
+        else 
+        {
+            $car = BarangayOfficials::where('id',$id)->update([
+                'lastName' => $request->input('lastName'),
+                'firstName' => $request->input('firstName'),
+                'middleName' => $request->input('middleName'),
+                'position' => $request->input('position'),
+            ]);
+        }
+
+        return redirect('/officials')->with('success','Official updated successfully');;
     }
 
     /**
