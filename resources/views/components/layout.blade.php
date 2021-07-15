@@ -29,8 +29,8 @@
               
                 <img class="float-start" src="{{ asset('images/PUPLogo.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
                 <a class="ms-3 navbar-brand" href="#">
-                    Barangay Online Report and Document Request
-                  <br>Integrated with QR Code 
+                    
+                    <h4>Barangay Online Report and Document Request</h4> <h6>Integrated with QR Code</h6>
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
