@@ -1,6 +1,11 @@
 
 <x-layout>
 
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     @section('title', 'Officials')
     <div class="wrap-container">
         <div class="container-1">
@@ -22,7 +27,7 @@
                             
                             <div>
                                 <div class="float-start" style="margin-right: 50px">
-                                    <img style="height: 288px; weight: 288px"src="{{ asset('images/officials/' . $official->imagePath) }}" alt="">
+                                    <img style="height: 288px !important; width: 288px !important;"src="{{ asset('images/officials/' . $official->imagePath) }}" alt="">
                                 </div>
     
                                 <div class="float-end">

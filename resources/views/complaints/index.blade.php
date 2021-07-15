@@ -34,7 +34,10 @@
               <td>{{ $comp->respondents }}</td>
               <td>{{ $comp->respondentsAdd }}</td>
               <td>
-                  <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Show</button>
+                  {{-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Show</button> --}}
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Show
+                  </button>
               </td>
               <td>{{ $comp->status }}</td>
               <td>
@@ -43,16 +46,14 @@
               </td>
           </tr>
   </table>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Complaint Details</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <form>
@@ -62,18 +63,20 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
+
+
   @endforeach
   
   
   <p class="text-center text-primary"><small>By Team Bard</small></p>
   
   
-  <script>
+  {{-- <script>
       // display a modal (large modal)
       $(document).on('click', '#largeButton', function(event) {
           event.preventDefault();
@@ -99,7 +102,7 @@
               timeout: 8000
           })
       });
-  </script>
+  </script> --}}
 </x-layout>
 
 

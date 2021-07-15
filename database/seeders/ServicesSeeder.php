@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Model\Service;
+use App\Models\Services;
 
 class ServicesSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class ServicesSeeder extends Seeder
             'Blotter'
         ];
 
-        foreach($service as $service)
+        foreach($services as $service)
             Services::create(['serviceName' => $service]);
     }
 }

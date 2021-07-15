@@ -30,13 +30,6 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('users', UserController::class);
-    Route::resource('profiles', ProfileController::class);
-    Route::resource('documents', DocumentsController::class);
-    Route::resource('complaints', ComplaintsController::class);
-});
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('view-document-pdf/{id}',[DocumentsController::class, 'pdfViewDocument']);
@@ -48,8 +41,6 @@ Route::get('view-complaint-pdf/{id}',[ComplaintsController::class, 'pdfViewCompl
 Route::get('generate-complaint-pdf/{id}',[ComplaintsController::class, 'pdfSaveComplaint']);
 
 // Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF']);
-<<<<<<< HEAD
-=======
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
@@ -58,4 +49,3 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('complaints', ComplaintsController::class);
     Route::resource('officials', BarangayOfficialsController::class);
 });
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db

@@ -78,15 +78,6 @@
 								Remember me
 							</label>
 						</div> --}}
-<<<<<<< HEAD
-						<div>
-							<a class="txt1" href="{{ route('register') }}">
-								{{ __('Register') }}
-							</a>						
-						</div>
-=======
-
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db
 						<div>
 							<a class="txt1" href="{{ route('register') }}">
 								{{ __('Register') }}
@@ -123,7 +114,7 @@
 					</div> --}}
 				</form>
 
-				<div class="login100-more" style="background-image: url('images/brgy-logo.png');">
+				<div class="login100-more" style="background-image: url('images/bg-01.jpg');">
 				</div>
 			</div>
 		</div>

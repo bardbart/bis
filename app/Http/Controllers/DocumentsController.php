@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\AvailedServices;
+use App\Models\ServiceMaintenances;
 use App\Models\Services;
 use App\Models\BarangayOfficials;
 use Illuminate\Support\Facades\DB;
@@ -95,10 +96,10 @@ class DocumentsController extends Controller
      */
     public function create()
     {
-        $data = DB::select(
-            'select id, docType from service_maintenances where serviceId = 1'
-        );
-        return view('documents.create', compact('data'));
+        $data = ServiceMaintenances::all()->where('serviceId', 1);
+        // dd($data);
+        // exit;
+        return view('documents.create', ['data' => $data]);
     }
 
     /**
@@ -109,7 +110,7 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'docType' => ['required', 'integer'],
             'transMode' => ['required', 'string'],
             'purpose' => ['required', 'string'],
@@ -130,7 +131,7 @@ class DocumentsController extends Controller
             'status' => 'Unpaid'
         ]);
 
-        redirect()->route('home')->with();
+        return redirect()->route('documents.create')->with('success', 'Document requested successfully!');
     }
 
     /**
