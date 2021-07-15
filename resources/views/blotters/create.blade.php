@@ -1,13 +1,18 @@
 <x-layout>
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
 
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('File Complaint Form') }}</div>
+                    <div class="card-header" style="background-color: gray; color:white;">{{ __('File Blotter Form') }}</div>
         
                         <div class="card-body">
-                            <form method="POST" action="{{ route('complaints.store') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('blotters.store') }}" enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="form-group row">
@@ -65,75 +70,25 @@
                                 </div>
             
                                 <div class="form-group row">
-                                    <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status') }}</label>
-                                    <div class="col-md-6">
-                                      <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Single">Single</label>
-                                    
-                                      <input @if (Auth::user()->civilStatus == 'Married') return checked @endif id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Married">Married</label>
-                                    
-                                      <input @if (Auth::user()->civilStatus == 'Widowed') return checked @endif id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Widowed">Widowed</label>
-            
-                                      <input @if (Auth::user()->civilStatus == 'Divorced') return checked @endif id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Divorce">Divorced</label>
-                                    </div>
-                                </div>
-            
-                                <div class="form-group row">
                                     <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                     
                                     <div class="col-md-6">
                                         <input id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
                                     </div>
                                 </div>
-            
+
                                 <div class="form-group row">
-                                    <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Complaint Type') }}</label>
+                                    <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Details') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <select class="form-select" name="complainType" id="complainType" autofocus>
-                                            <option>--Select Complaint Type--</option>
-                                        @foreach ($data as $type) 
-                                                <option value="{{ $type->id }}">{{ $type->complainType }}</option>
-                                        @endforeach
-                                    </select>
+                                        <textarea class="form-control" name="blotterDetails" id="blotterDetails" cols="30" rows="10" placeholder="Enter details here..."></textarea>
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="respondents" class="col-md-4 col-form-label text-md-right">{{ __('Respondent') }}</label>
-                                    
-                                    <div class="col-md-6">
-                                        <input id="respondents" type="text" class="form-control" name="respondents"  autofocus>
+                                @foreach ($smId as $id) 
+                                    <input type="hidden" name="smId" value="{{ $id->id }}">
+                                @endforeach
 
-                                        <!-- <textarea class="form-control" placeholder="Enter details here..." name="respondents" id="respondents" cols="30" rows="10"></textarea> -->
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="respondentsAdd" class="col-md-4 col-form-label text-md-right">{{ __("Respondent's Address") }}</label>
-                                    
-                                    <div class="col-md-6">
-                                        <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
-
-                                        <textarea class="form-control" placeholder="Enter address here..." name="respondentsAdd" id="respondentsAdd" cols="30"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for="complainDetails" class="col-md-4 col-form-label text-md-right">{{ __('Complaint Details') }}</label>
-                                    
-                                    <div class="col-md-6">
-                                        <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
-
-                                        <textarea class="form-control" placeholder="Enter details here..." name="complainDetails" id="complainDetails" cols="30" ></textarea>
-                                    </div>
-                                </div>
-                                
-            
-            
                                 <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
                                 
                                 <div class="form-group row mb-0">

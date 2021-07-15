@@ -2,7 +2,7 @@
   <div class="row">
       <div class="col-lg-12 margin-tb">
           <div class="pull-left">
-              <h2>Documents Management</h2>
+              <h2>Complaint Management</h2>
           </div>
       </div>
   </div>
@@ -33,9 +33,10 @@
               <td>{{ $comp->address }}</td>
               <td>{{ $comp->respondents }}</td>
               <td>{{ $comp->respondentsAdd }}</td>
+
               <td>
-                  {{-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Show</button> --}}
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Show</button> -->
+                  <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">
                     Show
                   </button>
               </td>
@@ -44,41 +45,45 @@
                   <a class="btn btn-outline-danger" href="view-complaint-pdf/{{ $comp->userId }}">View</a>
                   <a class="btn btn-outline-success" href="generate-complaint-pdf/{{ $comp->userId }}">Save PDF</a> 
               </td>
-          </tr>
-  </table>
+            </tr>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Complaint Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                  <textarea disabled class="form-control" id="message-text">{{ $comp->complainDetails }}</textarea>   
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal{{$comp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Complaint Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+  
+                  <div class="modal-body">
+                    <form>
+                      <div class="form-group">
+ 
+                          <textarea disabled class="form-control" id="message-text">{{ $comp->complainDetails }}</textarea>   
+                      </div>
+                    </form>
+                  </div>
+  
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+              </div>
+            </div>
+            @endforeach
+          </table>
+          
 
 
-  @endforeach
   
   
   <p class="text-center text-primary"><small>By Team Bard</small></p>
   
   
-  {{-- <script>
+<!-- <script>
       // display a modal (large modal)
-      $(document).on('click', '#largeButton', function(event) {
+      $(document).on('click', '#exampleModal', function(event) {
           event.preventDefault();
           let href = $(this).attr('data-attr');
           $.ajax({
@@ -88,8 +93,8 @@
               },
               // return the result
               success: function(result) {
-                  $('#largeModal').modal("show");
-                  $('#largeBody').html(result).show();
+                  $('#exampleModal').modal("show");
+                  $('#exampleBody').html(result).show();
               },
               complete: function() {
                   $('#loader').hide();
@@ -102,7 +107,7 @@
               timeout: 8000
           })
       });
-  </script> --}}
+</script> -->
 </x-layout>
 
 

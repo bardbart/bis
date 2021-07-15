@@ -18,6 +18,7 @@ class CreateServiceMaintenancesTable extends Migration
             $table->unsignedInteger('serviceId');
             $table->string('docType')->nullable();
             $table->string('complainType')->nullable();
+            $table->string('blotterType')->nullable();
             $table->timestamps();
             $table->foreign('serviceId')
                 ->references('id') 

@@ -44,7 +44,7 @@
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
 
-                            <li><a class="nav-link ms-3" href="#">{{ __('Home') }}</a></li>
+                            <li><a class="nav-link ms-3" href="/home">{{ __('Home') }}</a></li>
                             <li><a class="nav-link ms-3" href="{{ route('officials.index') }}">Barangay Officials</a></li>
                         
 
@@ -54,8 +54,8 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
-                                      <li><a class="dropdown-item" href="#">File Complaint</a></li>
-                                      <li><a class="dropdown-item" href="#">File Blotter</a></li>
+                                      <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
+                                      <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
                                       <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="#">Service Maintenance</a></li>
                                     </ul>
                                   </li>
@@ -70,7 +70,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                         <li><a class="dropdown-item" href="{{ route('documents.index') }}">Requested Documents</a></li>
                                         <li><a class="dropdown-item" href="{{ route('complaints.index') }}">Filed Complaints</a></li>
-                                        <li><a class="dropdown-item" href="#">Filed Blotters</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('blotters.index') }}">Filed Blotters</a></li>
                                     </ul>
                                   </li>
                                 
