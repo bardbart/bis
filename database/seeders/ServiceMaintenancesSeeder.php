@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Model\ServiceMaintences;
-use App\Model\Service;
+use App\Models\Services;
+use App\Models\ServiceMaintenances;
 
 class ServiceMaintenancesSeeder extends Seeder
 {

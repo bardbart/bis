@@ -13,11 +13,6 @@ class BarangayOfficials extends Model
 
     protected $primaryKey = 'id';
 
-<<<<<<< HEAD
-    public function positions(){
-        return $this->hasOne(OfficialsPositions::class);
-    }
-=======
     public $timestamps = 'true';
 
     protected $fillable = ['firstName', 'lastName', 'middleName', 'position', 'imagePath'];
@@ -30,5 +25,4 @@ class BarangayOfficials extends Model
     // whitelist
     protected $visible = ['firsName', 'lastName', 'middleName', 'position', 'created_at'];
 
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db
 }

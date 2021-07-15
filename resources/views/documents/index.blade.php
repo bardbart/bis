@@ -47,40 +47,6 @@
 </x-layout>
 
 
-<<<<<<< HEAD
-<table class="table table-bordered" >
-    <thead class="thead-dark">
-        <tr>
-        <th>Transaction No.</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Transaction Mode</th>
-        <th>Document</th>
-        <th>Purpose</th>
-        <th>Payment Mode</th>
-        <th>Status</th>
-        <th width="280px">Action</th>
-        </tr>
-    </thead>
-    @foreach ($data as $trans)
-        <tr>
-            <td>{{ $trans->id }}</td>
-            <td>{{ $trans->name}}</td>
-            <td>{{ $trans->email }}</td>
-            <td>{{ $trans->transMode }}</td>
-            <td>{{ $trans->docType }}</td>
-            <td>{{ $trans->purpose }}</td>
-            <td>{{ $trans->paymentMode }}</td>
-            <td>{{ $trans->status }}</td>
-            <td>
-                <a class="btn btn-outline-danger" href="view-document-pdf/{{ $trans->userId }}">View</a>
-                <a class="btn btn-outline-success" href="generate-document-pdf/{{ $trans->userId }}">Save PDF</a>
-            </td>
-        </tr>
-    @endforeach
-</table>
-=======
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db
 
 
 

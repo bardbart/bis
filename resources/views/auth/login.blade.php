@@ -78,15 +78,6 @@
 								Remember me
 							</label>
 						</div> --}}
-<<<<<<< HEAD
-						<div>
-							<a class="txt1" href="{{ route('register') }}">
-								{{ __('Register') }}
-							</a>						
-						</div>
-=======
-
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db
 						<div>
 							<a class="txt1" href="{{ route('register') }}">
 								{{ __('Register') }}

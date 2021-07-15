@@ -12,7 +12,7 @@
                             <label for="Image" class="col-sm-4 col-form-label text-md-right">{{ __('Image') }}</label>
                             
                             <div class="col-md-6">
-                                <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
+                                <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image">
                                 
                                 @error('image')
                                 <span class="invalid-feedback" role="alert">

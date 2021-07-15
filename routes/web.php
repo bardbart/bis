@@ -48,8 +48,6 @@ Route::get('view-complaint-pdf/{id}',[ComplaintsController::class, 'pdfViewCompl
 Route::get('generate-complaint-pdf/{id}',[ComplaintsController::class, 'pdfSaveComplaint']);
 
 // Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF']);
-<<<<<<< HEAD
-=======
 
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
@@ -58,4 +56,3 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('complaints', ComplaintsController::class);
     Route::resource('officials', BarangayOfficialsController::class);
 });
->>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db

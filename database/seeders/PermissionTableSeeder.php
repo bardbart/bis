@@ -50,8 +50,8 @@ class PermissionTableSeeder extends Seeder
             'blotter-file',
  
             'barangay-official-list',
-            'barangay-offical-create',
-            'barangay-offical-edit',
+            'barangay-official-create',
+            'barangay-official-edit',
             'barangay-official-delete',
  
             'report-list',
