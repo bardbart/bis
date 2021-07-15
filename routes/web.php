@@ -24,10 +24,17 @@ use App\Http\Controllers\ComplaintsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes(['verify' => true]);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('users', UserController::class);
+    Route::resource('profiles', ProfileController::class);
+    Route::resource('documents', DocumentsController::class);
+    Route::resource('complaints', ComplaintsController::class);
+});
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -40,10 +47,3 @@ Route::get('view-complaint-pdf/{id}',[ComplaintsController::class, 'pdfViewCompl
 Route::get('generate-complaint-pdf/{id}',[ComplaintsController::class, 'pdfSaveComplaint']);
 
 // Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF']);
-
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('users', UserController::class);
-    Route::resource('profiles', ProfileController::class);
-    Route::resource('documents', DocumentsController::class);
-    Route::resource('complaints', ComplaintsController::class);
-});

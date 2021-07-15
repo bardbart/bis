@@ -9,6 +9,11 @@ class AvailedServices extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'userId',
+        'smId'
+    ];
+
     public function services() {
         return $this->hasManyThrough(
             

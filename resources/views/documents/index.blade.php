@@ -35,8 +35,8 @@
             <td>{{ $trans->id }}</td>
             <td>{{ $trans->name}}</td>
             <td>{{ $trans->email }}</td>
-            <td>{{ $trans->docType }}</td>
             <td>{{ $trans->transMode }}</td>
+            <td>{{ $trans->docType }}</td>
             <td>{{ $trans->purpose }}</td>
             <td>{{ $trans->paymentMode }}</td>
             <td>{{ $trans->status }}</td>

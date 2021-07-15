@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Models\AvailedServices;
 use App\Models\Services;
+use App\Models\BarangayOfficials;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade;
 use PDF;
@@ -20,14 +21,14 @@ class DocumentsController extends Controller
      */
     public function index()
     {
-        $data = DB::select(
-            'select a.`id`, concat(b.`firstName`, " ", b.`lastName`) as "name", b.`email`, a.`transMode`, a.`purpose`, a.`paymentMode`, a.`status`, c.`userId`, d.`docType` 
-            FROM `transactions`a
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId`
-            where d.serviceId = 1'
-        );
+        $data = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 1)
+        ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 'users.email', 
+                    'transactions.transMode', 'transactions.purpose', 'transactions.paymentMode', 'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
+        ->get();
    
         return view('documents.index', compact('data'));
     }
@@ -36,13 +37,15 @@ class DocumentsController extends Controller
     {
         $users = User::find($id);
 
-        $td = DB::select(
-            'select a.id, date(a.created_at) as "date", a.purpose, d.`docType` from `transactions`a 
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId` 
-            where d.serviceId = 1 and b.id = ?', [$id]
-        );
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 1)
+        ->where('users.id', $id)
+        ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
+                    'transactions.purpose', 'service_maintenances.docType')
+        ->get();
 
         $data = [
             'lastName' => $users->lastName,
@@ -53,26 +56,23 @@ class DocumentsController extends Controller
             'city' => $users->city,
             'province' => $users->province
         ];
-        
-        foreach($td as $trans_data){
-            if($trans_data->docType == "Indigency")
-                return view('documents.indigency', compact('data', 'td'));
-            elseif ($trans_data->docType == "Clearance")
-                return view('documents.clearance', compact('data', 'td'));
-        }
+
+        return view('documents.document', compact('data', 'td'));
     }
 
     public function pdfSaveDocument($id) 
     {
         $users = User::find($id);
 
-        $td = DB::select(
-            'select a.id, date(a.created_at) as "date", a.purpose, d.`docType` from `transactions`a 
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId` 
-            where b.id = ?', [$id]
-        );
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 1)
+        ->where('users.id', $id)
+        ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
+                    'transactions.purpose', 'service_maintenances.docType')
+        ->get();
 
         $data = [
             'lastName' => $users->lastName,
@@ -84,16 +84,8 @@ class DocumentsController extends Controller
             'province' => $users->province
         ];
 
-        foreach($td as $trans_data){
-            if($trans_data->docType == "Indigency"){
-                $pdf = PDF::loadView('documents.indigency', compact('data', 'td'));
-                return $pdf->download('indigencyDocument.pdf');
-            }
-            elseif ($trans_data->docType == "Clearance"){
-                $pdf = PDF::loadView('documents.clearance', compact('data', 'td'));
-                return $pdf->download('clearanceDocument.pdf');
-            }    
-        }   
+        $pdf = PDF::loadView('documents.document', compact('data', 'td'));
+        return $pdf->download('Document.pdf');
     }
 
     /**
@@ -118,31 +110,27 @@ class DocumentsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'lastName' => ['required', 'string', 'max:255'],
-            'firstName' => ['required', 'string', 'max:255'],
-            'middleName' => ['required', 'string', 'max:255'],
-            'houseNo' => ['required', 'string'],
-            'province' => ['required', 'string'],
-            'city' => ['required', 'string'],
-            'civilStatus' => ['required', 'string'],
-            'citizenship' => ['required', 'string'],
             'docType' => ['required', 'integer'],
-            'purpose' => ['required', 'string'],
             'transMode' => ['required', 'string'],
+            'purpose' => ['required', 'string'],
             'paymentMode' => ['required', 'string'],
             'userId' => ['required', 'integer']
         ]);
     
-        // $input = $request->all();
         $availedService = AvailedServices::create([
             'userId' => $request->userId,
             'smId' => $request->docType
         ]);
 
-        $transaction = Transactions::create([
-            ''
+        Transaction::create([
+            'availedServiceId' => $availedService->id,
+            'transMode' => $request->transMode,
+            'purpose' => $request->purpose,
+            'paymentMode' => $request->paymentMode,
+            'status' => 'Unpaid'
         ]);
-        return redirect('/home'); 
+
+        redirect()->route('home')->with();
     }
 
     /**
