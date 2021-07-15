@@ -19,7 +19,7 @@
     {{-- Fontawesome --}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-
+    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
 
 </head>
 
@@ -27,7 +27,7 @@
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               
-              <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="#">
                 <img class="ms-auto" src="{{ asset('images/PUPLogo.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
                   Barangay Online Report and Document Request Integrated with QR Code
                 </a>
@@ -46,9 +46,9 @@
                             <li><a class="nav-link ms-3" href="#">{{ __('Home') }}</a></li>
                             <li><a class="nav-link ms-3" href="{{ route('officials.index') }}">Barangay Officials</a></li>
                         
-                            {{-- @if (Auth::user()->hasRole('User')) --}}
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <li class="nav-item ">
+                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
                                       Services
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -58,12 +58,12 @@
                                       <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="#">Service Maintenance</a></li>
                                     </ul>
                                   </li>
-                            {{-- @endif --}}
+
                         
                             @if (Auth::user()->hasRole('Admin'))
                             
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
                                       Transactions
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -73,30 +73,19 @@
                                     </ul>
                                   </li>
                                 
-                                {{-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                      Service Maintenance
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDarkDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="#">Add Document Type</a></li>
-                                        <li><a class="dropdown-item" href="#">Add Complaint Type</a></li>
-                                    </ul>
-                                </li> --}}
-
                                 <li><a class="nav-link ms-3" href="{{ route('users.index') }}">User Management</a></li>
                                 <li><a class="nav-link ms-3" href="">Reports</a></li>
                             @endif
                         
-
-                        
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle me-5 ms-5" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle me-5 ms-5" href="#" id="navbarDarkDropdownMenuLink" role="button"  aria-expanded="false">
                                 Account
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="{{ route('profiles.edit', Auth::user()->id) }}">{{ __('Edit Profile') }}</a></li>
                                     <li><a class="dropdown-item" href="{{ route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Logout') }}</a></li>
+                                    
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
