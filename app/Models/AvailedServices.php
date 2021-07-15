@@ -15,8 +15,6 @@ class AvailedServices extends Model
     ];
 
     public function services() {
-        return $this->hasManyThrough(
-            
-        );
+        return $this->hasManyThrough();
     }
 }

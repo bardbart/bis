@@ -15,16 +15,13 @@ class CreateBarangayOfficialsTable extends Migration
     {
         Schema::create('barangay_officials', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('opId');
             $table->string('lastName');
             $table->string('firstName');
             $table->string('middleName')->nullable();
+            $table->longText('position')->nullable();
+            $table->string('imagePath')->nullable();
             $table->string('activeStatus')->default(1);
             $table->timestamps();
-            $table->foreign('opId')
-                ->references('id')
-                ->on('officials_positions')
-                ->onDelete('cascade');
         });
     }
 

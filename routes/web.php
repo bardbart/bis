@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComplaintsController;
-
+use App\Http\Controllers\BarangayOfficialsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,3 +48,14 @@ Route::get('view-complaint-pdf/{id}',[ComplaintsController::class, 'pdfViewCompl
 Route::get('generate-complaint-pdf/{id}',[ComplaintsController::class, 'pdfSaveComplaint']);
 
 // Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF']);
+<<<<<<< HEAD
+=======
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('users', UserController::class);
+    Route::resource('profiles', ProfileController::class);
+    Route::resource('documents', DocumentsController::class);
+    Route::resource('complaints', ComplaintsController::class);
+    Route::resource('officials', BarangayOfficialsController::class);
+});
+>>>>>>> d487f13b6fe23a0e1fb7000c19fbde04f84986db

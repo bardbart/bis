@@ -1,10 +1,14 @@
-@extends('layouts.app')
+<x-layout>
+    <x-section name="scripts">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-@section('content')
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    </x-section>
 <div class="row">
     <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
+        <div class="float-start">
             <h2>Users Management</h2>
         </div>
         {{-- <div class="float-end">
@@ -26,7 +30,7 @@
 
 
 <table class="table table-bordered table-responsive-lg table-hover" >
-    <thead class="thead-dark">
+    <thead class="table-dark">
         <tr>
         <th>No</th>
         <th>Name</th>
@@ -45,7 +49,7 @@
             <td>
             @if(!empty($user->getRoleNames()))
                 @foreach($user->getRoleNames() as $v)
-                <label class="badge badge-success">{{ $v }}</label>
+                <label class="badge bg-success">{{ $v }}</label>
                 @endforeach
             @endif
             </td>
@@ -98,10 +102,11 @@
 </table>
 
 
-{!! $data->render() !!}
+{{-- {!! $data->render() !!} --}}
 
 
 <p class="text-center text-primary"><small>By Team Bard</small></p>
+
 
 <!-- large modal -->
 <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
@@ -202,6 +207,5 @@ $(document).on('click', '#mediumButton', function(event) {
 
 
 </script>
-
-@endsection
+</x-layout>
 
