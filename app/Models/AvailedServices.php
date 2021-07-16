@@ -14,7 +14,12 @@ class AvailedServices extends Model
         'smId'
     ];
 
-    public function services() {
-        return $this->hasManyThrough();
+    // public function services() {
+    //     return $this->hasManyThrough();
+    // }
+
+    public function services()
+    {
+        return $this->belongsTo(Transaction::class);
     }
 }

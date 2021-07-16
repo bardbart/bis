@@ -1,9 +1,13 @@
 <x-layout>
-    <div class="wrap-container">
-        <div class="container-1">
-            <h1>Create Official</h1>
-            <div class="flex-box-container-1">
-                <div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+
+                <div class="card-header" style="background-color: gray; color:white;">{{ __('Edit Officials') }}</div>
+    
+                <div class="card-body">
+
                     <form method="POST" action="{{ route('officials.update', $officials->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT') 
@@ -83,11 +87,11 @@
                                 </button>
                             </div>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 </x-layout>

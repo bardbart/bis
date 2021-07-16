@@ -38,14 +38,9 @@ class ServiceMaintenancesSeeder extends Seeder
         $sm5 = ServiceMaintenances::create([
             'serviceId' => '2',
             'complainType' => 'Roadworks/Environment/Cleanliness'
-        ]);
+        ]); 
 
-        $sm6  = ServiceMaintenances::create([
-            'serviceId' => '2',
-            'complainType' => 'Roadworks/Environment/Cleanliness'
-        ]);
-
-        $sm7 = ServiceMaintenances::create([
+        $sm6 = ServiceMaintenances::create([
             'serviceId' => '3',
             'blotterType' => 'Report'
         ]);
