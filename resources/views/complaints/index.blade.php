@@ -8,7 +8,7 @@
   </div>
 
   @if ($message = Session::get('success'))
-  <div class="alert alert-success">
+  <div class="alert alert-success" >
     <p>{{ $message }}</p>
   </div>
   @endif
@@ -38,18 +38,21 @@
               </td>
               <td>{{ $comp->status }}</td>
               <td>
-                @if ($comp->status == "Unsettled")
-                  <a class="btn btn-success" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
-                  <a class="btn btn-warning" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                  <a class="btn btn-danger" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
-                  <a class="btn btn-primary" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
-                @elseif ($comp->status == "Settled") 
-                  <a class="btn btn-danger" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
-                  <a class="btn btn-primary" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
-                @else
-                  <a class="btn btn-danger" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
-                  <a class="btn btn-primary" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
-                @endif
+                <div style="display: flex; flex-wrap: wrap; justify-content:space-around;">
+
+                  @if ($comp->status == "Unsettled")
+                    <a class="btn btn-success" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
+                    <a class="btn btn-warning" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
+                    <a class="btn btn-danger" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                    <a class="btn btn-primary" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
+                  @elseif ($comp->status == "Settled") 
+                    <a class="btn btn-danger" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
+                    <a class="btn btn-primary" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
+                  @else
+                    <a class="btn btn-danger" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
+                    <a class="btn btn-primary" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
+                  @endif
+                </div>
                 
               </td>
             </tr>

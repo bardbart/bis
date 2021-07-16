@@ -25,20 +25,39 @@ class ReportController extends Controller
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->where('service_maintenances.serviceId', 1)
-        ->whereYear('transactions.created_at', date('Y'))
+        // ->whereYear('transactions.created_at', date('Y'))
         ->groupBy('day_name')
         ->orderBy('count')
         ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
         ->get();
-        
-        // $data['pieChart'] = User::select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(created_at) as day_name"))
-        // ->whereYear('created_at', date('Y'))
-        // ->groupBy('day_name')
-        // ->orderBy('count')
-        // ->get();
+
+        $data2['pieChart2'] = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->where('service_maintenances.serviceId', 2)
+        // ->whereYear('transactions.created_at', date('Y'))
+        ->groupBy('day_name')
+        ->orderBy('count')
+        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
+        ->get();
 
 
-        return view('reports.index')->with($data);
+    
+        $data3['pieChart3'] = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->where('service_maintenances.serviceId', 3)
+        // ->whereYear('transactions.created_at', date('Y'))
+        ->groupBy('day_name')
+        ->orderBy('count')
+        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
+        ->get();
+    
+
+        return view('reports.index')
+        ->with($data)
+        ->with($data2)
+        ->with($data3);
     }
 
     /**
