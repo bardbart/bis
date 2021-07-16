@@ -94,7 +94,8 @@ class ComplaintsController extends Controller
      */
     public function create()
     {
-        $data = ServiceMaintenances::all()->where('serviceId', 2);
+        $data = ServiceMaintenances::all()->where('serviceId','=', 2);
+        // dd($data);
         return view('complaints.create', ['data' => $data]);
     }
 
