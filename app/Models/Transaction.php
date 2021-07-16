@@ -34,5 +34,13 @@ class Transaction extends Model
             AvailedServices::class
         );
     }
+    public function serviceType(){
+        return $this->hasManyThrough(
+            ServiceMaintenances::class,
+            AvailedServices::class,
+            'smId',
+            'serviceId'
 
+        );
+    }
 }

@@ -75,7 +75,7 @@
                                   </li>
                                 
                                 <li><a class="nav-link ms-3" href="{{ route('users.index') }}">User Management</a></li>
-                                <li><a class="nav-link ms-3" href="">Reports</a></li>
+                                <li><a class="nav-link ms-3" href="{{ route('reports.index') }}">Reports</a></li>
                             @endif
                         
                             <li class="nav-item dropdown">
