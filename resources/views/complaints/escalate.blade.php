@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Complaint</title>
+    <title>Escalate</title>
 </head>
 
 <style>
@@ -53,29 +53,27 @@
         </div>
 
         <div class="cr">
+            <p align="center"><b>CERTIFICATION TO FILE CASE</b></p>
             <p><u><b>{{ $data['firstName'] }} {{ $data['lastName'] }}</b></u></p>
             <p>{{ $data['address'] }}</p>
             <p>--against--</p>
             <p><u><b>{{ $trans_data->respondents }}</b></u></p>
             <p>{{ $trans_data->respondentsAdd }}</p>
-            <p align="center"><b>C O M P L A I N T</b></p>
         </div>
 
         <div class="body">
-            <p>I hereby complain against the above named respondent for violating my rights and interest in the following manner: <br><br>
-                {{ $trans_data->complainDetails }}
-            </p>
+            <p>This is to certify that <b>No Settlement/Concilliation was reached.</b><br>
+            Settlement has been reputed <br>
+            And therefore the corresponding complaint for the dispute may now be filled in Court/Government office.</p>
         </div>
 
         <div class="footer">
             <br>
-            <p>Made this day <b>{{ $trans_data->date }}</b> </p> <br>
-            <p id="name"><u>{{ $data['firstName'] }} {{ $data['lastName'] }}</u></p>
-            <p>Complainant's Signature</p> <br>
-            <p>Recieved and filed this <b>{{ $trans_data->date }}</b></p> <br>
+            <p>This day <b>{{ $trans_data->date }}</b></p><br>
+            <p><b>ATTESTED:</b></p> <br>
             @foreach ($officials as $chairman)
                 @if($chairman->position == 'Chairman')
-                    <p><u style="text-transform: uppercase">{{ $chairman->name }}</u><br>
+                    <p><u style="text-transform: uppercase">{{ $chairman->name }}</u> <br>
                     <b>Punong Barangay</b></p>
                 @endif
 		    @endforeach

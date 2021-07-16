@@ -34,8 +34,11 @@
                 </td>
                 <td>{{ $blot->status }}</td>
                 <td>
-                    <a class="btn btn-outline-danger" href="view-complaint-pdf/{{ $blot->userId }}">View</a>
-                    <a class="btn btn-outline-success" href="generate-complaint-pdf/{{ $blot->userId }}">Save PDF</a> 
+                  @if ($blot->status == "Noted")
+                    <a class="btn disabled btn-success" href="blotters/note/{{ $blot->id }}/{{ $blot->userId }}">Note</a>
+                  @else
+                    <a class="btn btn-success" href="blotters/note/{{ $blot->id }}/{{ $blot->userId }}">Note</a> 
+                  @endif
                 </td>
             </tr>
             <!-- Modal -->

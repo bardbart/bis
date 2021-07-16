@@ -23,7 +23,7 @@
           <th>Respondent's Address</th>
           <th>Complaint Details</th>
           <th>Status</th>
-          <th width="280px">Action</th>
+          <th width="400px">Action</th>
           </tr>
       </thead>
       @foreach ($data as $comp)
@@ -33,17 +33,24 @@
               <td>{{ $comp->address }}</td>
               <td>{{ $comp->respondents }}</td>
               <td>{{ $comp->respondentsAdd }}</td>
-
               <td>
-                  <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">Show</button> -->
-                  <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">
-                    Show
-                  </button>
+                  <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">Show Details</button>
               </td>
               <td>{{ $comp->status }}</td>
               <td>
-                  <a class="btn btn-outline-danger" href="view-complaint-pdf/{{ $comp->userId }}">View</a>
-                  <a class="btn btn-outline-success" href="generate-complaint-pdf/{{ $comp->userId }}">Save PDF</a> 
+                @if ($comp->status == "Unsettled")
+                  <a class="btn btn-success" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
+                  <a class="btn btn-warning" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
+                  <a class="btn btn-danger" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                  <a class="btn btn-primary" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
+                @elseif ($comp->status == "Settled") 
+                  <a class="btn btn-danger" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
+                  <a class="btn btn-primary" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
+                @else
+                  <a class="btn btn-danger" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
+                  <a class="btn btn-primary" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
+                @endif
+                
               </td>
             </tr>
 
@@ -59,7 +66,6 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
- 
                           <textarea disabled class="form-control" id="message-text">{{ $comp->complainDetails }}</textarea>   
                       </div>
                     </form>
@@ -79,35 +85,6 @@
   
   
   <p class="text-center text-primary"><small>By Team Bard</small></p>
-  
-  
-<!-- <script>
-      // display a modal (large modal)
-      $(document).on('click', '#exampleModal', function(event) {
-          event.preventDefault();
-          let href = $(this).attr('data-attr');
-          $.ajax({
-              url: href,
-              beforeSend: function() {
-                  $('#loader').show();
-              },
-              // return the result
-              success: function(result) {
-                  $('#exampleModal').modal("show");
-                  $('#exampleBody').html(result).show();
-              },
-              complete: function() {
-                  $('#loader').hide();
-              },
-              error: function(jqXHR, testStatus, error) {
-                  console.log(error);
-                  alert("Page " + href + " cannot open. Error:" + error);
-                  $('#loader').hide();
-              },
-              timeout: 8000
-          })
-      });
-</script> -->
 </x-layout>
 
 

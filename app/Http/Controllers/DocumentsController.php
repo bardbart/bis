@@ -28,22 +28,29 @@ class DocumentsController extends Controller
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 1)
         ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 'users.email', 
-                    'transactions.transMode', 'transactions.purpose', 'transactions.paymentMode', 'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
+                    'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
         ->get();
    
         return view('documents.index', compact('data'));
     }
 
-    public function pdfViewDocument($id) 
+    public function pdfViewDocument($transId, $userId) 
     {
-        $users = User::find($id);
+        $users = User::find($userId);
+
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        // dd($officials);
 
         $td = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 1)
-        ->where('users.id', $id)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
         ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
                     'transactions.purpose', 'service_maintenances.docType')
         ->get();
@@ -58,19 +65,24 @@ class DocumentsController extends Controller
             'province' => $users->province
         ];
 
-        return view('documents.document', compact('data', 'td'));
+        return view('documents.document', compact('data', 'td', 'officials'));
     }
 
-    public function pdfSaveDocument($id) 
+    public function pdfSaveDocument($transId, $userId) 
     {
-        $users = User::find($id);
+        $users = User::find($userId);
 
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+        
         $td = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 1)
-        ->where('users.id', $id)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
         ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
                     'transactions.purpose', 'service_maintenances.docType')
         ->get();
@@ -85,7 +97,7 @@ class DocumentsController extends Controller
             'province' => $users->province
         ];
 
-        $pdf = PDF::loadView('documents.document', compact('data', 'td'));
+        $pdf = PDF::loadView('documents.document', compact('data', 'td', 'officials'));
         return $pdf->download('Document.pdf');
     }
 
@@ -123,7 +135,6 @@ class DocumentsController extends Controller
         
         $request->image->move(public_path('images/barangayId'), $newImageName);
         
-        // dd($request->firstName);
         $availedService = AvailedServices::create([
             'userId' => $request->userId,
             'smId' => $request->docType
@@ -149,7 +160,7 @@ class DocumentsController extends Controller
      */
     public function show($id)
     {
-
+        //
     }
 
     /**
@@ -170,9 +181,15 @@ class DocumentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, $userId)
     {
-        //
+        
+    }
+
+    public function process($transId, $userId)
+    {
+        $paid = Transaction::where('id', $transId)->update(['status' => 'Paid']);
+        return redirect('documents')->with('success', 'Document payment noted!');
     }
 
     /**

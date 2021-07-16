@@ -23,7 +23,7 @@ class CreateTransactionsTable extends Migration
             $table->string('respondents')->nullable();
             $table->string('respondentsAdd')->nullable();
             $table->string('blotterDetails')->nullable();
-            $table->string('barangayIdPath');
+            $table->string('barangayIdPath')->nullable();
             $table->string('status');
             $table->timestamps();
             $table->foreign('availedServiceId')

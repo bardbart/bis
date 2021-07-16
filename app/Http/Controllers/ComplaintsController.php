@@ -21,31 +21,49 @@ class ComplaintsController extends Controller
      */
     public function index()
     {
-        $data = DB::select(
-            'select a.`id`, concat(b.`firstName`," ", b.`lastName`) as "name", concat(b.`houseNo`, " ", b.`street`," ",b.`city`," ",b.`province`) as "address",
-                    a.`complainDetails`, a.`respondents`, a.`respondentsAdd`, a.`status`, c.`userId`
-            FROM `transactions`a
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId`
-            where d.serviceId = 2'
-        );
+        // $data = DB::select(
+        //     'select a.`id`, concat(b.`firstName`," ", b.`lastName`) as "name", concat(b.`houseNo`, " ", b.`street`," ",b.`city`," ",b.`province`) as "address",
+        //             a.`complainDetails`, a.`respondents`, a.`respondentsAdd`, a.`status`, c.`userId`
+        //     FROM `transactions`a
+        //     inner join `availed_services`c on a.`availedServiceId` = c.`id`
+        //     inner join `service_maintenances`d on c.`smId` = d.`id`
+        //     inner join `users`b on b.`id` = c.`userId`
+        //     where d.serviceId = 2'
+        // );
+
+        $data = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
+                'availed_services.userId', 'service_maintenances.complainType')
+        ->get();
    
         return view('complaints.index', compact('data'));
     }
 
-    public function pdfViewComplaint($id) 
+    public function pdfViewComplaint($transId, $userId) 
     {
-        $users = User::find($id);
+        $users = User::find($userId);
 
-        $td = DB::select(
-            'select a.id, date(a.created_at) as "date", a.complainDetails, a.respondents, a.respondentsAdd, d.`complainType` 
-            from `transactions`a 
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId` 
-            where d.serviceId = 2 and b.id = ?', [$id]
-        );
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'),
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
 
         $data = [
             'lastName' => $users->lastName,
@@ -53,38 +71,168 @@ class ComplaintsController extends Controller
             'civilStatus' => $users->civilStatus,
             'citizenship' => $users->citizenship,
             'houseNo' => $users->houseNo,
-            'city' => $users->city,
-            'province' => $users->province
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
         ];
 
-        return view('complaints.form', compact('data', 'td'));
+        return view('complaints.form', compact('data', 'td', 'officials'));
     }
 
-    public function pdfSaveComplaint($id) 
+    public function pdfSaveComplaint($transId, $userId) 
     {
-        $users = User::find($id);
+        $users = User::find($userId);
 
-        $td = DB::select(
-            'select a.id, date(a.created_at) as "date", a.complainDetails, a.respondents, a.respondentsAdd, d.`complainType` 
-            from `transactions`a 
-            inner join `availed_services`c on a.`availedServiceId` = c.`id`
-            inner join `service_maintenances`d on c.`smId` = d.`id`
-            inner join `users`b on b.`id` = c.`userId` 
-            where d.serviceId = 2 and b.id = ?', [$id]
-        );
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
 
         $data = [
             'lastName' => $users->lastName,
             'firstName' => $users->firstName,
             'civilStatus' => $users->civilStatus,
             'citizenship' => $users->citizenship,
-            'houseNo' => $users->houseNo,
-            'city' => $users->city,
-            'province' => $users->province
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
         ];
 
-        $pdf = PDF::loadView('complaints.form', compact('data', 'td'));
+        $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
         return $pdf->download('ComplaintForm.pdf');
+    }
+
+    public function pdfViewEscalate($transId, $userId)
+    {
+        $users = User::find($userId);
+
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
+
+        $data = [
+            'lastName' => $users->lastName,
+            'firstName' => $users->firstName,
+            'civilStatus' => $users->civilStatus,
+            'citizenship' => $users->citizenship,
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        ];
+
+        return view('complaints.escalate', compact('data', 'td', 'officials'));
+    }
+
+    public function pdfSaveEscalate($transId, $userId)
+    {
+        $users = User::find($userId);
+
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
+
+        $data = [
+            'lastName' => $users->lastName,
+            'firstName' => $users->firstName,
+            'civilStatus' => $users->civilStatus,
+            'citizenship' => $users->citizenship,
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        ];
+
+        $pdf = PDF::loadView('complaints.escalate', compact('data', 'td', 'officials'));
+        return $pdf->download('EscalationForm.pdf');
+    }
+
+    public function pdfViewSettle($transId, $userId)
+    {
+        $users = User::find($userId);
+
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
+
+        $data = [
+            'lastName' => $users->lastName,
+            'firstName' => $users->firstName,
+            'civilStatus' => $users->civilStatus,
+            'citizenship' => $users->citizenship,
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        ];
+
+        return view('complaints.settle', compact('data', 'td', 'officials'));
+    }
+
+    public function pdfSaveSettle($transId, $userId)
+    {
+        $users = User::find($userId);
+
+        $officials = DB::table('barangay_officials')
+        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        ->get();
+
+        $td = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->where('transactions.id', $transId)
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        ->get();
+
+        $data = [
+            'lastName' => $users->lastName,
+            'firstName' => $users->firstName,
+            'civilStatus' => $users->civilStatus,
+            'citizenship' => $users->citizenship,
+            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        ];
+
+        $pdf = PDF::loadView('complaints.settle', compact('data', 'td', 'officials'));
+        return $pdf->download('SettlementForm.pdf');
     }
 
     /**
@@ -112,25 +260,19 @@ class ComplaintsController extends Controller
             // 'respondents' => 'required', 'string',
             // 'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
-
         ]);
-
-
-        // dd($request->complainDetails);
         
         $availedService = AvailedServices::create([
             'userId' => $request->userId,
             'smId' => $request->complainType
         ]);
 
-        Transaction::create([
-            
+        Transaction::create([  
             'complainDetails' => $request->complainDetails,
             'respondents' => $request->respondents,
             'respondentsAdd' => $request->respondentsAdd,
             'status' => 'Unsettled',
-            'availedServiceId' => $availedService->id,
-
+            'availedServiceId' => $availedService->id
         ]);
 
         return redirect('/complaints/create')->with('success', 'Complaint filed successfully!');
@@ -168,6 +310,18 @@ class ComplaintsController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function settle($transId, $userId)
+    {
+        $settled = Transaction::where('id', $transId)->update(['status' => 'Settled']);
+        return redirect('complaints')->with('success', 'Complaint Settled!');
+    }
+
+    public function escalate($transId, $userId)
+    {
+        $settled = Transaction::where('id', $transId)->update(['status' => 'Escalated']);
+        return redirect('complaints')->with('success', 'Complaint Escalated');
     }
 
     /**

@@ -82,18 +82,22 @@
 		</div>
 
 		<div class="officers">
-			<p><b>Barangay Officials</b></p>
-			<p><b>Baranagay Chairman</b><br>Jerry Jones </p>
-			<p><b>Baranagy Councils</b><br>
-				Jerry Jones <br><br>
-				Jerry Jones <br><br>
-				Jerry Jones <br><br>
-				Jerry Jones <br><br>
-				Jerry Jones <br><br>
-				Jerry Jones <br><br>
-				Jerry Jones
-			</p>
-		</div>
+			<p style="text-transform: uppercase"><b>Barangay Officials</b></p>
+			<p><b>Baranagay Chairman</b></p>
+			@foreach ($officials as $chairman)	
+				@if($chairman->position == 'Chairman')
+					<p>{{ $chairman->name }}</p>
+				@endif
+			@endforeach
+			<p><b>Barangay Councils</b><br>
+			@foreach ($officials as $councils)
+				@if($councils->position == 'Council')
+					<p>{{ $councils->name }}<br></p>	
+				@endif
+			{{-- <p>{{ $official->name }}<br>{{ $official->position }}</p> --}}
+			@endforeach
+		</div>	
+
 		@if ($trans_data->docType = "Indigency")
 			<div class="body">
 				<p>TO WHOM IT MAY CONCERN: 
@@ -124,10 +128,14 @@
 
 
     <div class="footer">
-    	<p align="right">
-			<u>BARANGAY CHAIRMAN</u> <br>
-    		<b>Punong Barangay</b>
-    	</p>
+		@foreach ($officials as $chairman)
+			@if($chairman->position == 'Chairman')
+				<p align="right">
+					<u style="text-transform: uppercase">{{ $chairman->name }}</u> <br>
+					<b>Punong Barangay</b>
+				</p>
+			@endif
+		@endforeach
     </div>
 
 

@@ -110,6 +110,12 @@ class BlottersController extends Controller
         //
     }
 
+    public function noted($transId, $userId)
+    {   
+        $noted = Transaction::where('id', $transId)->update(['status' => 'Noted']);
+        return redirect('blotters')->with('success', 'Blotter noted!');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
