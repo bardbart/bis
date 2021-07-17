@@ -14,6 +14,7 @@ use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\BlottersController;
 use App\Http\Controllers\BarangayOfficialsController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ServicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('blotters', BlottersController::class);
     Route::resource('officials', BarangayOfficialsController::class);
     Route::resource('reports', ReportController::class);
+    Route::resource('services', ServicesController::class);
 });

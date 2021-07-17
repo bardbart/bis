@@ -56,7 +56,7 @@
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
                                       <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
-                                      <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="#">Service Maintenance</a></li>
+                                      <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="{{ route('services.index') }}">Service Management</a></li>
                                     </ul>
                                   </li>
 

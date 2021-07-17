@@ -22,9 +22,6 @@
                 {{-- <div style="border: 2px solid black"> --}}
                     @foreach ( $officials as $official)
                         <div style="display: flex; justify-content:space-between">
-                            
-                            
-                            
                             <div>
                                 <div class="float-start" style="margin-right: 50px">
                                     <img style="height: 288px !important; width: 288px !important;"src="{{ asset('images/officials/' . $official->imagePath) }}" alt="">
