@@ -1,10 +1,10 @@
 <x-layout>
+    @section('title', 'Request Documents')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
         <p>{{ $message }}</p>
         </div>
     @endif
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -12,7 +12,7 @@
                     <div class="card-header" style="background-color: gray; color: white">{{ __('Document Request Form') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{route('documents.store')}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -113,11 +113,10 @@
                                 
                                 <div class="col-md-6">
                                     <select class="form-select" name="docType" id="docType" autofocus>
-                                        <option>--Select Document Type--</option>
                                     @foreach ($data as $type) 
                                             <option value="{{ $type->id }}">{{ $type->docType }}</option>
                                     @endforeach
-                                </select>
+                                    </select>
                                 </div>
                             </div>
 
@@ -126,13 +125,13 @@
                                 
                                 <div class="col-md-6">
                                     <select class="form-select" name="purpose" id="purpose" autofocus>
-                                        <option>--Select Purpose--</option>
                                         <option>Personal Identification and Residence Status</option>
                                         <option>Good Standing in the Community</option>
                                         <option>No pending case filed in the barangay</option>
                                         <option>Employment (Local)</option>
                                         <option>Employment (Abroad)</option>
                                         <option>Enrollment</option>
+                                        <option>Scholarship</option>
                                         <option>Indigency</option>
                                         <option>Senior Citizens & Solo Parent</option>
                                         <option>Marriage (Local)</option>
@@ -168,7 +167,7 @@
                             
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4 ">
-                                    <button  type="submit" class="btn btn-primary" >
+                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
                                         {{ __('Submit') }}
                                     </button>
                                 </div>

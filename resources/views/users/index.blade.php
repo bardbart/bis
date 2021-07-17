@@ -1,4 +1,5 @@
 <x-layout>
+    @section('title', 'Users')
     <x-section name="scripts">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 
@@ -100,11 +101,7 @@
         @endforeach
     </tbody>
 </table>
-
-
-{{-- {!! $data->render() !!} --}}
-
-
+{{ $data->links('pagination::bootstrap-4') }}
 <p class="text-center text-primary"><small>By Team Bard</small></p>
 
 

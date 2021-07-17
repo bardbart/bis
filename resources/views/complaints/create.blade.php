@@ -1,4 +1,5 @@
 <x-layout>
+    @section('title', 'File Complaints')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -70,23 +71,6 @@
                                 </div>
             
                                 <div class="form-group row">
-                                    <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status') }}</label>
-                                    <div class="col-md-6">
-                                      <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Single">Single</label>
-                                    
-                                      <input @if (Auth::user()->civilStatus == 'Married') return checked @endif id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Married">Married</label>
-                                    
-                                      <input @if (Auth::user()->civilStatus == 'Widowed') return checked @endif id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Widowed">Widowed</label>
-            
-                                      <input @if (Auth::user()->civilStatus == 'Divorced') return checked @endif id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                      <label for="Divorce">Divorced</label>
-                                    </div>
-                                </div>
-            
-                                <div class="form-group row">
                                     <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                     
                                     <div class="col-md-6">
@@ -99,7 +83,6 @@
                                     
                                     <div class="col-md-6">
                                         <select class="form-select" name="complainType" id="complainType" autofocus>
-                                            <option>--Select Complaint Type--</option>
                                         @foreach ($data as $type) 
                                                 <option value="{{ $type->id }}">{{ $type->complainType }}</option>
                                         @endforeach
@@ -111,9 +94,12 @@
                                     <label for="respondents" class="col-md-4 col-form-label text-md-right">{{ __('Respondent') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <input id="respondents" type="text" class="form-control" name="respondents"  autofocus>
-
-                                        <!-- <textarea class="form-control" placeholder="Enter details here..." name="respondents" id="respondents" cols="30" rows="10"></textarea> -->
+                                        <input id="respondents" type="text" class="form-control" @error('respondents') is-invalid @enderror placeholder="Enter Respondent here..." name="respondents" required>
+                                        @error('respondents')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -123,7 +109,7 @@
                                     <div class="col-md-6">
                                         <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
 
-                                        <textarea class="form-control" placeholder="Enter address here..." name="respondentsAdd" id="respondentsAdd" cols="30"></textarea>
+                                        <textarea class="form-control" @error('respondents') is-invalid @enderror placeholder="Enter address here..." name="respondentsAdd" id="respondentsAdd" cols="30" rows="5" required></textarea>
                                     </div>
                                 </div>
 
@@ -133,17 +119,15 @@
                                     <div class="col-md-6">
                                         <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
 
-                                        <textarea class="form-control" placeholder="Enter details here..." name="complainDetails" id="complainDetails" cols="30" ></textarea>
+                                        <textarea class="form-control" placeholder="Enter details here..." name="complainDetails" id="complainDetails" cols="30" rows="5" required></textarea>
                                     </div>
                                 </div>
                                 
-            
-            
                                 <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
                                 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4 ">
-                                        <button  type="submit" class="btn btn-primary" >
+                                        <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
                                             {{ __('Submit') }}
                                         </button>
                                     </div>
