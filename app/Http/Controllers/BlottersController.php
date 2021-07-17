@@ -19,6 +19,7 @@ class BlottersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     function __construct()
     {
 
@@ -36,18 +37,23 @@ class BlottersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+=======
+    public function index(Request $request)
+>>>>>>> e7a1f1b2b9bdd88a2c1ffa464bc3e784d3758e20
     {
         $data = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 3)
+        ->orderBy('transactions.id','DESC')
         ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 
                 DB::raw("concat(users.houseNo, ' ', users.street,' ',users.city,' ',users.province) as 'address'"),
                 'transactions.blotterDetails', 'transactions.status', 'availed_services.userId')
-        ->get();
+        ->paginate(5);
    
-        return view('blotters.index', compact('data')); 
+        return view('blotters.index', compact('data'))
+        ->with('i', ($request->input('page', 1) - 1) * 5); 
     }
 
     /**

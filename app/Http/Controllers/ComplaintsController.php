@@ -43,30 +43,22 @@ class ComplaintsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $data = DB::select(
-        //     'select a.`id`, concat(b.`firstName`," ", b.`lastName`) as "name", concat(b.`houseNo`, " ", b.`street`," ",b.`city`," ",b.`province`) as "address",
-        //             a.`complainDetails`, a.`respondents`, a.`respondentsAdd`, a.`status`, c.`userId`
-        //     FROM `transactions`a
-        //     inner join `availed_services`c on a.`availedServiceId` = c.`id`
-        //     inner join `service_maintenances`d on c.`smId` = d.`id`
-        //     inner join `users`b on b.`id` = c.`userId`
-        //     where d.serviceId = 2'
-        // );
-
         $data = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 2)
+        ->orderBy('transactions.id','DESC')
         ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 
                 DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
                 'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
                 'availed_services.userId', 'service_maintenances.complainType')
-        ->get();
+        ->paginate(5);
    
-        return view('complaints.index', compact('data'));
+        return view('complaints.index', compact('data'))
+        ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     public function pdfViewComplaint($transId, $userId) 
@@ -282,8 +274,8 @@ class ComplaintsController extends Controller
         $request->validate([
             'complainType' => 'required', 'integer',
             'complainDetails' => 'required', 'string',
-            // 'respondents' => 'required', 'string',
-            // 'respondentsAdd' => 'required', 'string',
+            'respondents' => 'regex:/^[\p{L}\s-]+$/','required', 'string',
+            'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
         ]);
         

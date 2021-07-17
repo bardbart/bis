@@ -48,7 +48,7 @@
                             <li><a class="nav-link ms-3" href="{{ route('officials.index') }}">Barangay Officials</a></li>
                         
 
-                                <li class="nav-item ">
+                                <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle ms-3" href="#" id="navbarDarkDropdownMenuLink" role="button" aria-expanded="false">
                                       Services
                                     </a>
@@ -56,7 +56,9 @@
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
                                       <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
-                                      <li><a class="dropdown-item @if (Auth::user()->hasRole('User')) return disabled @endif" href="{{ route('services.index') }}">Service Management</a></li>
+                                      @if (Auth::user()->hasRole('Admin'))
+                                        <li><a class="dropdown-item" href="{{ route('services.index') }}">Service Management</a></li>
+                                      @endif
                                     </ul>
                                   </li>
 
@@ -107,13 +109,4 @@
             {{ $slot }}
         </div>
     </main>
-    
-
-    <footer class="footer-wrapper">
-        <div class="footer mt-auto py-3 bg-light">
-            <div class="container">
-                <span class="text-muted">Place sticky footer content here.</span>
-            </div>
-        </div>
-    </footer>
 </html>

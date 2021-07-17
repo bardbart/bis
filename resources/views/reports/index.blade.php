@@ -1,6 +1,6 @@
 
 <x-layout>
-    
+  @section('title', 'Reports')
     <x-section name="scripts">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

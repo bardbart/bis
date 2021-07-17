@@ -1,4 +1,5 @@
 <x-layout>
+    @section('title', 'Documents')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -8,9 +9,9 @@
     </div>
 
     @if ($message = Session::get('success'))
-    <div class="alert alert-success">
-      <p>{{ $message }}</p>
-    </div>
+        <div class="alert alert-success">
+        <p>{{ $message }}</p>
+        </div>
     @endif
     <table class="table table-bordered" >
         <thead class="table-dark">
@@ -27,7 +28,7 @@
         </thead>
         @foreach ($data as $trans)
             <tr>
-                <td>{{ $trans->id }}</td>
+                <td>{{ ++$i }}</td>
                 <td>{{ $trans->name}}</td>
                 <td>{{ $trans->email }}</td>
                 <td>{{ $trans->docType }}</td>
@@ -65,9 +66,10 @@
               </div>
         @endforeach
     </table>
+    {{ $data->links('pagination::bootstrap-4') }}
     <p class="text-center text-primary"><small>By Team Bard</small></p>
+    
 </x-layout>
-
 
 
 

@@ -54,25 +54,30 @@ class ServicesController extends Controller
     {
         $request->validate([
             'serviceType' => 'required','integer',
-            'serviceName' => 'required'
+            'serviceName' => 'required','regex:/^[\p{L}\s-]+$/',
         ]);
 
-        if($request->input('serviceType') == 1)
+        if($request->serviceType == 1)
         {
             ServiceMaintenances::create([
-                'serviceId' => $request->input('serviceType'),
-                'docType' => $request->input('serviceName')
+                'serviceId' => $request->serviceType,
+                'docType' => $request->serviceName
             ]);
         }
         else
         {
             ServiceMaintenances::create([
-                'serviceId' => $request->input('serviceType'),
-                'complainType' => $request->input('serviceName')
+                'serviceId' => $request->serviceType,
+                'complainType' => $request->serviceName
             ]);
         }
 
-        return view('services.index')->with('success', 'Service added!');
+        // ServiceMaintenances::create([
+        //     'serviceId' => $request->serviceType,
+        //     'docType' => $request->serviceName
+        // ]);
+
+        return redirect('/services')->with('success', 'Service added!');
     }
 
     /**

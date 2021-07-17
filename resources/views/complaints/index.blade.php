@@ -1,4 +1,5 @@
 <x-layout>
+  @section('title', 'Complaints')
   <div class="row">
       <div class="col-lg-12 margin-tb">
           <div class="pull-left">
@@ -12,7 +13,6 @@
     <p>{{ $message }}</p>
   </div>
   @endif
-
   <table class="table table-bordered" >
       <thead class="table-dark">
           <tr>
@@ -82,11 +82,7 @@
             </div>
             @endforeach
           </table>
-          
-
-
-  
-  
+  {{ $data->links('pagination::bootstrap-4') }}
   <p class="text-center text-primary"><small>By Team Bard</small></p>
 </x-layout>
 

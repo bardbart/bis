@@ -108,9 +108,9 @@ class BarangayOfficialsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'lastName' => 'required',
-            'firstName' => 'required',
-            'position' => 'required',
+            'lastName' => 'regex:/^[\p{L}\s-]+$/','required',
+            'firstName' => 'regex:/^[\p{L}\s-]+$/','required',
+            'position' => 'regex:/^[\p{L}\s-]+$/','required',
         ]);
 
         if($request->image)

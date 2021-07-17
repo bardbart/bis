@@ -42,18 +42,20 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
         ->join('users', 'users.id', '=', 'availed_services.userId')
         ->where('service_maintenances.serviceId', 1)
+        ->orderBy('transactions.id','DESC')
         ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 'users.email', 
-                    'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
-        ->get();
+        'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
+        ->paginate(5);
    
-        return view('documents.index', compact('data'));
+        return view('documents.index', compact('data'))
+        ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     public function pdfViewDocument($transId, $userId) 

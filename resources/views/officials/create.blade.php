@@ -1,4 +1,5 @@
 <x-layout>
+    @section('title', 'Register Official')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -18,9 +19,9 @@
                                 <input type="file"  class="form-control @error('image') is-invalid @enderror" name="image">
                                 
                                 @error('image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -32,9 +33,9 @@
                                 <input id="lastName" type="text" class="form-control @error('lastName') is-invalid @enderror" name="lastName" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
                                 
                                 @error('lastName')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -46,9 +47,9 @@
                                 <input id="firstName" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{ old('firstName') }}" required autocomplete="firstName" autofocus>
                                 
                                 @error('firstName')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -60,9 +61,9 @@
                                 <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus>
                                 
                                 @error('middleName')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                         </div>
@@ -70,13 +71,13 @@
                             <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
                             
                             <div class="col-md-6">
-                                <input id="position" type="text" class="form-control @error('position') is-invalid @enderror" name="position" value="{{ old('position') }}" autocomplete="position" autofocus>
-                                
-                                @error('position')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <select class="form-select" name="purpose" id="purpose">
+                                    <option>Chairman</option>
+                                    <option>Councilor</option>
+                                    <option>SK Chairman</option>
+                                    <option>Secretary</option>
+                                    <option>Treasurer</option>
+                                </select>
                             </div>
                         </div>
 

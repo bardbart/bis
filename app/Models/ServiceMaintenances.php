@@ -9,7 +9,7 @@ class ServiceMaintenances extends Model
 {
     use HasFactory;
 
-    protected $fillables = [
+    protected $fillable = [
         'serviceId',
         'docType',
         'complainType'

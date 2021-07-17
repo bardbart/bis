@@ -1,4 +1,5 @@
 <x-layout>
+    @section('title', 'File Blotter')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -81,7 +82,7 @@
                                     <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Details') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <textarea class="form-control" name="blotterDetails" id="blotterDetails" cols="30" rows="10" placeholder="Enter details here..."></textarea>
+                                        <textarea class="form-control" name="blotterDetails" id="blotterDetails" cols="30" rows="10" placeholder="Enter details here..." required></textarea>
                                     </div>
                                 </div>
 
@@ -93,7 +94,7 @@
                                 
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4 ">
-                                        <button  type="submit" class="btn btn-primary" >
+                                        <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
                                             {{ __('Submit') }}
                                         </button>
                                     </div>
