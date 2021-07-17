@@ -15,6 +15,28 @@ use PDF;
 
 class DocumentsController extends Controller
 {
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+        // $this->middleware('permission:barangay-official-list|barangay-official-create|barangay-official-edit|barangay-official-delete', ['only' => ['index','store']]);
+        // $this->middleware('permission:barangay-official-create', ['only' => ['create','store']]);
+        // $this->middleware('permission:barangay-official-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-module-request-document', ['only' => ['create','store']]);
+        $this->middleware('permission:module-requested-documents',['only' => 'index']);
+
+        // $this->middleware('permission:documents-show-ID', ['only' => ['create','store']]);
+        $this->middleware('permission:documents-process',['only' => 'process']);
+        $this->middleware('permission:documents-view', ['only' => 'pdfViewDocument']);
+        $this->middleware('permission:documents-save-PDF',['only' => 'pdfSaveDocument']);
+
+
+
+        // $this->middleware();
+    }
     /**
      * Display a listing of the resource.
      *

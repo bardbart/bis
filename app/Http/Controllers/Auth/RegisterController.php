@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Contracts\Role;
@@ -97,15 +98,7 @@ class RegisterController extends Controller
 
         $user->assignRole('User');
 
-        $user->syncPermissions([
-            'module-services',
-            'module-barangay-officials',
-            'document-request',
-            'complaint-file',
-            'blotter-file',
-            'barangay-official-list'
-        ]);
-
+        $user->syncPermissions(DB::table('permissions')->where('name', 'like', '%user%')->pluck('name'));
 
         return $user;
 

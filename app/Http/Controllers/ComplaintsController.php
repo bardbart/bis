@@ -14,6 +14,30 @@ use PDF;
 
 class ComplaintsController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    function __construct()
+    {
+
+        $this->middleware('permission:user-module-file-complaint', ['only' => ['create','store']]);
+        $this->middleware('permission:module-filed-complaints', ['only' => 'index']);
+        $this->middleware('permission:complaint-view-complaint-form', ['only' => 'pdfViewComplaint']);
+        $this->middleware('permission:complaint-save-complaint-form', ['only' => 'pdfSaveComplaint']);
+        
+        // $this->middleware('permission:complaint-show-details', ['only' => 'index']);
+        $this->middleware('permission:complaint-settle', ['only' => 'settle']);
+        $this->middleware('permission:complaint-view-settle-form', ['only' => 'pdfViewSettle']);
+        $this->middleware('permission:complaint-save-settle-form', ['only' => 'pdfSaveSettle']);
+
+        $this->middleware('permission:complaint-escalate', ['only' => 'escalate']);
+        $this->middleware('permission:complaint-view-escalation-form', ['only' => 'pdfViewEscalate']);
+        $this->middleware('permission:complaint-save-escalation-form', ['only' => 'pdfSaveEscalate']);
+        
+    }
     /**
      * Display a listing of the resource.
      *

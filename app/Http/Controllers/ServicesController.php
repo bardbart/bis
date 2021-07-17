@@ -14,6 +14,19 @@ class ServicesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+
+        // $this->middleware('permission:user-module-file-blotter', ['only' => ['create','store']]);
+        $this->middleware('permission:module-service-management',['only' => 'index']);
+        
+
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $services = ServiceMaintenances::all()->where('serviceId', '!=', 3);

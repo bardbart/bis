@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div class="card">
     
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('Create Officials') }}</div>
+                    <div class="card-header" style="background-color: gray; color:white;">{{ __('Create Service') }}</div>
         
                         <div class="card-body">
     

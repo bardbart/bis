@@ -15,49 +15,56 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         $permissions = [
-
-            'module-households',
-            'module-services',
-            'module-service-maintenances',
-            'module-transactions',
-            'module-barangay-officials',
-
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
- 
-            'household-list',
-            'household-create',
-            'household-edit',
-            'household-delete',
- 
-            'document-request-list',
-            'document-request',
-            'document-type-create',
-            'document-delete',
-            'document-edit',
- 
-            'complaint-list',
-            'complaint-type-create',
-            'complaint-edit',
-            'complaint-delete',
-            'complaint-file',
- 
-            'blotter-list',
-            'blotter-edit',
-            'blotter-delete',
-            'blotter-file',
- 
-            'barangay-official-list',
+            //admin only
+            'user-barangay-official-list',
             'barangay-official-create',
             'barangay-official-edit',
             'barangay-official-delete',
  
-            'report-list',
-            'report-print'
             
-         ];
+            'documents-show-ID',
+            'documents-process',
+            'documents-view',
+            'documents-save-PDF',
+            
+            'complaint-show-details',
+            'complaint-settle',
+            'complaint-view-settle-form',
+            'complaint-save-settle-form',
+            'complaint-escalate',
+            'complaint-view-complaint-form',
+            'complaint-save-complaint-form',
+            'complaint-view-escalation-form',
+            'complaint-save-escalation-form',
+            
+            'blotter-note',
+            'blotter-show',
+            
+            'usrmngmnt-show',
+            'usrmngmnt-edit',
+            'usrmngmnt-delete',
+
+            //Modules/pages
+
+            'user-module-request-document',
+            'user-module-file-complaint',
+            'user-module-file-blotter',
+
+            'module-service-management',
+            
+            'module-requested-documents',
+            'module-filed-complaints',
+            'module-filed-blotters',
+            
+            'module-usrmngmnt',
+
+            'module-reports',
+            
+
+            
+            
+
+        ];
 
          foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

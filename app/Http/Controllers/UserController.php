@@ -14,10 +14,18 @@ use Spatie\Permission\Models\Permission;
 class UserController extends Controller
 {
 
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:module-usrmngmnt', ['only' => ['index']]);
+        $this->middleware('permission:usrmngmnt-show', ['only' => ['show']]);
+        $this->middleware('permission:usrmngmnt-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:usrmngmnt-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -143,7 +151,26 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->assignRole($request->input('roles'));
 
+        // dd($request->input('roles'));
+        // if($request->input('roles')){
+            
+        //     if($request->input('roles') == 'Admin'){
+        //         // $user->syncPermissions(Permission::pluck('name'));
+        //         dd(Permission::pluck('name'));
+        //     }
+        //     else if($request->input('roles')== 'User'){
+        //         // $user->syncPermissions(DB::table('permissions')->where('name', 'like', '%user%')->pluck('name'));
+        //         dd(DB::table('permissions')->where('name', 'like', '%user%')->pluck('name'));
+        //     }
+        // }
 
+
+  
+        // $permissions = DB::table('permissions')->where('name', 'like', '%user%')->pluck('name');
+        // dd($permissions);
+
+        // ->where('name','LIKE','%barangay%')
+        
         // dd($request->input('permission'));
         // exit();
 
