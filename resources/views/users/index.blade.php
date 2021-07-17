@@ -57,14 +57,14 @@
             <td>
             {{-- <a href="{{ route('users.show',$user->id) }}" ><i class="fas fa-eye text-success  fa-lg" ></i></a> --}}
 
-            <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
+            {{-- <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
             data-attr="{{ route('users.show', $user->id) }}" title="show">
             <i class="fas fa-eye fa-lg" style="color: #ee4bd3"></i>
-            </a>
+            </a> --}}
 
-            <a data-toggle="modal" id="largeButton" data-target="#largeModal"
+            <a class="btn btn-link" data-toggle="modal" id="largeButton" data-target="#largeModal"
             data-attr="{{ route('users.edit', $user->id) }}" title="edit">
-            <i class="fas fa-user-cog fa-lg" style="color: rgb(37, 186, 255)"></i>
+            <i class="fas fa-edit fa-lg"></i>
             </a>
             {{-- <a href="{{ route('users.edit', $user->id) }}"><i class="fas fa-user-tag fa-lg" style="color: orange"></i></a> --}}
             {{-- <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-edit fa-lg"></i></a> --}}
