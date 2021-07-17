@@ -16,7 +16,7 @@ class BarangayOfficialsController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:user-barangay-official-list|barangay-official-create|barangay-official-edit|barangay-official-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:user-barangay-official-list', ['only' => ['index']]);
         $this->middleware('permission:barangay-official-create', ['only' => ['create','store']]);
         $this->middleware('permission:barangay-official-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:barangay-official-delete', ['only' => ['destroy']]);
@@ -107,6 +107,8 @@ class BarangayOfficialsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->input());
+
         $request->validate([
             'lastName' => 'required','regex:/^[\p{L}\s-]+$/',
             'firstName' => 'required','regex:/^[\p{L}\s-]+$/',
@@ -118,7 +120,7 @@ class BarangayOfficialsController extends Controller
             $newImageName = time() . '-' . $request->lastName . ',' . $request->firstName . '.' . $request->middleName . $request->image->extension() ;   
             $request->image->move(public_path('images/officials'), $newImageName);
             
-            $car = BarangayOfficials::where('id',$id)->update([
+            BarangayOfficials::where('id',$id)->update([
                 'lastName' => $request->input('lastName'),
                 'firstName' => $request->input('firstName'),
                 'middleName' => $request->input('middleName'),
@@ -127,13 +129,13 @@ class BarangayOfficialsController extends Controller
         } 
         else 
         {
-            $car = BarangayOfficials::where('id',$id)->update([
+            BarangayOfficials::where('id',$id)->update([
                 'lastName' => $request->input('lastName'),
                 'firstName' => $request->input('firstName'),
                 'middleName' => $request->input('middleName'),
             ]);
         }
-
+        
         return redirect('/officials')->with('success','Official updated successfully');;
     }
 
