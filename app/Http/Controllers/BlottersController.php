@@ -19,7 +19,6 @@ class BlottersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
     function __construct()
     {
 
@@ -36,10 +35,7 @@ class BlottersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-=======
     public function index(Request $request)
->>>>>>> e7a1f1b2b9bdd88a2c1ffa464bc3e784d3758e20
     {
         $data = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
