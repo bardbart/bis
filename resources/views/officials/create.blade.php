@@ -71,7 +71,7 @@
                             <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position') }}</label>
                             
                             <div class="col-md-6">
-                                <select class="form-select" name="purpose" id="purpose">
+                                <select class="form-select" name="position" id="position">
                                     <option>Chairman</option>
                                     <option>Councilor</option>
                                     <option>SK Chairman</option>

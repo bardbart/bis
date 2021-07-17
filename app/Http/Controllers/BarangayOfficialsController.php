@@ -72,7 +72,7 @@ class BarangayOfficialsController extends Controller
             // 'user_id' => auth()->user()->id
 
         ]);
-        return redirect('/officials');
+        return redirect('/officials')->with('success', 'Official added!');
     }
 
     /**
@@ -108,9 +108,9 @@ class BarangayOfficialsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'lastName' => 'regex:/^[\p{L}\s-]+$/','required',
-            'firstName' => 'regex:/^[\p{L}\s-]+$/','required',
-            'position' => 'regex:/^[\p{L}\s-]+$/','required',
+            'lastName' => 'required','regex:/^[\p{L}\s-]+$/',
+            'firstName' => 'required','regex:/^[\p{L}\s-]+$/',
+            'image' => 'mimes:jpg,png,jpeg|max:5048',
         ]);
 
         if($request->image)
@@ -122,7 +122,6 @@ class BarangayOfficialsController extends Controller
                 'lastName' => $request->input('lastName'),
                 'firstName' => $request->input('firstName'),
                 'middleName' => $request->input('middleName'),
-                'position' => $request->input('position'),
                 'imagePath' => $newImageName
             ]);
         } 
@@ -132,7 +131,6 @@ class BarangayOfficialsController extends Controller
                 'lastName' => $request->input('lastName'),
                 'firstName' => $request->input('firstName'),
                 'middleName' => $request->input('middleName'),
-                'position' => $request->input('position'),
             ]);
         }
 
