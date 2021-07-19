@@ -18,6 +18,28 @@
             <i class="fas fa-plus-circle" ></i>
            </a>
         </div> --}}
+        <div class="mx-auto float-end">
+            <div class="">
+                <form action="{{ route('users.index') }}" method="GET" role="search">
+
+                    <div class="input-group">
+                        <span class="input-group-btn mr-5 mt-1">
+                            <button class="btn btn-info" type="submit" title="Search user">
+                                <span class="fas fa-search"></span>
+                            </button>
+                        </span>
+                        <input type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
+                        <a href="{{ route('users.index') }}" class=" mt-1">
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                    <span class="fas fa-sync-alt"></span>
+                                </button>
+                            </span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -90,7 +112,7 @@
             <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display:inline">
                     @csrf
                     @method('delete')
-                    <button  class="btn btn-link" type="submit"><i class="fas fa-trash-alt text-danger fa-lg" ></i></button>
+                    <button  class="btn btn-link" onclick="return confirm('Are you sure you want to delete this user?')" type="submit"><i class="fas fa-trash-alt text-danger fa-lg" ></i></button>
                 </form>
 
                 {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
@@ -111,9 +133,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="largeBody">
             <div>
@@ -131,9 +151,7 @@ aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="mediumBody">
             <div>

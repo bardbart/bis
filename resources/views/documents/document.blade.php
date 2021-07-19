@@ -50,16 +50,17 @@
 	}
 </style>
 <body>
-	{{-- {{ $qr= "Issued: 2021-07-14 
-			 Issued by: Jon Jeremiah Bartolome
-			 Jerry Jones, Barangay Chairman" }} --}}
+	
 	@foreach ($td as $trans_data)
 		<div class="header" align="center">
-			<p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 150px; width: auto;"></p>
-			<p><img id="qr-code" src="data:image/png;base64,{!! base64_encode(QrCode::format('png')->size(150)->generate($trans_data->id)) !!}"></p>	
+			<p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
+			<p><img id="qr-code" 
+				src="data:image/png;base64,{!! base64_encode(QrCode::format('png')
+				->size(100)
+				->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>	
 			<p>Republic of the Philippines <br>
 			Province of Metro Manila <br>
-			Municipality of Taguig <br>
+			City of Taguig <br>
 			<b>Barangay (barangay)</b></p>
 		</div>
 
@@ -95,7 +96,7 @@
 				<br><br>
 				This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a {{ $trans_data->purpose }} requirement.
 				<br><br>
-				Issued on this date {{ $trans_data->date }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
+				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
 				</p>
 			</div>
 		@elseif ($trans_data->docType = "Clearance")
@@ -107,7 +108,7 @@
 				<br><br>
 				This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a <b><u>{{ $trans_data->purpose }}</u></b> requirement.
 				<br><br>
-				Issued on this date {{ $trans_data->date }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
+				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
 				</p>
 			</div>
 		@endif

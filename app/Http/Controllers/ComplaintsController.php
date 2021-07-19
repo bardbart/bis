@@ -22,7 +22,7 @@ class ComplaintsController extends Controller
      */
     function __construct()
     {
-
+        $this->middleware(['auth','verified']);
         $this->middleware('permission:user-module-file-complaint', ['only' => ['create','store']]);
         $this->middleware('permission:module-filed-complaints', ['only' => 'index']);
         $this->middleware('permission:complaint-view-complaint-form', ['only' => 'pdfViewComplaint']);
@@ -45,18 +45,31 @@ class ComplaintsController extends Controller
      */
     public function index(Request $request)
     {
-        $data = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->orderBy('transactions.id','DESC')
-        ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
-                'availed_services.userId', 'service_maintenances.complainType')
-        ->paginate(5);
-   
+        if($request->input('term')){
+            $data = DB::table('transactions')
+            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            ->join('users', 'users.id', '=', 'availed_services.userId')
+            ->where('service_maintenances.serviceId', 2)
+            ->where('users.lastName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
+            ->paginate(5);
+
+        }else if(!$request->input('term')){
+            $data = DB::table('transactions')
+            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            ->join('users', 'users.id', '=', 'availed_services.userId')
+            ->where('service_maintenances.serviceId', 2)
+            ->orderBy('transactions.id','DESC')
+            ->select('transactions.id', 'users.firstName', 'users.lastName', 
+                    'users.houseNo', 'users.street', 'users.city', 'users.province', 
+                    'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
+                    'availed_services.userId', 'service_maintenances.complainType')
+            ->paginate(5);
+        }
+        
         return view('complaints.index', compact('data'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -274,7 +287,7 @@ class ComplaintsController extends Controller
         $request->validate([
             'complainType' => 'required', 'integer',
             'complainDetails' => 'required', 'string',
-            'respondents' => 'required','regex:/^[\p{L}\s-]+$/', 'string',
+            'respondents' => 'required','regex:/^[a-zA-Z\s]/', 'string',
             'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
         ]);

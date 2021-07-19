@@ -44,10 +44,13 @@
     @foreach ($td as $trans_data )
         <div class="header" align="center">
             <p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
-            <p><img id="qr-code" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($trans_data->id)) !!}"></p>
+            <p><img id="qr-code" 
+                src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                ->size(100)
+                ->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>
             <p>Republic of the Philippines <br>
             Province of Metro Manila <br>
-            Municipality of Taguig <br>
+            City of Taguig <br>
             Barangay (barangay) <br>
             OFFICE OF THE LUPONG TAGAPAMAYAPA</p>
         </div>
@@ -74,7 +77,7 @@
             <p id="name"><u>{{ $data['firstName'] }} {{ $data['lastName'] }}</u></p>
             <p>Respondent/s</p>
             <p id="name"><u>{{ $trans_data->respondents }}</u></p>
-            <p>Recieved and filed this <b>{{ $trans_data->date }}</b></p><br>
+            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b></p><br>
             <p><b>ATTESTATION</b></p>
             <p>I hereby certify that the following amicable settlement was entered into by the parties freely and voluntarily, after I had explained to them the nature and consequence of such settlement</p>
             @foreach ($officials as $chairman)

@@ -51,6 +51,7 @@ Route::get('generate-escalate-pdf/{transId}/{userId}',[ComplaintsController::cla
 
 //Processing of Document
 Route::get('documents/process/{transId}/{userId}', [DocumentsController::class,'process']);
+Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'paid']);
 
 //Processing of Complaint
 Route::get('complaints/settle/{transId}/{userId}', [ComplaintsController::class,'settle']);

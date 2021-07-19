@@ -13,10 +13,32 @@
         <p>{{ $message }}</p>
         </div>
     @endif
+    <div class="mx-auto float-end">
+      <div class="">
+            <form action="{{ route('blotters.index') }}" method="GET" role="search">
+
+                <div class="input-group">
+                    <span class="input-group-btn mr-5 mt-1">
+                        <button class="btn btn-info me-3" type="submit" title="Search user">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control mr-2" size="30" name="term" placeholder="Search user" id="term">
+                    <a href="{{ route('blotters.index') }}" class=" mt-1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger ms-3" type="button" title="Refresh page">
+                                <span class="fas fa-sync-alt"></span>
+                            </button>
+                        </span>
+                    </a>
+                </div>
+            </form>
+        </div>
+      </div>
     <table class="table table-bordered" >
         <thead class="table-dark">
             <tr>
-                <th>Transaction No.</th>
+                <th>No.</th>
                 <th>Reporter</th>
                 <th>Reporter's Address</th>
                 <th>Blotter Details</th>
@@ -26,9 +48,9 @@
         </thead>
         @foreach ($data as $blot)
             <tr>
-                <td>{{ $blot->id }}</td>
-                <td>{{ $blot->name }}</td>
-                <td>{{ $blot->address }}</td>
+                <td>{{ ++$i }}</td>
+                <td>{{ $blot->firstName . ' ' . $blot->lastName }}</td>
+                <td>{{ $blot->houseNo . ' ' . $blot->street . ' ' . $blot->city . ' ' . $blot->province }}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $blot->id }}">Show</button>
                 </td>

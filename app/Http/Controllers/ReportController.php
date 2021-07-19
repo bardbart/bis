@@ -18,6 +18,7 @@ class ReportController extends Controller
      */
     function __construct()
     {
+        $this->middleware(['auth','verified']);
         $this->middleware('permission:module-reports',['only' => 'index']);
     }
     /**

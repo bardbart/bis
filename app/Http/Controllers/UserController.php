@@ -21,6 +21,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        $this->middleware(['auth','verified']);
         $this->middleware('permission:module-usrmngmnt', ['only' => ['index']]);
         $this->middleware('permission:usrmngmnt-show', ['only' => ['show']]);
         $this->middleware('permission:usrmngmnt-edit', ['only' => ['edit','update']]);
@@ -33,8 +34,18 @@ class UserController extends Controller
      */
 
     public function index(Request $request)
-    {
-        $data = User::orderBy('id','DESC')->paginate(5);
+    {   
+        if($request->input('term')){
+            $data = User::where('firstName', 'Like', '%' . request('term') . '%')
+            ->orWhere('lastName', 'Like', '%' . request('term') . '%')
+            ->orWhere('middleName', 'Like', '%' . request('term') . '%')
+            ->paginate(5);
+
+        }else if(!$request->input('term')){
+            $data = User::orderBy('id','DESC')->paginate(5);
+        }
+
+        
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }

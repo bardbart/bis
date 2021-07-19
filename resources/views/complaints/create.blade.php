@@ -53,7 +53,15 @@
                                         <input id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
                                     </div>
                                 </div>
-            
+
+                                <div class="form-group row">
+                                    <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street') }}</label>
+                                    
+                                    <div class="col-md-6">
+                                        <input id="street" type="text" class="form-control" name="street" value="{{ Auth::user()->street }}" autofocus>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                     

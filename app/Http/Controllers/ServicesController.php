@@ -18,6 +18,7 @@ class ServicesController extends Controller
     {
 
         // $this->middleware('permission:user-module-file-blotter', ['only' => ['create','store']]);
+        $this->middleware(['auth','verified']);
         $this->middleware('permission:module-service-management',['only' => 'index']);
         
 
@@ -54,7 +55,7 @@ class ServicesController extends Controller
     {
         $request->validate([
             'serviceType' => 'required','integer',
-            'serviceName' => 'required','regex:/^[\p{L}\s-]+$/',
+            'serviceName' => 'required','regex:/^[a-zA-Z\s]/',
         ]);
 
         if($request->serviceType == 1)

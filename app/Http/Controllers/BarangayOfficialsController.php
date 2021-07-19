@@ -5,6 +5,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\BarangayOfficials;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BarangayOfficialsController extends Controller
 {
@@ -16,6 +17,7 @@ class BarangayOfficialsController extends Controller
      */
     function __construct()
     {
+        $this->middleware(['auth','verified']);
         $this->middleware('permission:user-barangay-official-list', ['only' => ['index']]);
         $this->middleware('permission:barangay-official-create', ['only' => ['create','store']]);
         $this->middleware('permission:barangay-official-edit', ['only' => ['edit','update']]);
@@ -29,7 +31,22 @@ class BarangayOfficialsController extends Controller
     public function index()
     {
         $officials = BarangayOfficials::all();
-        return view('officials.index', ['officials' => $officials]);
+        $officials = DB::table('barangay_officials')
+        ->whereIn('position', array("Chairman", "Councilor", "SK Chairman", "Secretary", "Treasurer"))
+        ->orderBy(DB::raw(
+            'CASE position
+             WHEN "Chairman" THEN 1
+             WHEN "Councilor" THEN 2
+             WHEN "SK Chairman" THEN 3
+             WHEN "Secretary" THEN 4
+             WHEN "Treasurer" THEN 5
+             END'
+        ))
+        ->get();
+
+        return view('officials.index', [
+            'officials' => $officials
+        ]);
     }
 
     /**
@@ -39,7 +56,18 @@ class BarangayOfficialsController extends Controller
      */
     public function create()
     {
-        return view('officials.create');
+
+        $officials = [
+            'cm' => BarangayOfficials::where('position','=','Chairman')->count(),
+            'coun' => BarangayOfficials::where('position','=','Councilor')->count(),
+            'sk' => BarangayOfficials::where('position','=','SK Chairman')->count(),
+            'sec' => BarangayOfficials::where('position','=','Secretary')->count(),
+            'tre' => BarangayOfficials::where('position','=','Treasurer')->count()
+        ];
+  
+        // dd();
+
+        return view('officials.create',compact('officials'));
     }
 
     /**
@@ -110,8 +138,9 @@ class BarangayOfficialsController extends Controller
         // dd($request->input());
 
         $request->validate([
-            'lastName' => 'required','regex:/^[\p{L}\s-]+$/',
-            'firstName' => 'required','regex:/^[\p{L}\s-]+$/',
+            'lastName' => 'required','regex:/^[a-zA-Z\s]/',
+            'firstName' => 'required','regex:/^[a-zA-Z\s]/',
+            'middleName' => ['nullable','regex:/^[a-zA-Z\s]/', 'string', 'max:255'],
             'image' => 'mimes:jpg,png,jpeg|max:5048',
         ]);
 

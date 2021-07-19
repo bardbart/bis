@@ -38,7 +38,7 @@
                             </div>
                             
                             <div class="form-group row">
-                                <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name *') }}</label>
+                                <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                 
                                 <div class="col-md-6">
                                     <input id="middleName" type="text" class="form-control @error('middleName') is-invalid @enderror" name="middleName" value="{{ old('middleName') }}" autocomplete="middleName" autofocus>

@@ -13,10 +13,32 @@
     <p>{{ $message }}</p>
   </div>
   @endif
+  <div class="mx-auto float-end">
+      <div class="">
+            <form action="{{ route('complaints.index') }}" method="GET" role="search">
+
+                <div class="input-group">
+                    <span class="input-group-btn mr-5 mt-1">
+                        <button class="btn btn-info me-3" type="submit" title="Search user">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control mr-4" size="30" name="term" placeholder="Search user" id="term">
+                    <a href="{{ route('complaints.index') }}" class=" mt-1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger ms-3" type="button" title="Refresh page">
+                                <span class="fas fa-sync-alt"></span>
+                            </button>
+                        </span>
+                    </a>
+                </div>
+            </form>
+        </div>
+      </div>
   <table class="table table-bordered" >
       <thead class="table-dark">
           <tr>
-          <th>Transaction No.</th>
+          <th>No.</th>
           <th>Complainant</th>
           <th>Complainant's Address</th>
           <th>Respondent</th>
@@ -28,9 +50,9 @@
       </thead>
       @foreach ($data as $comp)
           <tr>
-              <td>{{ $comp->id }}</td>
-              <td>{{ $comp->name }}</td>
-              <td>{{ $comp->address }}</td>
+              <td>{{ ++$i }}</td>
+              <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
+              <td>{{ $comp->houseNo . ' ' . $comp->street . ' ' . $comp->city . ' ' . $comp->province }}</td>
               <td>{{ $comp->respondents }}</td>
               <td>{{ $comp->respondentsAdd }}</td>
               <td>
@@ -43,13 +65,13 @@
                   @if ($comp->status == "Unsettled")
                     <a class="btn btn-success" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
                     <a class="btn btn-warning" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                    <a class="btn btn-danger" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                    <a class="btn btn-secondary" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
                     <a class="btn btn-primary" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
                   @elseif ($comp->status == "Settled") 
-                    <a class="btn btn-danger" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
+                    <a class="btn btn-secondary" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
                     <a class="btn btn-primary" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
                   @else
-                    <a class="btn btn-danger" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
+                    <a class="btn btn-secondary" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
                     <a class="btn btn-primary" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
                   @endif
                 </div>

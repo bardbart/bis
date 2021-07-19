@@ -44,10 +44,13 @@
     @foreach ($td as $trans_data )
         <div class="header" align="center">
             <p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
-            <p><img id="qr-code" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($trans_data->id)) !!}"></p>
+            <p><img id="qr-code" 
+                src="data:image/png;base64, {!! base64_encode(QrCode::format('png')
+                ->size(100)
+                ->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>
             <p>Republic of the Philippines <br>
             Province of Metro Manila <br>
-            Municipality of Taguig <br>
+            City of Taguig <br>
             Barangay (barangay) <br>
             OFFICE OF THE LUPONG TAGAPAMAYAPA</p>
         </div>
@@ -69,10 +72,10 @@
 
         <div class="footer">
             <br>
-            <p>Made this day <b>{{ $trans_data->date }}</b> </p> <br>
+            <p>Made this day <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b> </p> <br>
             <p id="name"><u>{{ $data['firstName'] }} {{ $data['lastName'] }}</u></p>
             <p>Complainant's Signature</p> <br>
-            <p>Recieved and filed this <b>{{ $trans_data->date }}</b></p> <br>
+            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b></p> <br>
             @foreach ($officials as $chairman)
                 @if($chairman->position == 'Chairman')
                     <p><u style="text-transform: uppercase">{{ $chairman->name }}</u><br>

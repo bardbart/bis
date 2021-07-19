@@ -72,11 +72,11 @@
                             
                             <div class="col-md-6">
                                 <select class="form-select" name="position" id="position">
-                                    <option>Chairman</option>
-                                    <option>Councilor</option>
-                                    <option>SK Chairman</option>
-                                    <option>Secretary</option>
-                                    <option>Treasurer</option>
+                                    <option @if($officials['cm'] == 1) return disabled @endif>Chairman</option>
+                                    <option @if($officials['coun'] == 7) return disabled @endif>Councilor</option>
+                                    <option @if($officials['sk'] == 1) return disabled @endif>SK Chairman</option>
+                                    <option @if($officials['sec'] == 1) return disabled @endif>Secretary</option>
+                                    <option @if($officials['tre'] == 1) return disabled @endif>Treasurer</option>
                                 </select>
                             </div>
                         </div>

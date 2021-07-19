@@ -1,5 +1,12 @@
 
 <x-layout>
+ 
+        <style>
+            .float-end:hover
+            {
+                color:rgb(179, 19, 19);
+            }
+        </style>
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -20,25 +27,27 @@
                 @endif
                 
                 {{-- <div style="border: 2px solid black"> --}}
-                    @foreach ( $officials as $official)
-                        <div style="display: flex; justify-content:space-between">
-                            <div>
-                                <div class="float-start" style="margin-right: 50px">
-                                    <img style="height: 288px !important; width: 288px !important;"src="{{ asset('images/officials/' . $official->imagePath) }}" alt="">
-                                </div>
-    
-                                <div class="float-end">
-                                    <h4 >
-                                        <a href="#">
-                                            {{ $official->firstName . ' ' . $official->middleName . ' ' . $official->lastName }}
-                                        </a>
-                                    </h4>
-                                    <span >
-                                        {{ $official->position }}
-                                    </span>
-                                </div>
-                                
+                    @foreach ($officials as $official)
+                    <div style="display: flex; justify-content:space-between">
+
+                        <div>
+                            <div class="float-start" style="margin-right: 50px">
+                                <img style="height: 200px !important; width: 200px !important;"src="{{ asset('images/officials/' . $official->imagePath) }}" alt="">
                             </div>
+
+                            <div class="float-end">
+                                <h4>
+                                    {{ $official->firstName . ' ' . $official->middleName . ' ' . $official->lastName }}
+                                </h4>
+                                <span >
+                                    {{ $official->position }}
+                                </span>
+                            </div>  
+                            
+                        </div>
+
+
+                        
                             
                             @if (Auth::user()->hasRole('Admin'))
                                 <div class="float-end"> 

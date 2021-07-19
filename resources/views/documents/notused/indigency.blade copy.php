@@ -72,7 +72,7 @@
 			<p><img id="qr-code" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($trans_data->id)) !!}"></p>	
 			<p>Republic of the Philippines <br>
 			Province of Metro Manila <br>
-			Municipality of Taguig <br>
+			City of Taguig <br>
 			<b>Barangay Central Bicutan</b></p>
 		</div>
 
