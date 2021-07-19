@@ -8,15 +8,18 @@
     <style>
         .container-1, .container-2, .container-3{
             margin: 0 auto;
-            border: 1px solid black;
-            width: 75%;
+            /* border: 1px solid black; */
+            width: 100%;
+            text-align: start;
+        }
+        .container-1{
             text-align: center;
         }
         .flex-box-container-1, .flex-box-container-2, .flex-box-container-3{
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             justify-content: space-around;
             padding: 10px;
         }
@@ -60,10 +63,10 @@
             @method('PUT')
 
             <div class="container-1">
-                <h2 for="role" >{{ __('Role') }}</h2>
+                <h3 class="text-center" for="role" >{{ __('Role') }}</h3>
                 <div class="flex-box-container-1">
                     <div>
-                        <select name="roles" multiple="multiple" class="custom-select custom-select-md mb-3">
+                        <select name="roles" multiple="multiple" class="form-select form-select-md mb-2">
                             @foreach ( $roles as $role )
                                 <option @if ($userRole[0] == $role) return selected @endif value="{{ $role }}">{{ $role }}</option>                                            
                             @endforeach
@@ -73,7 +76,7 @@
             </div>
 
             <div class="container-2">
-                <h2 for="permission" >{{ __('Permissions') }}</h2>
+                <h3 class="text-center" for="permission" >{{ __('Permissions') }}</h3>
                 <div class="flex-box-container-2">
                     <div>
                         @foreach ( $permission as $permission )
