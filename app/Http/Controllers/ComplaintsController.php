@@ -274,7 +274,7 @@ class ComplaintsController extends Controller
         $request->validate([
             'complainType' => 'required', 'integer',
             'complainDetails' => 'required', 'string',
-            'respondents' => 'regex:/^[\p{L}\s-]+$/','required', 'string',
+            'respondents' => 'required','regex:/^[\p{L}\s-]+$/', 'string',
             'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
         ]);

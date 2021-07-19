@@ -50,30 +50,17 @@
 	}
 </style>
 <body>
-	{{-- @foreach ($brgy as $officials)
-		<table>
-			<th>Name</th>
-			<th>Position</th>
-			<tr>
-				<td>{{ $officials->lastName.', '.$officials->firstName }}</td>
-				<!-- @foreach ($brgy->officialsPositions as $position)
-					<td>{{ $position->positionName }}</td>
-				@endforeach -->
-			</tr>
-		</table>
-		
-	@endforeach --}}
 	{{-- {{ $qr= "Issued: 2021-07-14 
 			 Issued by: Jon Jeremiah Bartolome
 			 Jerry Jones, Barangay Chairman" }} --}}
 	@foreach ($td as $trans_data)
 		<div class="header" align="center">
-			<p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
-			<p><img id="qr-code" src="data:image/png;base64, {!! base64_encode(QrCode::format('png')->size(100)->generate($trans_data->id)) !!}"></p>	
+			<p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 150px; width: auto;"></p>
+			<p><img id="qr-code" src="data:image/png;base64,{!! base64_encode(QrCode::format('png')->size(150)->generate($trans_data->id)) !!}"></p>	
 			<p>Republic of the Philippines <br>
 			Province of Metro Manila <br>
 			Municipality of Taguig <br>
-			<b>Barangay Central Bicutan</b></p>
+			<b>Barangay (barangay)</b></p>
 		</div>
 
 		<div class="document-type" align="center">
@@ -91,7 +78,7 @@
 			@endforeach
 			<p><b>Barangay Councils</b><br>
 			@foreach ($officials as $councils)
-				@if($councils->position == 'Council')
+				@if($councils->position == 'Councilor')
 					<p>{{ $councils->name }}<br></p>	
 				@endif
 			{{-- <p>{{ $official->name }}<br>{{ $official->position }}</p> --}}
