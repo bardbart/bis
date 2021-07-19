@@ -188,8 +188,25 @@ class UserController extends Controller
         // if(empty($request->input('permission'))){
         //     $user->revokePermissionTo($permission);
         // }
-       
-        $user->syncPermissions($request->input('permission'));
+
+        // dd(count($request->input('permission')));
+
+        $permissionsLength = count($request->input('permission'));
+
+    //    dd($permissionsLength);
+        
+        if($request->input('permission') && $permissionsLength > 1){
+            for($i=1; $i < $permissionsLength; $i++)
+            {   
+                // dd($request->input('permission[$i]'));
+                $perm[] = $request->input("permission.$i");
+
+            }
+            $user->syncPermissions($perm);
+            // dd($perm);
+        }else if($permissionsLength === 1){
+            $user->revokePermissionTo(Permission::pluck('name')->toArray());
+        }
 
         // dd($role[0]);
 

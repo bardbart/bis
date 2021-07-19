@@ -15,7 +15,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <table class="table table-bordered" >
+    <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
                 <th>No.</th>
@@ -28,11 +28,11 @@
             <tr>
                 <td>{{ $service->id }}</td>
                 @if($service->serviceId == 1)
-                    <td>Document</td>
                     <td>{{ $service->docType }}</td>
+                    <td>Document</td>
                 @elseif($service->serviceId == 2)
-                    <td>Complaint</td> 
                     <td>{{ $service->complainType }}</td>
+                    <td>Complaint</td> 
                 @endif
             </tr>
         @endforeach

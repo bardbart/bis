@@ -20,7 +20,7 @@
                 <h1>Barangay Officials</h1>
                 @if (Auth::user()->hasRole('Admin'))
                     <div style="padding-bottom: 10px">
-                        <a class="@if (!Auth::user()->can('barangay-official-create'))
+                        <a class="@if (!Auth::user()->can('barangay-official-create') || $off === 11)
                             return btn disabled
                         @endif" href="{{ route('officials.create') }}">Add a new official &rarr;</a>
                     </div>
@@ -60,7 +60,7 @@
                                     <form action="{{ route('officials.destroy', $official->id) }}" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <button style="color:red" class="btn btn-link @if (!Auth::user()->can('barangay-official-delete'))
+                                        <button onclick="return confirm('Are you sure you want to delete this Official?')" style="color:red" class="btn btn-link @if (!Auth::user()->can('barangay-official-delete'))
                                             return disabled
                                         @endif" type="submit"> Delete &rarr;</button>
                                     </form>

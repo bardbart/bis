@@ -20,19 +20,21 @@
         </div> --}}
         <div class="mx-auto float-end">
             <div class="">
-                <form action="{{ route('users.index') }}" method="GET" role="search">
+                <form style="display: inline" action="{{ route('users.index') }}" method="GET" role="search">
 
                     <div class="input-group">
                         <span class="input-group-btn mr-5 mt-1">
-                            <button class="btn btn-info" type="submit" title="Search user">
-                                <span class="fas fa-search"></span>
+                            <button class="btn btn-info px-3 " type="button" title="Refresh page">
+                                <span class="fas fa-sync-alt"></span>
                             </button>
                         </span>
-                        <input type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
+                        <div class="form-outline">
+                            <input size="30" type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
+                        </div>
                         <a href="{{ route('users.index') }}" class=" mt-1">
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" title="Refresh page">
-                                    <span class="fas fa-sync-alt"></span>
+                                <button class="btn btn-danger px-3" type="submit" title="Search user">
+                                    <span class="fas fa-search"></span>
                                 </button>
                             </span>
                         </a>
@@ -45,9 +47,9 @@
 
 
 @if ($message = Session::get('success'))
-<div class="alert alert-success">
-  <p>{{ $message }}</p>
-</div>
+    <div class="alert alert-success">
+        <p>{{ $message }}</p>
+    </div>
 @endif
 
 
@@ -59,7 +61,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Roles</th>
-        <th width="400px">Action</th>
+        <th width="150px">Action</th>
         </tr>
     </thead> 
     <tbody>
@@ -88,6 +90,10 @@
             data-attr="{{ route('users.edit', $user->id) }}" title="edit">
             <i class="fas fa-edit fa-lg"></i>
             </a>
+            <!-- <a class="btn btn-link" href="{{ route('users.edit', $user->id) }}" ><i class="fas fa-edit fa-lg"></i></a> -->
+            
+            </a>
+            
             {{-- <a href="{{ route('users.edit', $user->id) }}"><i class="fas fa-user-tag fa-lg" style="color: orange"></i></a> --}}
             {{-- <a href="{{ route('users.edit',$user->id) }}"><i class="fas fa-edit fa-lg"></i></a> --}}
 
@@ -123,7 +129,7 @@
         @endforeach
     </tbody>
 </table>
-{{ $data->links('pagination::bootstrap-4') }}
+<div class="float-end">{{ $data->links('pagination::bootstrap-4') }}</div>
 <p class="text-center text-primary"><small>By Team Bard</small></p>
 
 

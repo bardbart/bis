@@ -135,7 +135,7 @@ class ComplaintsController extends Controller
         ];
 
         $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
-        return $pdf->download('ComplaintForm.pdf');
+        return $pdf->download($data['lastName'].'-'.'Complaint-Form.pdf');
     }
 
     public function pdfViewEscalate($transId, $userId)
@@ -198,7 +198,7 @@ class ComplaintsController extends Controller
         ];
 
         $pdf = PDF::loadView('complaints.escalate', compact('data', 'td', 'officials'));
-        return $pdf->download('EscalationForm.pdf');
+        return $pdf->download($data['lastName'].'-'.'Escalation-Form.pdf');
     }
 
     public function pdfViewSettle($transId, $userId)
@@ -261,7 +261,7 @@ class ComplaintsController extends Controller
         ];
 
         $pdf = PDF::loadView('complaints.settle', compact('data', 'td', 'officials'));
-        return $pdf->download('SettlementForm.pdf');
+        return $pdf->download($data['lastName'].'-'.'Settlement-Form.pdf');
     }
 
     /**
@@ -287,7 +287,7 @@ class ComplaintsController extends Controller
         $request->validate([
             'complainType' => 'required', 'integer',
             'complainDetails' => 'required', 'string',
-            'respondents' => 'required','regex:/^[a-zA-Z\s]/', 'string',
+            'respondents' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
             'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
         ]);

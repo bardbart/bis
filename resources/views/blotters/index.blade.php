@@ -86,7 +86,7 @@
             </div>
         @endforeach
     </table>
-    {{ $data->links('pagination::bootstrap-4') }}
+    <div class="float-end">{{ $data->links('pagination::bootstrap-4') }}</div>  
     <p class="text-center text-primary"><small>By Team Bard</small></p>
     
   </x-layout>

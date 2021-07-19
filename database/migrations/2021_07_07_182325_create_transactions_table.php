@@ -26,6 +26,7 @@ class CreateTransactionsTable extends Migration
             $table->string('barangayIdPath')->nullable();
             $table->string('status');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('availedServiceId')
                 ->references('id')
                 ->on('availed_services')

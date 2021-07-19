@@ -134,6 +134,8 @@ class DocumentsController extends Controller
                     'transactions.purpose', 'service_maintenances.docType')
         ->get();
 
+        $type = $td->pluck('docType');
+
         $data = [
             'lastName' => $users->lastName,
             'firstName' => $users->firstName,
@@ -145,7 +147,7 @@ class DocumentsController extends Controller
         ];
 
         $pdf = PDF::loadView('documents.document', compact('data', 'td', 'officials'));
-        return $pdf->download('Document.pdf');
+        return $pdf->download($data['lastName'].'-'.$type[0].'-'.'Document.pdf');
     }
 
     /**

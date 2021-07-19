@@ -5,10 +5,20 @@
         <p>{{ $message }}</p>
         </div>
     @endif
+    
     <div class="container">
-        
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="row">
+                    <div class="col-lg-12 margin-tb">
+                        <div class="float-start">
+                            <h2>Request Documents</h2>
+                        </div>
+                        <div class="float-end">
+                            <a class="btn btn-primary" href="{{ route('home') }}"> Back</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-header" style="background-color: gray; color: white">{{ __('Document Request Form') }}</div>
 
@@ -175,7 +185,7 @@
                             
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4 ">
-                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
+                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-success" >
                                         {{ __('Submit') }}
                                     </button>
                                 </div>

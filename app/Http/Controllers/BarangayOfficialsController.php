@@ -43,9 +43,10 @@ class BarangayOfficialsController extends Controller
              END'
         ))
         ->get();
-
+        $off = BarangayOfficials::all()->count();
         return view('officials.index', [
-            'officials' => $officials
+            'officials' => $officials,
+            'off' => $off
         ]);
     }
 
@@ -138,9 +139,9 @@ class BarangayOfficialsController extends Controller
         // dd($request->input());
 
         $request->validate([
-            'lastName' => 'required','regex:/^[a-zA-Z\s]/',
-            'firstName' => 'required','regex:/^[a-zA-Z\s]/',
-            'middleName' => ['nullable','regex:/^[a-zA-Z\s]/', 'string', 'max:255'],
+            'lastName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
             'image' => 'mimes:jpg,png,jpeg|max:5048',
         ]);
 

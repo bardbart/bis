@@ -79,6 +79,7 @@
                 <h3 class="text-center" for="permission" >{{ __('Permissions') }}</h3>
                 <div class="flex-box-container-2">
                     <div>
+                        <input name="permission[]" type="hidden" checked value="null">
                         @foreach ( $permission as $permission )
                             <label>
                                 <input @if(in_array($permission->name,$userPermissions)) return checked @endif value="{{$permission->name}}" name="permission[]" type="checkbox">

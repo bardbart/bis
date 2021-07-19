@@ -45,7 +45,7 @@
           <th>Respondent's Address</th>
           <th>Complaint Details</th>
           <th>Status</th>
-          <th width="400px">Action</th>
+          <th width="450px">Action</th>
           </tr>
       </thead>
       @foreach ($data as $comp)
@@ -63,16 +63,18 @@
                 <div style="display: flex; flex-wrap: wrap; justify-content:space-around;">
 
                   @if ($comp->status == "Unsettled")
-                    <a class="btn btn-success" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
-                    <a class="btn btn-warning" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                    <a class="btn btn-secondary" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
-                    <a class="btn btn-primary" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
+                    {{-- <div class="btn-group" role="group"> --}}
+                      <a class="btn-lg btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
+                      <a class="btn-lg btn-danger my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
+                      <a class="btn-lg btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
+                      <a class="btn-lg btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                    {{-- </div> --}}
                   @elseif ($comp->status == "Settled") 
-                    <a class="btn btn-secondary" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
-                    <a class="btn btn-primary" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
+                    <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
+                    <a class="btn btn-primary my-2" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
                   @else
-                    <a class="btn btn-secondary" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
-                    <a class="btn btn-primary" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
+                    <a class="btn btn-secondary my-2" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
+                    <a class="btn btn-primary my-2" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
                   @endif
                 </div>
                 
@@ -104,7 +106,7 @@
             </div>
             @endforeach
           </table>
-  {{ $data->links('pagination::bootstrap-4') }}
+        <div class="float-end">{{ $data->links('pagination::bootstrap-4') }}</div>
   <p class="text-center text-primary"><small>By Team Bard</small></p>
 </x-layout>
 

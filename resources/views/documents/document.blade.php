@@ -28,7 +28,7 @@
 	}
 	
 	.officers{
-		font-size:100%;
+		font-size:95%;
 		float: left;
 		/* border: 1px solid; */
 		margin: 0px 20px 0px 5px;
@@ -70,19 +70,36 @@
 		</div>
 
 		<div class="officers">
-			<p style="text-transform: uppercase"><b>Barangay Officials</b></p>
-			<p><b>Baranagay Chairman</b></p>
+			<p style="text-transform: uppercase; font-size: 110%"><b>Barangay Officials</b></p>
+			<p style="text-transform: uppercase"><b><u>Baranagay Chairman</u></b></p>
 			@foreach ($officials as $chairman)	
 				@if($chairman->position == 'Chairman')
 					<p>{{ $chairman->name }}</p>
 				@endif
 			@endforeach
-			<p><b>Barangay Councils</b><br>
+			<p style="text-transform: uppercase"><b><u>Barangay Councils</u></b><br>
 			@foreach ($officials as $councils)
 				@if($councils->position == 'Councilor')
 					<p>{{ $councils->name }}<br></p>	
 				@endif
-			{{-- <p>{{ $official->name }}<br>{{ $official->position }}</p> --}}
+			@endforeach
+			<p style="text-transform: uppercase"><b><u>Barangay SK Chairman</u></b></p>
+			@foreach ($officials as $sk)
+				@if($sk->position == 'SK Chairman')
+					<p>{{ $sk->name }}<br></p>	
+				@endif
+			@endforeach
+			<p style="text-transform: uppercase"><b><u>Barangay Secretary</u></b></p>
+			@foreach ($officials as $secretary)
+				@if($secretary->position == 'Secretary')
+					<p>{{ $secretary->name }}<br></p>	
+				@endif
+			@endforeach
+			<p style="text-transform: uppercase"><b><u>Barangay Treasurer</u></b></p>
+			@foreach ($officials as $treasurer)
+				@if($treasurer->position == 'Treasurer')
+					<p>{{ $treasurer->name }}<br></p>	
+				@endif
 			@endforeach
 		</div>	
 
