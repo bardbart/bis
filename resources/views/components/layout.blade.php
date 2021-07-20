@@ -27,7 +27,7 @@
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               
-                <img class="float-start" src="{{ asset('images/PUPLogo.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
+                <img class="float-start" src="{{ asset('images/logo-taguig.png') }}" alt="" width="96px" height="96px" class="d-inline-block align-text-top">
                 <a class="ms-3 navbar-brand" href="#">
                     
                     <h4>Barangay Online Report and Document Request</h4> <h6>Integrated with QR Code</h6>
