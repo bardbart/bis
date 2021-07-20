@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ProcessRequestedDocument;
 use Illuminate\Http\Request;
 use App\Models\Transaction;
 use App\Models\User;
@@ -238,7 +239,14 @@ class DocumentsController extends Controller
     public function process($transId, $userId)
     {
         $rtc = Transaction::where('id', $transId)->update(['status' => 'Ready to Claim']);
+
+        $email = User::where('id',$userId)->pluck('email')->all();
+        
+        event(new ProcessRequestedDocument($email));
+
         return redirect('documents')->with('success', 'Document ready to claim!');
+
+        
     }
 
     public function paid($transId, $userId)
