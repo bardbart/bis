@@ -51,7 +51,7 @@
             <p>Republic of the Philippines <br>
             Province of Metro Manila <br>
             City of Taguig <br>
-            Barangay (barangay) <br>
+            <b> Barangay Lower Bicutan</b> <br>
             OFFICE OF THE LUPONG TAGAPAMAYAPA</p>
         </div>
 

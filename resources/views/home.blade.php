@@ -5,7 +5,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Dashboard') }}</div>
-    
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -17,50 +16,104 @@
                                 <p>{{ $message }}</p>
                             </div>
                         @endif
-    
-                        {{ __('Welcome ' . Auth::user()->firstName . ' !') }}
-                    </div>
-                </div>
-                
-                @if(Auth::user()->hasRole('User'))
-                        <div class="card">
-                            <div class="card-body p-0">
-                                <div class="table-responsive mailbox-messages">
-                                    <table class="table table-hover" id="tableInbox">
+                        <h4>{{ __('Welcome '. Auth::user()->firstName .'!') }}</h4>
+
+                    @role('User')
+                        <hr>
+                        {{-- Collapse Buttons --}}
+                        <div class="d-flex justify-content-center">
+                            {{-- <button class="btn btn-outline-primary me-2">All Transactions</button> --}}
+                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#documents" role="button" aria-expanded="false" aria-controls="documents">Requested Documents</button>
+                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#complaints" role="button" aria-expanded="false" aria-controls="complaints">Complaints Filed</button>
+                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#blotters" role="button" aria-expanded="false" aria-controls="blotters">Blotters Filed</button>
+                        </div>
+                        <hr>
+                        <p><b>Results</b></p>
+                        {{-- Collapse Items --}}
+                        {{-- Documents Collapse --}}
+                        <div class="collapse" id="documents">
+                            <div class="card-header">All Documents</div>
+                            <div class="card card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Document Type</th>
+                                            <th>Purpose</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                        <tr style="cursor:pointer;" onclick="openMail(2009290001,'OPENING+OF+CLASSES+FOR+THE+1ST+SEMESTER%2C+SY+2020-2021','noreply%40sis','September+29%2C+2020')"  data-toggle="modal" data-target="#modal-msg">
-                                            <td class="mailbox-name"><a href="#">noreply@bis</a></td>
-                                            <td class="mailbox-subject">OPENING OF CLASSES FOR THE 1ST SEMESTER, SY 2020-2021<br/>  
-                                            </td>
-                                            <td class="mailbox-date">September 29, 2020</td>
+                                        @foreach ($documents as $docu)
+                                        <tr>
+                                            <td>{{ $docu->date }}</td>
+                                            <td>{{ $docu->docType }}</td>
+                                            <td>{{ $docu->purpose }}</td>
+                                            <td>{{ $docu->status }}</td>
                                         </tr>
-                                        <tr style="cursor:pointer;" onclick="openMail(2006180003,'+PUPSIS+Advisory%3A+Changing+of+Password','noreply%40sis','June+18%2C+2020')"  data-toggle="modal" data-target="#modal-msg">
-                                            <td class="mailbox-name"><a href="#">noreply@bis</a></td>
-                                            <td class="mailbox-subject"> PUPbis Advisory: Changing of Password<br/>
-                                            </td>
-                                            <td class="mailbox-date">June 18, 2020</td>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{-- Complaints --}}
+                        <div class="collapse" id="complaints">
+                            <div class="card-header">All Filed Complaints</div>
+                            <div class="card card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Complain Type</th>
+                                            <th>Complain Details</th>
+                                            <th>Respondents</th>
+                                            <th>Status</th>
                                         </tr>
-                                        <tr style="cursor:pointer;" onclick="openMail(2006180002,'PUPbis+Advisory%3A+Changing+of+Password','noreply%40bis','June+18%2C+2020')"  data-toggle="modal" data-target="#modal-msg">
-                                            <td class="mailbox-name"><a href="#">noreply@bis</a></td>
-                                            <td class="mailbox-subject">PUPbis Advisory: Changing of Password<br/>
-                                            </td>
-                                            <td class="mailbox-date">June 18, 2020</td>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($complaints as $comp)
+                                        <tr>
+                                            <td>{{ $comp->date }}</td>
+                                            <td>{{ $comp->complainType }}</td>
+                                            <td>{{ $comp->complainDetails }}</td>
+                                            <td>{{ $comp->respondents }}</td>
+                                            <td>{{ $comp->status }}</td>
                                         </tr>
-                                        <tr style="cursor:pointer;" onclick="openMail(2006180001,'PUPbis+Advisory%3A+Changing+of+Password','noreply%40bis','June+18%2C+2020')"  data-toggle="modal" data-target="#modal-msg">
-                                            <td class="mailbox-name"><a href="#">noreply@bis</a></td>
-                                            <td class="mailbox-subject">PUPSIS Advisory: Changing of Password<br/>
-                                            </td>
-                                            <td class="mailbox-date">June 18, 2020</td>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> 
+                        {{-- Blotters --}}
+                        <div class="collapse" id="blotters">
+                            <div class="card-header">All Filed Blotters</div>
+                            <div class="card card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Blotter Details</th>
+                                            <th>Status</th>
                                         </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($blotters as $blot)
+                                        <tr>
+                                            <td>{{ $blot->date }}</td>
+                                            <td>{{ $blot->blotterDetails }}</td>
+                                            <td>{{ $blot->status }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                @endif
-
-            </div>
+                    @endrole    
+                        
+                    </div>
+                </div>
+            </div>           
         </div>
     </div>
 </x-layout>

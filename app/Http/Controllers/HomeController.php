@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Transaction;
+use App\Models\User;
+use App\Models\AvailedServices;
+use App\Models\ServiceMaintenances;
+use App\Models\Services;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -21,8 +28,44 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('home');
+    public function index(Request $request)
+    {   
+        $userId = Auth::user()->id;
+
+        $documents = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 1)
+        ->where('users.id', $userId)
+        ->orderBy('transactions.id','DESC')
+        ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
+                    'transactions.purpose', 'service_maintenances.docType', 'transactions.status')
+        ->get();
+
+        $complaints = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 2)
+        ->where('users.id', $userId)
+        ->orderBy('transactions.id','DESC')
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 'transactions.complainDetails', 
+                'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType',
+                'transactions.status')
+        ->get();
+
+        $blotters = DB::table('transactions')
+        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        ->join('users', 'users.id', '=', 'availed_services.userId')
+        ->where('service_maintenances.serviceId', 3)
+        ->where('users.id', $userId)
+        ->orderBy('transactions.id','DESC')
+        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+                'transactions.blotterDetails', 'transactions.status')
+        ->get();
+
+        return view('home', compact('documents', 'complaints', 'blotters'));
     }
 }

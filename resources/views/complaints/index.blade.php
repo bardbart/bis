@@ -35,7 +35,7 @@
             </form>
         </div>
       </div>
-  <table class="table table-bordered" >
+  <table class="table table-bordered table-hover">
       <thead class="table-dark">
           <tr>
           <th>No.</th>
@@ -60,14 +60,13 @@
               </td>
               <td>{{ $comp->status }}</td>
               <td>
-                <div style="display: flex; flex-wrap: wrap; justify-content:space-around;">
-
+                <div>
                   @if ($comp->status == "Unsettled")
                     {{-- <div class="btn-group" role="group"> --}}
-                      <a class="btn-lg btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
-                      <a class="btn-lg btn-danger my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                      <a class="btn-lg btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
-                      <a class="btn-lg btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                      <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
+                      <a class="btn btn-danger my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
+                      <a class="btn btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                      <a class="btn btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
                     {{-- </div> --}}
                   @elseif ($comp->status == "Settled") 
                     <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>

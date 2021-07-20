@@ -61,7 +61,7 @@
 			<p>Republic of the Philippines <br>
 			Province of Metro Manila <br>
 			City of Taguig <br>
-			<b>Barangay (barangay)</b></p>
+			<b>Barangay Lower Bicutan</b></p>
 		</div>
 
 		<div class="document-type" align="center">
@@ -113,7 +113,7 @@
 				<br><br>
 				This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a {{ $trans_data->purpose }} requirement.
 				<br><br>
-				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
+				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Lower Bicutan, Taguig, Philippines.
 				</p>
 			</div>
 		@elseif ($trans_data->docType = "Clearance")
@@ -125,7 +125,7 @@
 				<br><br>
 				This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a <b><u>{{ $trans_data->purpose }}</u></b> requirement.
 				<br><br>
-				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Central Bicutan, {{ $data['province'] }}, Philippines.
+				Issued on this date {{ Carbon\Carbon::now()->format('Y-m-d') }}, from the Barangay Information System, Brgy. Lower Bicutan, Taguig, Philippines.
 				</p>
 			</div>
 		@endif

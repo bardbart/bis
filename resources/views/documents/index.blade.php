@@ -35,7 +35,7 @@
                 </form>
             </div>
         </div>
-    <table class="table table-bordered" >
+    <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
             <th>No.</th>
