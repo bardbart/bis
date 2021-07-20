@@ -24,8 +24,8 @@
                         <div class="d-flex justify-content-center">
                             {{-- <button class="btn btn-outline-primary me-2">All Transactions</button> --}}
                             <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#documents" role="button" aria-expanded="false" aria-controls="documents">Requested Documents</button>
-                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#complaints" role="button" aria-expanded="false" aria-controls="complaints">Complaints Filed</button>
-                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#blotters" role="button" aria-expanded="false" aria-controls="blotters">Blotters Filed</button>
+                            <button class="btn btn-outline-danger me-2" data-bs-toggle="collapse" href="#complaints" role="button" aria-expanded="false" aria-controls="complaints">Complaints Filed</button>
+                            <button class="btn btn-outline-success me-2" data-bs-toggle="collapse" href="#blotters" role="button" aria-expanded="false" aria-controls="blotters">Blotters Filed</button>
                         </div>
                         <hr>
                         <p><b>Results</b></p>
