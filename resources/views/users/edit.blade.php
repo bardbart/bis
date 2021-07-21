@@ -41,7 +41,7 @@
             transition: 0.5s;
             user-select:none;
             overflow: hidden;
-            border: 2px solid rgb(56, 193, 114);
+            border: 2px solid #0275d8;
             
         }
         .flex-box-container-2 div label span:before {
@@ -50,7 +50,7 @@
             background: rgba(184, 179, 179, 0.1);
         }
         .flex-box-container-2 div label input[type=checkbox]:checked ~ span {
-            background: rgb(56, 193, 114);
+            background: #0275d8;
             color: white;
             
         }
@@ -63,7 +63,7 @@
             @method('PUT')
 
             <div class="container-1">
-                <h3 class="text-center" for="role" >{{ __('Role') }}</h3>
+                <h3 class="text-start ms-3" for="role" >{{ __('Role') }}</h3>
                 <div class="flex-box-container-1">
                     <div>
                         <select name="roles" multiple="multiple" class="form-select form-select-md mb-2">
@@ -76,7 +76,7 @@
             </div>
 
             <div class="container-2">
-                <h3 class="text-center" for="permission" >{{ __('Permissions') }}</h3>
+                <h3 class="text-start ms-3" for="permission" >{{ __('Permissions') }}</h3>
                 <div class="flex-box-container-2">
                     <div>
                         <input name="permission[]" type="hidden" checked value="null">
@@ -93,7 +93,7 @@
             <div class="container-3">
                 <div class="flex-box-container-3">
                     <div>
-                        <button  type="submit" class="btn btn-primary" >
+                        <button  type="submit" class="btn btn-success" >
                             {{ __('Submit') }}
                         </button>
                     </div>

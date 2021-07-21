@@ -19,6 +19,12 @@
                 {{ $user->firstName . ' ' . $user->lastName}}
             </div>
         </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Contact Number:</strong>
+                {{ '+63' . $user->contactNo}}
+            </div>
+        </div>
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
@@ -29,7 +35,7 @@
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Roles:</strong>
+                <strong>Role:</strong>
                 @if(!empty($user->getRoleNames()))
                     @forelse($user->getRoleNames() as $v)
 
