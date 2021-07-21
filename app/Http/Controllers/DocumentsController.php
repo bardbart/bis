@@ -197,9 +197,9 @@ class DocumentsController extends Controller
             ]);
 
 
-            return redirect('/documents/create')->with('success', 'Document requested successfully!');
+            return redirect('home')->with('success', 'Document requested successfully!');
         }else{
-            return redirect('/documents/create')->with('danger', 'Select document type!');
+            return redirect('home')->with('danger', 'Select document type!');
         }
     }
 

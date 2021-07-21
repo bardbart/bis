@@ -3,6 +3,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="float-start">
+                        <h2>Add Official</h2>
+                    </div>
+                    <div class="float-end">
+                        <a class="btn btn-primary" href="{{ route('officials.index') }}"> Back</a>
+                    </div>
+                </div>
+            </div>
             <div class="card">
 
                 <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Create Officials') }}</div>
@@ -12,7 +22,7 @@
                     <form method="POST" action="{{ route('officials.store') }}" enctype="multipart/form-data">
                         @csrf
 
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="Image" class="col-sm-4 col-form-label text-md-right">{{ __('Image*') }}</label>
                             
                             <div class="col-md-6">
@@ -26,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="lastName" class="col-sm-4 col-form-label text-md-right">{{ __('Last Name*') }}</label>
                             
                             <div class="col-md-6">
@@ -40,7 +50,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name*') }}</label>
                             
                             <div class="col-md-6">
@@ -54,7 +64,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                             
                             <div class="col-md-6">
@@ -67,11 +77,12 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="position" class="col-md-4 col-form-label text-md-right">{{ __('Position*') }}</label>
                             
                             <div class="col-md-6">
                                 <select class="form-select" name="position" id="position">
+                                    <option value="" selected>--Choose Position--</option>
                                     <option @if($officials['cm'] == 1) return disabled @endif>Chairman</option>
                                     <option @if($officials['coun'] == 7) return disabled @endif>Councilor</option>
                                     <option @if($officials['sk'] == 1) return disabled @endif>SK Chairman</option>
@@ -81,9 +92,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row my-1">
                             <div class="col-md-6 offset-md-4 ">
-                                <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
+                                <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-success" >
                                     {{ __('Submit') }}
                                 </button>
                             </div>

@@ -77,10 +77,10 @@ class BarangayOfficialsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'lastName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
-            'firstName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
-            'middleName' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
-            'position' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
+            'lastName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
+            'position' => ['nullable','regex:/^[a-zA-Z\sñÑ]+$/', 'string', 'max:255'],
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
 
         ]);
@@ -136,9 +136,9 @@ class BarangayOfficialsController extends Controller
         // dd($request->input());
 
         $request->validate([
-            'lastName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
-            'firstName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
-            'middleName' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
+            'lastName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
             'image' => 'mimes:jpg,png,jpeg|max:5048',
         ]);
 

@@ -53,13 +53,16 @@
                                             <td>{{ $docu->date }}</td>
                                             <td>{{ $docu->docType }}</td>
                                             <td>{{ $docu->purpose }}</td>
-                                            @if ($docu->status == "Unpaid" || $docu->status == "Disapproved")
+                                            @if ($docu->status == "Unpaid")
                                                 <td class="text-danger"><b>{{ $docu->status }}</b></td>
                                                 <form action="{{ route('home.destroy', $docu->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <td><button onclick="return confirm('Are you sure you want to cancel?')" class="btn btn-danger">Cancel</button></td>
                                                 </form>
+                                            @elseif($docu->status == "Disapproved")
+                                                <td class="text-danger"><b>{{ $docu->status }}</b></td>
+                                                <td><b>None</b></td>
                                             @else
                                                 <td class="text-success"><b>{{ $docu->status }}</b></td>
                                                 <td><b>None</b></td>
@@ -131,7 +134,11 @@
                                         <tr>
                                             <td>{{ $blot->date }}</td>
                                             <td>{{ $blot->blotterDetails }}</td>
-                                            <td class="text-success"><b>{{ $blot->status }}</b></td>
+                                            @if ($blot->status == "Unread")  
+                                                <td class="text-danger"><b>{{ $blot->status }}</b></td>
+                                            @else
+                                                <td class="text-success"><b>{{ $blot->status }}</b></td>
+                                            @endif
                                         </tr>
                                         @endforeach
                                         @else

@@ -3,22 +3,25 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="row">
+                    <div class="col-lg-12 margin-tb">
+                        <div class="float-start">
+                            <h2>Add Service</h2>
+                        </div>
+                        <div class="float-end">
+                            <a class="btn btn-primary" href="{{ route('services.index') }}"> Back</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
     
-<<<<<<< HEAD
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('Create Service') }}</div>
-        
-                        <div class="card-body">
-    
-=======
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('Add Service') }}</div>
+                    <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Add Service') }}</div>
 
                     <div class="card-body">
->>>>>>> e7a1f1b2b9bdd88a2c1ffa464bc3e784d3758e20
                         <form method="POST" action="{{ route('services.store') }}" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Service Type') }}</label>
                                 
                                 <div class="col-md-6">
@@ -30,7 +33,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="serviceName" class="col-md-4 col-form-label text-md-right">{{ __('Service Name') }}</label>
                                 
                                 <div class="col-md-6">
@@ -43,9 +46,9 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row mb-0">
+                            <div class="form-group row my-1">
                                 <div class="col-md-6 offset-md-4 ">
-                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
+                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-success" >
                                         {{ __('Submit') }}
                                     </button>
                                 </div>

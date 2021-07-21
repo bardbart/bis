@@ -105,7 +105,7 @@ class BlottersController extends Controller
             'status' => 'Unread',
         ]);
 
-        return redirect('/blotters/create')->with('success', 'Blotter filed successfully!');
+        return redirect('home')->with('success', 'Blotter filed successfully!');
     }
 
     /**

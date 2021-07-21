@@ -4,7 +4,7 @@
         <style>
             .float-end:hover
             {
-                color:rgb(179, 19, 19);
+                color:rgb(253, 135, 155);
             }
         </style>
 

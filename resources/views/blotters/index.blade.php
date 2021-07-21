@@ -43,7 +43,7 @@
                 <th>Reporter's Address</th>
                 <th>Blotter Details</th>
                 <th>Status</th>
-                <th width="280px">Action</th>
+                <th width="150px">Action</th>
             </tr>
         </thead>
     @if ($data->count() > 0)  

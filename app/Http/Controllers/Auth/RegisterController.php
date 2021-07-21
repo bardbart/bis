@@ -52,9 +52,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'lastName' => ['required', 'regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
-            'firstName' => ['required','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
-            'middleName' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
+            'lastName' => ['required', 'regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'contactNo' => ['integer'],
@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'dob' => ['required', 'date'],  
             'gender' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],
-            'citizenship' => ['required','regex:/^[a-zA-Z\s]+$/', 'string'],
+            'citizenship' => ['required','regex:/^[a-zA-ZñÑ\s]+$/', 'string'],
         ]);
     }
 

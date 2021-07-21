@@ -128,7 +128,7 @@
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
+                                    <input readonly="true" id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
                                 </div>
                             </div>
 

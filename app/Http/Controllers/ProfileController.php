@@ -72,9 +72,9 @@ class ProfileController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'lastName' => ['regex:/^[a-zA-Z\s]/','required', 'string', 'max:255'],
-            'firstName' => ['regex:/^[a-zA-Z\s]/','required', 'string', 'max:255'],
-            'middleName' => ['nullable','regex:/^[a-zA-Z\s]/', 'string', 'max:255'],
+            'lastName' => ['regex:/^[a-zA-ZñÑ\s]+$/','required', 'string', 'max:255'],
+            'firstName' => ['regex:/^[a-zA-ZñÑ\s]+$/','required', 'string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
             // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],
             'contactNo' => ['integer'],
@@ -82,7 +82,7 @@ class ProfileController extends Controller
             'street' => ['required', 'string'],
             'zipCode' => ['required', 'integer'],
             'province' => ['required', 'string'],
-            'city' => ['regex:/^[a-zA-Z\s]/','required', 'string'],
+            'city' => ['regex:/^[a-zA-ZñÑ\s]+$/','required', 'string'],
             'dob' => ['required', 'date'],  
             // 'gender' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],

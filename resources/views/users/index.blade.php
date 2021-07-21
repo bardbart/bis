@@ -74,7 +74,11 @@
             <td>
             @if(!empty($user->getRoleNames()))
                 @foreach($user->getRoleNames() as $v)
-                <label class="badge bg-success">{{ $v }}</label>
+                    @if ($v == 'Admin')
+                        <label class="badge bg-success">{{ $v }}</label>
+                    @else
+                        <label class="badge bg-secondary">{{ $v }}</label>
+                    @endif
                 @endforeach
             @endif
             </td>
@@ -118,7 +122,7 @@
             <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display:inline">
                     @csrf
                     @method('delete')
-                    <button  class="btn btn-link" onclick="return confirm('Are you sure you want to delete this user?')" type="submit"><i class="fas fa-trash-alt text-danger fa-lg" ></i></button>
+                    <button  class="btn btn-link px-0" onclick="return confirm('Are you sure you want to delete this user?')" type="submit"><i class="fas fa-trash-alt text-danger fa-lg" ></i></button>
                 </form>
 
                 {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}

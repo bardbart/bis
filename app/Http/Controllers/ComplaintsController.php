@@ -295,7 +295,7 @@ class ComplaintsController extends Controller
         $request->validate([
             'complainType' => 'required', 'integer',
             'complainDetails' => 'required', 'string',
-            'respondents' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
+            'respondents' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
             'respondentsAdd' => 'required', 'string',
             'userId' => 'required', 'integer',
         ]);
@@ -312,8 +312,8 @@ class ComplaintsController extends Controller
             'status' => 'Unsettled',
             'availedServiceId' => $availedService->id
         ]);
-
-        return redirect('/complaints/create')->with('success', 'Complaint filed successfully!');
+        
+        return redirect('home')->with('success', 'Complaint filed successfully!');
     }
 
     /**

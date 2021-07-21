@@ -26,6 +26,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/util.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
 <!--===============================================================================================-->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
 </head>
 <body style="background-color: #666666;">
 	
@@ -59,7 +61,9 @@
 					
 					
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100 form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
+						<input id="myInput"class="input100 form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Password">
+						<!-- <input type="checkbox" onclick="myFunction()">Show Password -->
+					
 						<span class="focus-input100"></span>
 						{{-- <span class="label-input100">Password</span> --}}
 
@@ -68,7 +72,17 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+					</div>
+					<!-- <div class="txt1">
+						<input type="checkbox" onclick="myFunction()">
+						<i class="fas fa-eye" type="checkbox" onclick="myFunction()"></i>
+					</div> -->
 
+					<div class="flex-sb-m w-full p-t-3 p-b-32">
+						<div></div>
+						<a class="txt1">
+							<input  type="checkbox" onclick="myFunction()"> Show Password
+						</a>
 					</div>
 
 					<div class="flex-sb-m w-full p-t-3 p-b-32">
@@ -78,6 +92,7 @@
 								Remember me
 							</label>
 						</div> --}}
+
 						<div>
 							<a class="txt1" href="{{ route('register') }}">
 								{{ __('Register') }}
@@ -140,6 +155,17 @@
 	<script src="{{ asset('vendor/countdowntime/countdowntime.js') }}"></script>
 <!--===============================================================================================-->
 	<script src="{{ asset('js/main.js') }}"></script>
+<script>
+	
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
 
+</script>
 </body>
 </html>

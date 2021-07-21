@@ -3,16 +3,26 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="float-start">
+                        <h2>Edit Official</h2>
+                    </div>
+                    <div class="float-end">
+                        <a class="btn btn-primary" href="{{ route('officials.index') }}">Back</a>
+                    </div>
+                </div>
+            </div>
             <div class="card">
 
-                <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Edit Officials') }}</div>
+                <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Edit Official') }}</div>
     
                 <div class="card-body">
 
                     <form method="POST" action="{{ route('officials.update', $officials->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT') 
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="Image" class="col-sm-4 col-form-label text-md-right">{{ __('Image') }}</label>
                             
                             <div class="col-md-6">
@@ -26,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="lastName" class="col-sm-4 col-form-label text-md-right">{{ __('Last Name*') }}</label>
                             
                             <div class="col-md-6">
@@ -40,7 +50,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name*') }}</label>
                             
                             <div class="col-md-6">
@@ -54,7 +64,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group row">
+                        <div class="form-group row my-1">
                             <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                             
                             <div class="col-md-6">
@@ -68,9 +78,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row my-1">
                             <div class="col-md-6 offset-md-4 ">
-                                <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary" >
+                                <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-success" >
                                     {{ __('Submit') }}
                                 </button>
                             </div>

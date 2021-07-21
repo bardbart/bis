@@ -55,7 +55,7 @@ class ServicesController extends Controller
     {
         $request->validate([
             'serviceType' => 'required','integer',
-            'serviceName' => 'required','regex:/^[a-zA-Z\s]/',
+            'serviceName' => 'required','regex:/^[a-zA-ZñÑ\s]+$/',
         ]);
 
         if($request->serviceType == 1)

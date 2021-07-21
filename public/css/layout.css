@@ -18,9 +18,9 @@
     
 }
 ul .nav-link:hover {
-    border: 1px solid #800;
+    border: 1px solid rgb(253, 135, 155);
     border-radius: 20px;
-    background-color: #800;
+    background-color: rgb(253, 135, 155);
     color: white!important;
 }
 
@@ -54,6 +54,6 @@ ul .nav-link:hover {
     display: block;
 }
 .nav-item:hover .nav-link {
-    background-color: #800;
+    background-color: rgb(253, 135, 155);
     color: whitesmoke!important;
 }
