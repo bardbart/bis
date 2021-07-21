@@ -56,34 +56,36 @@
         </thead>
     @if ($data->count() > 0)
         @foreach ($data as $trans)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $trans->firstName. ' ' .$trans->lastName}}</td>
-                <td>{{ $trans->email }}</td>
-                <td>{{ $trans->docType }}</td>
-                <td>{{ $trans->purpose }}</td>
-                <td>
-                    <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$trans->id}}">Show ID</button>
-                </td>
-                @if ($trans->status == "Unpaid" || $trans->status == "Disapproved" || $trans->status == "Cancelled")
-                    <td class="text-danger"><b>{{ $trans->status }}</b></td>
-                @else
-                    <td class="text-success"><b>{{ $trans->status }}</b></td>    
-                @endif
-                <td>
-                    @if($trans->status == 'Unpaid')
-                        <a class="btn btn-primary"  onclick="return confirm('Are you sure to process the request?')" href="documents/process/{{ $trans->id }}/{{ $trans->userId }}">Process</a>
-                        <a class="btn btn-danger" onclick="return confirm('Are you sure to disapprove the request?')" href="documents/disapprove/{{ $trans->id }}/{{ $trans->userId }}">Disapprove</a>
-                    @elseif($trans->status == 'Ready to Claim')
-                        <a class="btn btn-primary" href="documents/paid/{{ $trans->id }}/{{ $trans->userId }}">Paid</a>
-                        <a class="btn btn-secondary" href="view-document-pdf/{{ $trans->id }}/{{ $trans->userId }}" target="_blank">View</a>
-                        <a class="btn btn-success" href="generate-document-pdf/{{ $trans->id }}/{{ $trans->userId }}">Save PDF</a>
-                    @elseif($trans->status == 'Paid')
-                        <a class="btn btn-secondary" href="view-document-pdf/{{ $trans->id }}/{{ $trans->userId }}" target="_blank">View</a>
-                        <a class="btn btn-success" href="generate-document-pdf/{{ $trans->id }}/{{ $trans->userId }}">Save PDF</a>
+            @if ($trans->docType != null)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    <td>{{ $trans->firstName. ' ' .$trans->lastName}}</td>
+                    <td>{{ $trans->email }}</td>
+                    <td>{{ $trans->docType }}</td>
+                    <td>{{ $trans->purpose }}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$trans->id}}">Show ID</button>
+                    </td>
+                    @if ($trans->status == "Unpaid" || $trans->status == "Disapproved" || $trans->status == "Cancelled")
+                        <td class="text-danger"><b>{{ $trans->status }}</b></td>
+                    @else
+                        <td class="text-success"><b>{{ $trans->status }}</b></td>    
                     @endif
-                </td>
-            </tr>
+                    <td>
+                        @if($trans->status == 'Unpaid')
+                            <a class="btn btn-primary"  onclick="return confirm('Are you sure to process the request?')" href="documents/process/{{ $trans->id }}/{{ $trans->userId }}">Process</a>
+                            <a class="btn btn-danger" onclick="return confirm('Are you sure to disapprove the request?')" href="documents/disapprove/{{ $trans->id }}/{{ $trans->userId }}">Disapprove</a>
+                        @elseif($trans->status == 'Ready to Claim')
+                            <a class="btn btn-primary" href="documents/paid/{{ $trans->id }}/{{ $trans->userId }}">Paid</a>
+                            <a class="btn btn-secondary" href="view-document-pdf/{{ $trans->id }}/{{ $trans->userId }}" target="_blank">View</a>
+                            <a class="btn btn-success" href="generate-document-pdf/{{ $trans->id }}/{{ $trans->userId }}">Save PDF</a>
+                        @elseif($trans->status == 'Paid')
+                            <a class="btn btn-secondary" href="view-document-pdf/{{ $trans->id }}/{{ $trans->userId }}" target="_blank">View</a>
+                            <a class="btn btn-success" href="generate-document-pdf/{{ $trans->id }}/{{ $trans->userId }}">Save PDF</a>
+                        @endif
+                    </td>
+                </tr>
+            @endif
             <div class="modal fade" id="exampleModal{{$trans->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                   <div class="modal-content">

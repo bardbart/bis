@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header" style="background-color: gray; color: white">{{ __('Document Request Form') }}</div>
+                    <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Document Request Form') }}</div>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">

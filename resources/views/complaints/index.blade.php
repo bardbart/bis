@@ -24,7 +24,7 @@
 
                 <div class="input-group">
                     <span class="input-group-btn mr-5 mt-1">
-                        <button class="btn btn-info me-3" type="submit" title="Search">
+                        <button class="btn btn-primary me-3" type="submit" title="Search">
                             <span class="fas fa-search"></span>
                         </button>
                     </span>
@@ -55,43 +55,45 @@
       </thead>
     @if ($data->count() > 0)
       @foreach ($data as $comp)
-          <tr>
-              <td>{{ ++$i }}</td>
-              <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
-              <td>{{ $comp->houseNo . ' ' . $comp->street . ' ' . $comp->city . ' ' . $comp->province }}</td>
-              <td>{{ $comp->respondents }}</td>
-              <td>{{ $comp->respondentsAdd }}</td>
-              <td>
-                  <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">Show Details</button>
-              </td>
-              @if ($comp->status == "Settled") 
-                <td class="text-success"><b>{{ $comp->status }}</b></td>
-              @elseif ($comp->status == "Escalated")
-                <td class="text-danger"><b>{{ $comp->status }}</b></td>
-              @else
-                <td class="text-dark"><b>{{ $comp->status }}</b></td>
-              @endif
-              <td>
-                <div>
-                  @if ($comp->status == "Unsettled")
-                    {{-- <div class="btn-group" role="group"> --}}
-                      <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
-                      <a class="btn btn-warning my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                      <a class="btn btn-danger my-2" href="complaints/reject/{{ $comp->id }}/{{ $comp->userId }}">Reject</a> 
-                      <a class="btn btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
-                      <a class="btn btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
-                    {{-- </div> --}}
-                  @elseif ($comp->status == "Settled") 
-                    <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
-                    <a class="btn btn-primary my-2" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
-                  @else
-                    <a class="btn btn-secondary my-2" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
-                    <a class="btn btn-primary my-2" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
-                  @endif
-                </div>
-                
-              </td>
-            </tr>
+      @if ($comp->complainType != null)
+        <tr>
+            <td>{{ ++$i }}</td>
+            <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
+            <td>{{ $comp->houseNo . ' ' . $comp->street . ' ' . $comp->city . ' ' . $comp->province }}</td>
+            <td>{{ $comp->respondents }}</td>
+            <td>{{ $comp->respondentsAdd }}</td>
+            <td>
+                <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">Show Details</button>
+            </td>
+            @if ($comp->status == "Settled") 
+              <td class="text-success"><b>{{ $comp->status }}</b></td>
+            @elseif ($comp->status == "Escalated")
+              <td class="text-danger"><b>{{ $comp->status }}</b></td>
+            @else
+              <td class="text-dark"><b>{{ $comp->status }}</b></td>
+            @endif
+            <td>
+              <div>
+                @if ($comp->status == "Unsettled")
+                  {{-- <div class="btn-group" role="group"> --}}
+                    <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
+                    <a class="btn btn-warning my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
+                    <a class="btn btn-danger my-2" href="complaints/reject/{{ $comp->id }}/{{ $comp->userId }}">Reject</a> 
+                    <a class="btn btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
+                    <a class="btn btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
+                  {{-- </div> --}}
+                @elseif ($comp->status == "Settled") 
+                  <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
+                  <a class="btn btn-primary my-2" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
+                @else
+                  <a class="btn btn-secondary my-2" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
+                  <a class="btn btn-primary my-2" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
+                @endif
+              </div>
+              
+            </td>
+          </tr>
+      @endif
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal{{$comp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

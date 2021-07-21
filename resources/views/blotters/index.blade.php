@@ -19,7 +19,7 @@
 
                 <div class="input-group">
                     <span class="input-group-btn mr-5 mt-1">
-                        <button class="btn btn-info me-3" type="submit" title="Search">
+                        <button class="btn btn-primary me-3" type="submit" title="Search">
                             <span class="fas fa-search"></span>
                         </button>
                     </span>
@@ -48,6 +48,7 @@
         </thead>
     @if ($data->count() > 0)  
         @foreach ($data as $blot)
+          @if ($blot->blotterType != null)
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $blot->firstName . ' ' . $blot->lastName }}</td>
@@ -68,6 +69,7 @@
                   @endif
                 </td>
             </tr>
+          @endif
             <!-- Modal -->
             <div class="modal fade" id="exampleModal{{ $blot->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">

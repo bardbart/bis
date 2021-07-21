@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('File Blotter Form') }}</div>
+                    <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('File Blotter Form') }}</div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('blotters.store') }}" enctype="multipart/form-data">
                                 @csrf

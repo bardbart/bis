@@ -16,7 +16,7 @@
                 </div>
     
                 <div class="card">
-                    <div class="card-header" style="background-color: gray; color: white">{{ __('Edit Profile') }}</div>
+                    <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Edit Profile') }}</div>
     
                     <div class="card-body">
                         <form method="POST" action="{{ route('profiles.update', $user->id) }}">

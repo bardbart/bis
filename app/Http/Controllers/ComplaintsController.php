@@ -56,7 +56,11 @@ class ComplaintsController extends Controller
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.email', 'Like', '%' . request('term') . '%')
-            ->where('transactions.status', 'Like', '%' . request('term') . '%')
+            ->orWhere('transactions.status', 'Like', '%' . request('term') . '%')
+            ->select('transactions.id', 'users.firstName', 'users.lastName', 
+                    'users.houseNo', 'users.street', 'users.city', 'users.province', 
+                    'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
+                    'availed_services.userId', 'service_maintenances.complainType')
             ->paginate(5);
             $data->appends($request->all());
 

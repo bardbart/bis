@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <div class="card">
 
-                <div class="card-header" style="background-color: gray; color:white;">{{ __('Edit Officials') }}</div>
+                <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('Edit Officials') }}</div>
     
                 <div class="card-body">
 

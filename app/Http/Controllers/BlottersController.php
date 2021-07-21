@@ -45,7 +45,7 @@ class BlottersController extends Controller
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
-            ->where('transactions.status', 'Like', '%' . request('term') . '%')
+            ->orWhere('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
             $data->appends($request->all());
 
@@ -58,7 +58,7 @@ class BlottersController extends Controller
             ->orderBy('transactions.id','DESC')
             ->select('transactions.id', 'users.firstName','users.lastName', 
                     'users.houseNo', 'users.street', 'users.city', 'users.province',
-                    'transactions.blotterDetails', 'transactions.status', 'availed_services.userId')
+                    'transactions.blotterDetails','service_maintenances.blotterType', 'transactions.status', 'availed_services.userId')
             ->paginate(5);
         }
    

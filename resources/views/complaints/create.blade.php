@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="card">
-                    <div class="card-header" style="background-color: gray; color:white;">{{ __('File Complaint Form') }}</div>
+                    <div class="card-header" style="background-color: rgb(253, 135, 155);">{{ __('File Complaint Form') }}</div>
                         <div class="card-body">
                             <form method="POST" action="{{ route('complaints.store') }}" enctype="multipart/form-data">
                                 @csrf

@@ -51,11 +51,13 @@ class DocumentsController extends Controller
             ->join('users', 'users.id', '=', 'availed_services.userId')
             ->where('service_maintenances.serviceId', 1)
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
-            ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.email', 'Like', '%' . request('term') . '%')
             ->orWhere('service_maintenances.docType', 'Like', '%' . request('term') . '%')
-            ->Where('transactions.status', 'Like', '%' . request('term') . '%')
+            ->orWhere('transactions.status', 'Like', '%' . request('term') . '%')
+            ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
+            'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
             ->paginate(5);
             $data->appends($request->all());
         }
