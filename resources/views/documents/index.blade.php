@@ -24,14 +24,14 @@
 
                 <div class="input-group">
                     <span class="input-group-btn mr-5 mt-1">
-                        <button class="btn btn-primary me-3" type="submit" title="Search user">
+                        <button class="btn btn-primary me-3" type="submit" title="Search">
                             <span class="fas fa-search"></span>
                         </button>
                     </span>
                     <input type="text" class="form-control mr-2" size="30" name="term" placeholder="Search user/email/document type" id="term">
                     <a href="{{ route('documents.index') }}" class=" mt-1">
                         <span class="input-group-btn">
-                            <button class="btn btn-danger ms-3" type="button" title="Refresh page">
+                            <button class="btn btn-success ms-3" type="button" title="Refresh Page">
                                 <span class="fas fa-sync-alt"></span>
                             </button>
                         </span>
@@ -65,14 +65,14 @@
                 <td>
                     <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$trans->id}}">Show ID</button>
                 </td>
-                @if ($trans->status == "Unpaid" || $trans->status == "Disapproved")
+                @if ($trans->status == "Unpaid" || $trans->status == "Disapproved" || $trans->status == "Cancelled")
                     <td class="text-danger"><b>{{ $trans->status }}</b></td>
                 @else
                     <td class="text-success"><b>{{ $trans->status }}</b></td>    
                 @endif
                 <td>
                     @if($trans->status == 'Unpaid')
-                        <a class="btn btn-primary" href="documents/process/{{ $trans->id }}/{{ $trans->userId }}">Process</a>
+                        <a class="btn btn-primary"  onclick="return confirm('Are you sure to process the request?')" href="documents/process/{{ $trans->id }}/{{ $trans->userId }}">Process</a>
                         <a class="btn btn-danger" onclick="return confirm('Are you sure to disapprove the request?')" href="documents/disapprove/{{ $trans->id }}/{{ $trans->userId }}">Disapprove</a>
                     @elseif($trans->status == 'Ready to Claim')
                         <a class="btn btn-primary" href="documents/paid/{{ $trans->id }}/{{ $trans->userId }}">Paid</a>

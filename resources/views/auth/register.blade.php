@@ -1,5 +1,5 @@
 <x-layout>
-
+    @section('title', 'Register')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -192,13 +192,13 @@
                                 <div class="col-md-6">
                                     {{-- <input id="gender" type="text" class="form-control  @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender"> --}}
                                     
-                                      <input id="gender" type="radio" name="gender" value="male" class=" @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Male" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
                                       <label for="male">Male</label>
                                     
-                                      <input id="gender" type="radio" name="gender" value="female" class=" @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Female" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
                                       <label for="female">Female</label>
                                     
-                                      <input id="gender" type="radio" name="gender" value="rather not say" class=" @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Rather not say" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
                                       <label for="others">Others</label>
                                     
                                     {{-- @error('gender')
@@ -215,16 +215,16 @@
                                 <div class="col-md-6">
                                     {{-- <input id="civilStatus" type="text" class="form-control  @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus"> --}}
                                     
-                                      <input id="civilStatus" type="radio" value="single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="single">Single</label>
                                     
-                                      <input id="civilStatus" type="radio" value="married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="married">Married</label>
                                     
-                                      <input id="civilStatus" type="radio" value="widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="widowed">Widowed</label><br>
     
-                                      <input id="civilStatus" type="radio" value="divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="divorce">Divorced</label>
                                     
                                     {{-- @error('civilStatus')
@@ -252,7 +252,7 @@
     
                             <div class="form-group row my-1">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-primary">
                                         {{ __('Register') }}
                                     </button>
                                 </div>

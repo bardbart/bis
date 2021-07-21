@@ -57,7 +57,6 @@ class BarangayOfficialsController extends Controller
      */
     public function create()
     {
-
         $officials = [
             'cm' => BarangayOfficials::where('position','=','Chairman')->count(),
             'coun' => BarangayOfficials::where('position','=','Councilor')->count(),
@@ -65,9 +64,7 @@ class BarangayOfficialsController extends Controller
             'sec' => BarangayOfficials::where('position','=','Secretary')->count(),
             'tre' => BarangayOfficials::where('position','=','Treasurer')->count()
         ];
-  
-        // dd();
-
+        
         return view('officials.create',compact('officials'));
     }
 
@@ -80,10 +77,10 @@ class BarangayOfficialsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'lastName' => 'required',
-            'firstName' => 'required',
-            // 'middleName' => 'required',
-            'position' => 'required',
+            'lastName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-Z\s]+$/','string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
+            'position' => ['nullable','regex:/^[a-zA-Z\s]+$/', 'string', 'max:255'],
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
 
         ]);

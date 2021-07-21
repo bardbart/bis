@@ -45,6 +45,7 @@ class BlottersController extends Controller
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
+            ->where('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
             $data->appends($request->all());
 

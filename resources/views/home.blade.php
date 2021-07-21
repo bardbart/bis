@@ -53,7 +53,7 @@
                                             <td>{{ $docu->date }}</td>
                                             <td>{{ $docu->docType }}</td>
                                             <td>{{ $docu->purpose }}</td>
-                                            @if ($docu->status == "Unpaid")
+                                            @if ($docu->status == "Unpaid" || $docu->status == "Disapproved")
                                                 <td class="text-danger"><b>{{ $docu->status }}</b></td>
                                                 <form action="{{ route('home.destroy', $docu->id) }}" method="POST">
                                                     @method('DELETE')
@@ -98,6 +98,8 @@
                                                 <td>{{ $comp->respondents }}</td>
                                                 @if ($comp->status == "Settled")
                                                     <td class="text-success"><b>{{ $comp->status }}</b></td>
+                                                @elseif ($comp->status == "Escalated")
+                                                    <td class="text-warning"><b>{{ $comp->status }}</b></td>
                                                 @else
                                                     <td class="text-danger"><b>{{ $comp->status }}</b></td>
                                                 @endif 

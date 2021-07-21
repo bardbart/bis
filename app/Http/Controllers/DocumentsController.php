@@ -54,7 +54,7 @@ class DocumentsController extends Controller
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.email', 'Like', '%' . request('term') . '%')
             ->orWhere('service_maintenances.docType', 'Like', '%' . request('term') . '%')
-            ->orWhere('transactions.status', 'Like', '%' . request('term') . '%')
+            ->where('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
             $data->appends($request->all());
         }
@@ -65,7 +65,6 @@ class DocumentsController extends Controller
             ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
             ->join('users', 'users.id', '=', 'availed_services.userId')
             ->where('service_maintenances.serviceId', 1)
-            ->whereNull('transactions.deleted_at')
             ->orderBy('transactions.id','DESC')
             ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
             'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
@@ -140,7 +139,7 @@ class DocumentsController extends Controller
         ];
 
         $pdf = PDF::loadView('documents.document', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].'-'.$type[0].'-'.'Document.pdf');
+        return $pdf->download($data['lastName'].$data['firstName'].'-'.$type[0].'-'.'Document.pdf');
     }
 
     /**

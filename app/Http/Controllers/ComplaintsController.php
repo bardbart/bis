@@ -55,6 +55,7 @@ class ComplaintsController extends Controller
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.email', 'Like', '%' . request('term') . '%')
+            ->where('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
             $data->appends($request->all());
 
@@ -200,7 +201,7 @@ class ComplaintsController extends Controller
         ];
 
         $pdf = PDF::loadView('complaints.escalate', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].'-'.'Escalation-Form.pdf');
+        return $pdf->download($data['lastName'].$data['firstName'].'-'.'Escalation-Form.pdf');
     }
 
     public function pdfViewSettle($transId, $userId)
@@ -263,7 +264,7 @@ class ComplaintsController extends Controller
         ];
 
         $pdf = PDF::loadView('complaints.settle', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].'-'.'Settlement-Form.pdf');
+        return $pdf->download($data['lastName'].$data['firstName'].'-'.'Settlement-Form.pdf');
     }
 
     /**

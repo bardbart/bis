@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'dob' => ['required', 'date'],  
             'gender' => ['required', 'string'],
             'civilStatus' => ['required', 'string'],
-            'citizenship' => ['required','regex:/^[a-zA-Z\s]/', 'string'],
+            'citizenship' => ['required','regex:/^[a-zA-Z\s]/', 'string', 'max:255'],
         ]);
     }
 

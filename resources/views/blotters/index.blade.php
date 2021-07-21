@@ -19,14 +19,14 @@
 
                 <div class="input-group">
                     <span class="input-group-btn mr-5 mt-1">
-                        <button class="btn btn-info me-3" type="submit" title="Search user">
+                        <button class="btn btn-info me-3" type="submit" title="Search">
                             <span class="fas fa-search"></span>
                         </button>
                     </span>
                     <input type="text" class="form-control mr-2" size="30" name="term" placeholder="Search user" id="term">
                     <a href="{{ route('blotters.index') }}" class=" mt-1">
                         <span class="input-group-btn">
-                            <button class="btn btn-danger ms-3" type="button" title="Refresh page">
+                            <button class="btn btn-success ms-3" type="button" title="Refresh Page">
                                 <span class="fas fa-sync-alt"></span>
                             </button>
                         </span>
