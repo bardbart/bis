@@ -24,20 +24,20 @@
 
                     <div class="input-group">
                         <span class="input-group-btn mr-5 mt-1">
-                            <button class="btn btn-info px-3 " type="button" title="Refresh page">
-                                <span class="fas fa-sync-alt"></span>
+                            <button class="btn btn-primary me-3 px-3" type="submit" title="Search user">
+                                <span class="fas fa-search"></span>
                             </button>
                         </span>
                         <div class="form-outline">
                             <input size="30" type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
                         </div>
-                        <a href="{{ route('users.index') }}" class=" mt-1">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger px-3" type="submit" title="Search user">
-                                    <span class="fas fa-search"></span>
-                                </button>
+                            <span class="input-group-btn mr-5 mt-1">
+                                <a href="{{ route('users.index') }}" class=" mt-1">
+                                    <button class="btn btn-success ms-3 px-3 " type="button" title="Refresh page">
+                                        <span class="fas fa-sync-alt"></span>
+                                    </button>
+                                </a>
                             </span>
-                        </a>
                     </div>
                 </form>
             </div>
@@ -79,12 +79,12 @@
             @endif
             </td>
             <td>
-            {{-- <a href="{{ route('users.show',$user->id) }}" ><i class="fas fa-eye text-success  fa-lg" ></i></a> --}}
+            {{-- <a  href="{{ route('users.show',$user->id) }}" ><i class="fas fa-eye text-success  fa-lg" ></i></a> --}}
 
-            {{-- <a data-toggle="modal" id="mediumButton" data-target="#mediumModal"
+            <a class="btn btn-link px-0" data-toggle="modal" id="mediumButton" data-target="#mediumModal"
             data-attr="{{ route('users.show', $user->id) }}" title="show">
-            <i class="fas fa-eye fa-lg" style="color: #ee4bd3"></i>
-            </a> --}}
+            <i class="fas fa-eye fa-lg text-success"></i>
+            </a>
 
             <a class="btn btn-link" data-toggle="modal" id="largeButton" data-target="#largeModal"
             data-attr="{{ route('users.edit', $user->id) }}" title="edit">
@@ -139,6 +139,7 @@ aria-hidden="true">
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
+            <h3>Edit User</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="largeBody">
@@ -157,6 +158,7 @@ aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
+            <h3>Show User</h3>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body" id="mediumBody">

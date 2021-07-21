@@ -54,7 +54,7 @@ class DocumentsController extends Controller
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.email', 'Like', '%' . request('term') . '%')
             ->orWhere('service_maintenances.docType', 'Like', '%' . request('term') . '%')
-            ->where('transactions.status', 'Like', '%' . request('term') . '%')
+            ->Where('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
             $data->appends($request->all());
         }

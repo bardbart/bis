@@ -192,13 +192,13 @@
                                 <div class="col-md-6">
                                     {{-- <input id="gender" type="text" class="form-control  @error('gender') is-invalid @enderror" name="gender" value="{{ old('gender') }}" required autocomplete="gender"> --}}
                                     
-                                      <input id="gender" type="radio" name="gender" value="Male" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Male" class=" @error('gender') is-invalid @enderror"  value="{{ old('gender') }}" required autocomplete="gender">
                                       <label for="male">Male</label>
                                     
-                                      <input id="gender" type="radio" name="gender" value="Female" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Female" class=" @error('gender') is-invalid @enderror" value="{{ old('gender') }}" required autocomplete="gender">
                                       <label for="female">Female</label>
                                     
-                                      <input id="gender" type="radio" name="gender" value="Rather not say" class=" @error('gender') is-invalid @enderror" name="gender" required autocomplete="gender">
+                                      <input id="gender" type="radio" name="gender" value="Rather not say" class=" @error('gender') is-invalid @enderror" value="{{ old('gender') }}" required autocomplete="gender">
                                       <label for="others">Others</label>
                                     
                                     {{-- @error('gender')

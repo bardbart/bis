@@ -20,7 +20,7 @@ class CreateAdminUserSeeder extends Seeder
             'firstName' => 'Timothy',
             'middleName' => null,
             'email' => 'bsdtimothy@gmail.com',
-        	'password' => bcrypt('123456'),
+        	'password' => bcrypt('password'),
             'contactNo' => 9302990870,
             'houseNo' => 'Blk 31 Lot 1 Purok 4 Central Bicutan Taguig City',
             'street' => 'Poolan',
