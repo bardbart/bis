@@ -2,10 +2,16 @@
     @section('title', 'Request Documents')
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
-        <p>{{ $message }}</p>
+            <p>{{ $message }}</p>
         </div>
     @endif
     
+    @if ($message = Session::get('danger'))
+        <div class="alert alert-danger">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -44,7 +50,7 @@
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="lastName" type="text" class="form-control" name="lastName" value="{{ Auth::user()->lastName }}" autofocus>
+                                    <input readonly="true" id="lastName" type="text" class="form-control" name="lastName" value="{{ Auth::user()->lastName }}" autofocus>
                                 </div>
                             </div>
 
@@ -52,7 +58,7 @@
                                 <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="firstName" type="text" class="form-control" name="firstName" value="{{ Auth::user()->firstName }}" autofocus>
+                                    <input readonly="true" id="firstName" type="text" class="form-control" name="firstName" value="{{ Auth::user()->firstName }}" autofocus>
                                 </div>
                             </div>
 
@@ -61,7 +67,7 @@
                                     <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <input id="middleName" type="text" class="form-control" name="middleName" value="{{ Auth::user()->middleName }}" autofocus>
+                                        <input readonly="true" readonly="true" id="middleName" type="text" class="form-control" name="middleName" value="{{ Auth::user()->middleName }}" autofocus>
                                     </div>
                                 </div>
                             @else
@@ -74,14 +80,14 @@
                                 <label for="houseNo" class="col-md-4 col-form-label text-md-right">{{ __('House Number') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
+                                    <input readonly="true" id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
                                 </div>
                             </div>
                             <div class="form-group row my-1">
                                 <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="street" type="text" class="form-control" name="street" value="{{ Auth::user()->street }}" autofocus>
+                                    <input readonly="true" id="street" type="text" class="form-control" name="street" value="{{ Auth::user()->street }}" autofocus>
                                 </div>
                             </div>
 
@@ -89,7 +95,7 @@
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="province" type="text" class="form-control" name="province" value="{{ Auth::user()->province }}" autofocus>
+                                    <input readonly="true" id="province" type="text" class="form-control" name="province" value="{{ Auth::user()->province }}" autofocus>
                                 </div>
                             </div>
 
@@ -97,7 +103,7 @@
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
+                                    <input readonly="true" id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
                                 </div>
                             </div>
 
@@ -130,7 +136,8 @@
                                 <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Document Type') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <select class="form-select" name="docType" id="docType" autofocus>
+                                    <select  class="form-select" name="docType" id="docType" autofocus>
+                                            <option value="" selected>--Select Document Type--</option>
                                     @foreach ($data as $type) 
                                             <option value="{{ $type->id }}">{{ $type->docType }}</option>
                                     @endforeach
