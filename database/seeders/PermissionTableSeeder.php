@@ -26,6 +26,7 @@ class PermissionTableSeeder extends Seeder
             'documents-process',
             'documents-view',
             'documents-save-PDF',
+            'document-disapprove',
             
             'complaint-show-details',
             'complaint-settle',
@@ -36,6 +37,7 @@ class PermissionTableSeeder extends Seeder
             'complaint-save-complaint-form',
             'complaint-view-escalation-form',
             'complaint-save-escalation-form',
+            'complain-reject',
             
             'blotter-note',
             'blotter-show',
@@ -60,7 +62,6 @@ class PermissionTableSeeder extends Seeder
 
             'module-reports',
             
-
             
             
 

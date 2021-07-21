@@ -30,6 +30,7 @@ class DocumentsController extends Controller
         $this->middleware('permission:documents-process',['only' => 'process']);
         $this->middleware('permission:documents-view', ['only' => 'pdfViewDocument']);
         $this->middleware('permission:documents-save-PDF',['only' => 'pdfSaveDocument']);
+        $this->middleware('permission:documents-disaprove',['only' => 'disapproved']);
 
 
 
@@ -171,27 +172,34 @@ class DocumentsController extends Controller
             'paymentMode' => 'required', 'string',
             'userId' => 'required', 'integer',
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
-        ]);
-        
-        $newImageName = time() . '-' . $request->lastName . '.' . $request->firstName . '.' . $request->middleName . '.' .$request->image->extension();
-        
-        $request->image->move(public_path('images/barangayId'), $newImageName);
-        
-        $availedService = AvailedServices::create([
-            'userId' => $request->userId,
-            'smId' => $request->docType
-        ]);
 
-        Transaction::create([
-            'availedServiceId' => $availedService->id,
-            'transMode' => $request->transMode,
-            'purpose' => $request->purpose,
-            'paymentMode' => $request->paymentMode,
-            'status' => 'Unpaid',
-            'barangayIdPath' => $newImageName
         ]);
+        if($request->input('docType')){
 
-        return redirect('/documents/create')->with('success', 'Document requested successfully!');
+        
+            $newImageName = time() . '-' . $request->lastName . '.' . $request->firstName . '.' . $request->middleName . '.' .$request->image->extension();
+            
+            $request->image->move(public_path('images/barangayId'), $newImageName);
+            
+            $availedService = AvailedServices::create([
+                'userId' => $request->userId,
+                'smId' => $request->docType
+            ]);
+
+            Transaction::create([
+                'availedServiceId' => $availedService->id,
+                'transMode' => $request->transMode,
+                'purpose' => $request->purpose,
+                'paymentMode' => $request->paymentMode,
+                'status' => 'Unpaid',
+                'barangayIdPath' => $newImageName
+            ]);
+
+
+            return redirect('/documents/create')->with('success', 'Document requested successfully!');
+        }else{
+            return redirect('/documents/create')->with('danger', 'Select document type!');
+        }
     }
 
     /**

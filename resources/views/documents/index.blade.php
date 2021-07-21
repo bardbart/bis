@@ -85,15 +85,15 @@
                 </td>
             </tr>
             <div class="modal fade" id="exampleModal{{$trans->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Barangay ID of {{ $trans->firstName. ' ' .$trans->lastName}}</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
     
-                    <div class="modal-body" style="margin: 0px 0px 0px 80px; width: 50%; ">
-                        <img src="{{ asset('images/barangayId/'.$trans->barangayIdPath) }}" alt="brgyId" style="height: 300px">
+                    <div class="modal-body" style="display: flex; justify-content:center">
+                        <img style="margin:auto; width: 75%;"src="{{ asset('images/barangayId/'.$trans->barangayIdPath) }}" alt="brgyId" style="height: 300px">
                     </div>
     
                     <div class="modal-footer">

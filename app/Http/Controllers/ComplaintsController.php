@@ -36,6 +36,7 @@ class ComplaintsController extends Controller
         $this->middleware('permission:complaint-escalate', ['only' => 'escalate']);
         $this->middleware('permission:complaint-view-escalation-form', ['only' => 'pdfViewEscalate']);
         $this->middleware('permission:complaint-save-escalation-form', ['only' => 'pdfSaveEscalate']);
+        $this->middleware('permission:complaint-reject', ['only' => 'reject']);
         
     }
     /**
