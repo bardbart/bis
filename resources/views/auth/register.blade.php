@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                 
                                 <div class="col-md-6">
@@ -51,7 +51,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -79,7 +79,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="contactNo" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="houseNo" class="col-md-4 col-form-label text-md-right">{{ __('House Number *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -115,7 +115,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -129,7 +129,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="zipCode" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -171,7 +171,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -209,7 +209,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -235,7 +235,7 @@
                                 </div>
                             </div>
     
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -250,7 +250,7 @@
                             </div>
                             
     
-                            <div class="form-group row mb-0">
+                            <div class="form-group row my-1">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Register') }}

@@ -6,7 +6,7 @@
     
                 <div class="row">
                     <div class="col-lg-12 margin-tb">
-                        <div class="pull-left">
+                        <div class="float-start">
                             <h2>Edit Profile</h2>
                         </div>
                         <div class="float-end">
@@ -16,7 +16,7 @@
                 </div>
     
                 <div class="card">
-                    <div class="card-header">{{ __('Edit Profile') }}</div>
+                    <div class="card-header" style="background-color: gray; color: white">{{ __('Edit Profile') }}</div>
     
                     <div class="card-body">
                         <form method="POST" action="{{ route('profiles.update', $user->id) }}">
@@ -24,7 +24,7 @@
                             @method('PUT')
     
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                 
                                 <div class="col-md-6">
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             
-                            {{-- <div class="form-group row">
+                            {{-- <div class="form-group row my-1">
                                 <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -102,7 +102,7 @@
                                 </div>
                             </div> --}}
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="contactNo" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="houseNo" class="col-md-4 col-form-label text-md-right">{{ __('House Number *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -130,7 +130,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="zipCode" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -158,7 +158,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth *') }}</label>
                                 
                                 <div class="col-md-6">
@@ -201,43 +201,26 @@
                                 </div> 
                             </div>
                             
-                            <!-- <div class="form-group row">
-                                <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
-                                
-                                <div class="col-md-6">
-                                    
-                                      <input @if ($user->gender == 'Male') return checked @endif id="gender" type="radio" name="gender" value="Male" class=" @error('gender') is-invalid @enderror"   required autocomplete="gender">
-                                      <label for="Male">Male</label>
-                                    
-                                      <input @if ($user->gender == 'Female') return checked @endif id="gender" type="radio" name="gender" value="Female" class=" @error('gender') is-invalid @enderror"  required autocomplete="gender">
-                                      <label for="Female">Female</label>
-                                    
-                                      <input @if ($user->gender == 'Rather not say') return checked @endif id="gender" type="radio" name="gender" value="Rather not say" class=" @error('gender') is-invalid @enderror"  required autocomplete="gender">
-                                      <label for="others">Others</label>
-                                </div>
-                            </div> -->
-                            
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status *') }}</label>
                                 
                                 <div class="col-md-6">
-                                    
-                                    
-                                      <input @if ($user->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                    {{--   <input @if ($user->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus"> --}}
+                                      <input {{ $user->civilStatus == "Single" ? 'checked' : '' }} id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="Single" required autocomplete="civilStatus">
                                       <label for="Single">Single</label>
                                     
-                                      <input @if ($user->civilStatus == 'Married') return checked @endif id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input {{ $user->civilStatus == "Married" ? 'checked' : '' }} id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="Married" required autocomplete="civilStatus">
                                       <label for="Married">Married</label>
                                     
-                                      <input @if ($user->civilStatus == 'Widowed') return checked @endif id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
-                                      <label for="Widowed">Widowed</label><br>
+                                      <input {{ $user->civilStatus == "Widowed" ? 'checked' : '' }} id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="Widowed" required autocomplete="civilStatus">
+                                      <label for="Widowed">Widowed</label>
     
-                                      <input @if ($user->civilStatus == 'Divorced') return checked @endif id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
+                                      <input {{ $user->civilStatus == "Divorced" ? 'checked' : '' }} id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="Divorced" required autocomplete="civilStatus">
                                       <label for="Divorce">Divorced</label>
                                 </div>
                             </div>
     
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
                                 <div class="col-md-6">
@@ -252,7 +235,7 @@
                             
                             
     
-                            <div class="form-group row mb-0">
+                            <div class="form-group row my-1">
                                 <div class="col-md-6 offset-md-4 ">
                                     <button onclick="return confirm('Are your inputs correct?')" type="submit" class="btn btn-success" >
                                         {{ __('Submit') }}

@@ -46,6 +46,7 @@ class BlottersController extends Controller
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
             ->paginate(5);
+            $data->appends($request->all());
 
         }else if(!$request->input('term')){
             $data = DB::table('transactions')

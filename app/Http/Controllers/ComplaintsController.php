@@ -54,7 +54,9 @@ class ComplaintsController extends Controller
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.email', 'Like', '%' . request('term') . '%')
             ->paginate(5);
+            $data->appends($request->all());
 
         }else if(!$request->input('term')){
             $data = DB::table('transactions')
@@ -352,6 +354,12 @@ class ComplaintsController extends Controller
     {
         $settled = Transaction::where('id', $transId)->update(['status' => 'Escalated']);
         return redirect('complaints')->with('success', 'Complaint Escalated');
+    }
+
+    public function reject($transId, $userId)
+    {
+        $settled = Transaction::where('id', $transId)->update(['status' => 'Rejected']);
+        return redirect('complaints')->with('danger', 'Complaint Rejected!');
     }
 
     /**

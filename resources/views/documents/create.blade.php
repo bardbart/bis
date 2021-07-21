@@ -26,7 +26,7 @@
                         <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="Image" class="col-sm-4 col-form-label text-md-right">{{ __('Barangay ID') }}</label>
                                 
                                 <div class="col-md-6">
@@ -40,7 +40,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
                                 
                                 <div class="col-md-6">
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="firstName" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
                                 
                                 <div class="col-md-6">
@@ -57,7 +57,7 @@
                             </div>
 
                             @if(!empty(Auth::User()->middleName))
-                                <div class="form-group row">
+                                <div class="form-group row my-1">
                                     <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('Middle Name') }}</label>
                                     
                                     <div class="col-md-6">
@@ -65,19 +65,19 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="form-group row">
+                                <div class="form-group row my-1">
                                     <label for="middleName" class="col-md-4 col-form-label text-md-right">{{ __('No Middle Name') }}</label>
                                 </div>
                             @endif
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="houseNo" class="col-md-4 col-form-label text-md-right">{{ __('House Number') }}</label>
                                 
                                 <div class="col-md-6">
                                     <input id="houseNo" type="text" class="form-control" name="houseNo" value="{{ Auth::user()->houseNo }}" autofocus>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="street" class="col-md-4 col-form-label text-md-right">{{ __('Street') }}</label>
                                 
                                 <div class="col-md-6">
@@ -85,7 +85,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                 
                                 <div class="col-md-6">
@@ -93,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
                                 
                                 <div class="col-md-6">
@@ -101,7 +101,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status') }}</label>
                                 <div class="col-md-6">
                                   <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
@@ -118,7 +118,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
                                 <div class="col-md-6">
@@ -126,7 +126,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row my-1">
                                 <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Document Type') }}</label>
                                 
                                 <div class="col-md-6">
@@ -138,7 +138,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row py-1">
                                 <label for="purpose" class="col-md-4 col-form-label text-md-right">{{ __('Purpose') }}</label>
                                 
                                 <div class="col-md-6">
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row py-1">
                                 <label for="transMode" class="col-md-4 col-form-label text-md-right">{{ __('Transaction Mode') }}</label>
                                 
                                 <div class="col-md-6">
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row py-1">
                                 <label for="paymentMode" class="col-md-4 col-form-label text-md-right">{{ __('Payment Mode') }}</label>
                                 
                                 <div class="col-md-6">

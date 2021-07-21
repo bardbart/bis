@@ -46,6 +46,7 @@
                 <th width="280px">Action</th>
             </tr>
         </thead>
+    @if ($data->count() > 0)  
         @foreach ($data as $blot)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -54,7 +55,11 @@
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $blot->id }}">Show</button>
                 </td>
-                <td>{{ $blot->status }}</td>
+                @if ($blot->status == "Noted")
+                  <td class="text-success"><b>{{ $blot->status }}</b></td>
+                @else
+                  <td class="text-danger"><b>{{ $blot->status }}</b></td>
+                @endif
                 <td>
                   @if ($blot->status == "Noted")
                     <a class="btn disabled btn-success" href="blotters/note/{{ $blot->id }}/{{ $blot->userId }}">Note</a>
@@ -85,6 +90,9 @@
               </div>
             </div>
         @endforeach
+    @else
+      <h5 style="color: rgb(255, 0, 0)">No available data</h5> 
+    @endif
     </table>
     <div class="float-end">{{ $data->links('pagination::bootstrap-4') }}</div>  
     <p class="text-center text-primary"><small>By Team Bard</small></p>

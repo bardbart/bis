@@ -52,8 +52,11 @@ class DocumentsController extends Controller
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
             ->orWhere('users.middleName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.email', 'Like', '%' . request('term') . '%')
             ->orWhere('service_maintenances.docType', 'Like', '%' . request('term') . '%')
+            ->orWhere('transactions.status', 'Like', '%' . request('term') . '%')
             ->paginate(5);
+            $data->appends($request->all());
         }
         else if(!$request->input('term'))
         {
@@ -62,22 +65,13 @@ class DocumentsController extends Controller
             ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
             ->join('users', 'users.id', '=', 'availed_services.userId')
             ->where('service_maintenances.serviceId', 1)
+            ->whereNull('transactions.deleted_at')
             ->orderBy('transactions.id','DESC')
             ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
             'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
             ->paginate(5);
         }
-        
-        // $data = DB::table('transactions')
-        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        // ->join('users', 'users.id', '=', 'availed_services.userId')
-        // ->where('service_maintenances.serviceId', 1)
-        // ->orderBy('transactions.id','DESC')
-        // ->select('transactions.id', DB::raw("concat(users.firstName, ' ' ,users.lastName) as name"), 'users.email', 
-        // 'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
-        // ->paginate(5);
-   
+           
         return view('documents.index', compact('data'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -89,8 +83,6 @@ class DocumentsController extends Controller
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
         ->get();
-
-        // dd($officials);
 
         $td = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
@@ -244,15 +236,19 @@ class DocumentsController extends Controller
         
         event(new ProcessRequestedDocument($email));
 
-        return redirect('documents')->with('success', 'Document ready to claim!');
-
-        
+        return redirect('documents')->with('success', 'Document ready to claim and user emailed!');       
     }
 
     public function paid($transId, $userId)
     {
         $paid = Transaction::where('id', $transId)->update(['status' => 'Paid']);
         return redirect('documents')->with('success', 'Document paid!');
+    }
+
+    public function disapproved($transId, $userId)
+    {
+        $paid = Transaction::where('id', $transId)->update(['status' => 'Disapproved']);
+        return redirect('documents')->with('danger', 'Document diapproved!');
     }
 
     /**

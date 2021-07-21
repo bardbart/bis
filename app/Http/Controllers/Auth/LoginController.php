@@ -53,9 +53,9 @@ class LoginController extends Controller
         // Load user from database
         $user = \App\Models\User::where($this->username(), $request->{$this->username()})->first();
     
-        if ($user && ! Hash::check($request->password, $user->password)) {
-            $errors = ['password' => 'Incorrect password'];
-        }
+        // if ($user && ! Hash::check($request->password, $user->password)) {
+        //     $errors = ['password' => 'Incorrect password'];
+        // }
     
         if ($request->expectsJson()) {
             return response()->json($errors, 422);

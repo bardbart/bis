@@ -34,6 +34,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('home/fetch_data', [HomeController::class, 'fetch_data']);
 
 //PDFs
 //Documents
@@ -51,11 +52,16 @@ Route::get('generate-escalate-pdf/{transId}/{userId}',[ComplaintsController::cla
 
 //Processing of Document
 Route::get('documents/process/{transId}/{userId}', [DocumentsController::class,'process']);
+Route::get('documents/disapprove/{transId}/{userId}', [DocumentsController::class,'disapproved']);
 Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'paid']);
+
+//Cancelling of Document
+Route::delete('home/document/cancel/{transId}', [HomeController::class,'cancel'])->name('home.destroy');
 
 //Processing of Complaint
 Route::get('complaints/settle/{transId}/{userId}', [ComplaintsController::class,'settle']);
 Route::get('complaints/escalate/{transId}/{userId}', [ComplaintsController::class,'escalate']);
+Route::get('complaints/reject/{transId}/{userId}', [ComplaintsController::class,'reject']);
 
 //Processing of Blotters
 Route::get('blotters/note/{transId}/{userId}', [BlottersController::class,'noted']);
