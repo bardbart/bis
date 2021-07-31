@@ -224,7 +224,7 @@
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input disabled id="citizenship" type="text" class="form-control @error('citizenship') is-invalid @enderror" name="citizenship" value="{{ $user->citizenship }}" required autocomplete="citizenship">
+                                    <input id="citizenship" type="text" class="form-control @error('citizenship') is-invalid @enderror" name="citizenship" value="{{ $user->citizenship }}" required autocomplete="citizenship">
                                     @error('citizenship')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ __('The citizenship must be letters only') }}</strong>

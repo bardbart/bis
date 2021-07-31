@@ -18,7 +18,7 @@
                         @endif
                         <h4>{{ __('Welcome '. Auth::user()->firstName .'!') }}</h4>
 
-                    {{-- @role('User') --}}
+                    @role('User')
                         <hr>
                         <h5 class="text-center">See your transactions for each module</h5>
                         {{-- Collapse Buttons --}}
@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="collapse" id="xdocuments">
-                            <div class="card-header"><b>Canceled Document Requests</b></div>
+                            <div class="card-header"><b>Cancelled Document Requests</b></div>
                             <div class="card card-body">
                                 <table class="table table-hover">
                                     <thead>
@@ -180,7 +180,7 @@
                             </div>
                         </div>
                     </div>
-                    {{-- @endrole     --}}
+                    @endrole    
                         
                     </div>
                 </div>

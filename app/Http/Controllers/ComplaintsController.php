@@ -84,7 +84,10 @@ class ComplaintsController extends Controller
 
     public function pdfViewComplaint($transId, $userId) 
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -116,7 +119,10 @@ class ComplaintsController extends Controller
 
     public function pdfSaveComplaint($transId, $userId) 
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -148,7 +154,10 @@ class ComplaintsController extends Controller
 
     public function pdfViewEscalate($transId, $userId)
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -179,7 +188,10 @@ class ComplaintsController extends Controller
 
     public function pdfSaveEscalate($transId, $userId)
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -211,7 +223,10 @@ class ComplaintsController extends Controller
 
     public function pdfViewSettle($transId, $userId)
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -242,7 +257,10 @@ class ComplaintsController extends Controller
 
     public function pdfSaveSettle($transId, $userId)
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')

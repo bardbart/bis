@@ -110,7 +110,7 @@
                             <div class="form-group row my-1">
                                 <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status') }}</label>
                                 <div class="col-md-6">
-                                  <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
+                                {{--   <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
                                   <label for="Single">Single</label>
                                 
                                   <input @if (Auth::user()->civilStatus == 'Married') return checked @endif id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
@@ -120,7 +120,8 @@
                                   <label for="Widowed">Widowed</label>
 
                                   <input @if (Auth::user()->civilStatus == 'Divorced') return checked @endif id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                  <label for="Divorce">Divorced</label>
+                                  <label for="Divorce">Divorced</label> --}}
+                                    <input readonly="true" id="civilStatus" type="text" class="form-control" name="civilStatus" value="{{ Auth::user()->civilStatus }}">
                                 </div>
                             </div>
 
@@ -136,8 +137,8 @@
                                 <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Document Type') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <select  class="form-select" name="docType" id="docType" autofocus>
-                                            <option value="" selected>--Select Document Type--</option>
+                                    <select class="form-select" name="docType" id="docType" required>
+                                            <option value>--Select Document Type--</option>
                                     @foreach ($data as $type) 
                                             <option value="{{ $type->id }}">{{ $type->docType }}</option>
                                     @endforeach
@@ -149,7 +150,8 @@
                                 <label for="purpose" class="col-md-4 col-form-label text-md-right">{{ __('Purpose') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <select class="form-select" name="purpose" id="purpose" autofocus>
+                                    <select class="form-select" name="purpose" id="purpose" required>
+                                        <option value>--Select Purpose--</option>
                                         <option>Personal Identification and Residence Status</option>
                                         <option>Good Standing in the Community</option>
                                         <option>No pending case filed in the barangay</option>
@@ -157,7 +159,6 @@
                                         <option>Employment (Abroad)</option>
                                         <option>Enrollment</option>
                                         <option>Scholarship</option>
-                                        <option>Indigency</option>
                                         <option>Senior Citizens & Solo Parent</option>
                                         <option>Marriage (Local)</option>
                                         <option>Marriage (Abroad)</option>

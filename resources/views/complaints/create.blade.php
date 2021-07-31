@@ -98,7 +98,8 @@
                                     <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Complaint Type') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <select class="form-select" name="complainType" id="complainType" autofocus>
+                                        <select class="form-select" name="complainType" id="complainType" required>
+                                            <option value>--Select Complaint--</option>
                                         @foreach ($data as $type) 
                                                 <option value="{{ $type->id }}">{{ $type->complainType }}</option>
                                         @endforeach

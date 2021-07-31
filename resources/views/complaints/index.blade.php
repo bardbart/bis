@@ -68,6 +68,8 @@
             @if ($comp->status == "Settled") 
               <td class="text-success"><b>{{ $comp->status }}</b></td>
             @elseif ($comp->status == "Escalated")
+              <td class="text-warning"><b>{{ $comp->status }}</b></td>
+            @elseif ($comp->status == "Rejected")
               <td class="text-danger"><b>{{ $comp->status }}</b></td>
             @else
               <td class="text-dark"><b>{{ $comp->status }}</b></td>
@@ -85,7 +87,7 @@
                 @elseif ($comp->status == "Settled") 
                   <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
                   <a class="btn btn-primary my-2" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
-                @else
+                @elseif ($comp->status == "Escalated")
                   <a class="btn btn-secondary my-2" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
                   <a class="btn btn-primary my-2" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
                 @endif

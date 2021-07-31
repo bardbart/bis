@@ -30,7 +30,7 @@ class DocumentsController extends Controller
         $this->middleware('permission:documents-process',['only' => 'process']);
         $this->middleware('permission:documents-view', ['only' => 'pdfViewDocument']);
         $this->middleware('permission:documents-save-PDF',['only' => 'pdfSaveDocument']);
-        $this->middleware('permission:documents-disaprove',['only' => 'disapproved']);
+        $this->middleware('permission:documents-disapprove',['only' => 'disapproved']);
 
 
 
@@ -68,6 +68,7 @@ class DocumentsController extends Controller
             ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
             ->join('users', 'users.id', '=', 'availed_services.userId')
             ->where('service_maintenances.serviceId', 1)
+            // ->whereNull('users.deleted_at')
             ->orderBy('transactions.id','DESC')
             ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
             'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
@@ -80,7 +81,11 @@ class DocumentsController extends Controller
 
     public function pdfViewDocument($transId, $userId) 
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
+        // dd($users);
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
@@ -112,7 +117,10 @@ class DocumentsController extends Controller
 
     public function pdfSaveDocument($transId, $userId) 
     {
-        $users = User::find($userId);
+        // $users = User::find($userId);
+        $users = DB::table('users')
+        ->where('users.id', $userId)
+        ->first();
 
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
