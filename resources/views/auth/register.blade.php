@@ -101,7 +101,7 @@
                                 <label for="contactNo" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number *') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="contactNo" type="tel" pattern="[0-9]{10}" placeholder="9123456789" class="form-control @error('contactNo') is-invalid @enderror" name="contactNo" value="{{ old('contactNo') }}" required autocomplete="contactNo">
+                                    <input id="contactNo" type="tel" pattern="[0-9]{11}" placeholder="09123456789" class="form-control @error('contactNo') is-invalid @enderror" name="contactNo" value="{{ old('contactNo') }}" required autocomplete="contactNo">
                                     
                                     @error('contactNo')
                                     <span class="invalid-feedback" role="alert">

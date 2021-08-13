@@ -28,7 +28,7 @@
                             <span class="fas fa-search"></span>
                         </button>
                     </span>
-                    <input type="text" class="form-control mr-4" size="30" name="term" placeholder="Search" id="term">
+                    <input type="text" class="form-control mr-4" size="30" name="term" placeholder="Search User Last Name" id="term">
                     <a href="{{ route('complaints.index') }}" class=" mt-1">
                         <span class="input-group-btn">
                             <button class="btn btn-success ms-3" type="button" title="Refresh Page">
