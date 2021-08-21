@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             PermissionTableSeeder::class,
             CreateAdminUserSeeder::class,
             ServicesSeeder::class,
-            ServiceMaintenancesSeeder::class,
+            DocumentTypesSeeder::class,
         ]);
     }
 }

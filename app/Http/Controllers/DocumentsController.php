@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Events\ProcessRequestedDocument;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Transactions;
 use App\Models\User;
-use App\Models\AvailedServices;
-use App\Models\ServiceMaintenances;
+// use App\Models\AvailedServices;
+use App\Models\DocumentsTransactions;
+use App\Models\DocumentTypes;
 use App\Models\Services;
 use App\Models\BarangayOfficials;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +26,7 @@ class DocumentsController extends Controller
     function __construct()
     {
         $this->middleware(['auth','verified']);
-        $this->middleware('permission:user-module-request-document', ['only' => ['create','store']]);
+        $this->middleware('permission:res-module-request-document', ['only' => ['create','store']]);
         $this->middleware('permission:module-requested-documents',['only' => 'index']);
         // $this->middleware('permission:documents-show-ID', ['only' => ['create','store']]);
         $this->middleware('permission:documents-process',['only' => 'process']);
@@ -45,109 +47,148 @@ class DocumentsController extends Controller
     {
         if($request->input('term'))
         {
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 1)
+            $data = DB::table('documents_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 1)
+            ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+            ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
-            ->orWhere('service_maintenances.docType', 'Like', '%' . request('term') . '%')
-            ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
-            'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
+            ->orWhere('document_types.docType', 'Like', '%' . request('term') . '%')
+            ->orderBy('documents_transactions.id','DESC')
+            ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
+                    'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
+                    'transactions.status', 'transactions.userId', 'document_types.docType')
             ->paginate(8);
             $data->appends($request->all());
             // dd($data);
         }
         else if(!$request->input('term'))
         {
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 1)
-            // ->whereNull('users.deleted_at')
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', 'users.firstName', 'users.lastName', 'users.email', 
-            'transactions.purpose', 'transactions.barangayIdPath' ,'transactions.status', 'availed_services.userId', 'service_maintenances.docType')
-            ->paginate(8);
+            $data = DB::table('documents_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 1)
+            ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+            ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+            ->join('users', 'users.id', '=', 'transactions.userId')
+            ->orderBy('documents_transactions.id','DESC')
+            ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
+                    'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
+                    'transactions.status', 'transactions.userId', 'document_types.docType')
+            ->paginate(5);
         }
            
         return view('documents.index', compact('data'))
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
-    public function pdfViewDocument($transId, $userId) 
+    public function getDocData($transId, $userId)
     {
-        // $users = User::find($userId);
-        $users = DB::table('users')
+        $td = DB::table('documents_transactions')
+        ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+        ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+        ->join('users', 'users.id', '=', 'transactions.userId')
         ->where('users.id', $userId)
+        ->where('documents_transactions.id', $transId)
+        ->select('documents_transactions.id', DB::raw('date(documents_transactions.created_at) as "date"'), 
+                'documents_transactions.purpose', 'document_types.docType',
+                'users.lastName', 'users.firstName', 'users.civilStatus', 'users.citizenship', 'users.houseNo')
         ->first();
-        // dd($users);
-
+        
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
         ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 1)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
-                    'transactions.purpose', 'service_maintenances.docType')
-        ->get();
+        return compact('td', 'officials');
+    }
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'houseNo' => $users->houseNo,
-            'city' => $users->city,
-            'province' => $users->province
-        ];
+    public function pdfViewDocument($transId, $userId) 
+    {
+        // $users = User::find($userId);
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
+        // dd($users);
 
-        return view('documents.document', compact('data', 'td', 'officials'));
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
+
+        // $td = DB::table('documents_transactions')
+        // // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // // ->where('service_maintenances.serviceId', 1)
+        // ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+        // ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+        // ->join('users', 'users.id', '=', 'transactions.userId')
+        // ->where('users.id', $userId)
+        // ->where('documents_transactions.id', $transId)
+        // ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
+        //         'transactions.purpose', 'service_maintenances.docType')
+        // ->get();
+
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'houseNo' => $users->houseNo,
+        //     'city' => $users->city,
+        //     'province' => $users->province
+        // ];
+
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+        return view('documents.document')->with('td', $td)->with('officials', $officials);
     }
 
     public function pdfSaveDocument($transId, $userId) 
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
         
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 1)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
-                    'transactions.purpose', 'service_maintenances.docType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 1)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
+        //             'transactions.purpose', 'service_maintenances.docType')
+        // ->get();
 
-        $type = $td->pluck('docType');
+        // $type = $td->pluck('docType');
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'houseNo' => $users->houseNo,
-            'city' => $users->city,
-            'province' => $users->province
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'houseNo' => $users->houseNo,
+        //     'city' => $users->city,
+        //     'province' => $users->province
+        // ];
 
-        $pdf = PDF::loadView('documents.document', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].$data['firstName'].'-'.$type[0].'-'.'Document.pdf');
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+        // dd($td);
+        // $pdf = PDF::loadView('documents.document')->with('td', $td)->with('officials', $officials);
+        $pdf = PDF::loadView('documents.document', ['td' => $td,  'officials' => $officials]);
+        return $pdf->download($td->lastName.'-'.$td->firstName.'-'.$td->docType.'-'.'Document.pdf');
     }
 
     /**
@@ -156,11 +197,11 @@ class DocumentsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $data = ServiceMaintenances::all()->where('serviceId', 1);
+    {  
+        $doctypes = DocumentTypes::select('id','docType')->get();
         // dd($data);
         // exit;
-        return view('documents.create', ['data' => $data]);
+        return view('documents.create', compact('doctypes'));
     }
 
     /**
@@ -171,39 +212,41 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = Auth::User()->id;
+        $serviceId = 1;
         $request->validate([
             'docType' => 'required', 'integer',
-            'transMode' => 'required', 'string',
+            // 'transMode' => 'required', 'string',
             'purpose' => 'required', 'string',
-            'paymentMode' => 'required', 'string',
-            'userId' => 'required', 'integer',
+            // 'paymentMode' => 'required', 'string',
+            // 'userId' => 'required', 'integer',
             'image' => 'required|mimes:jpg,png,jpeg|max:5048',
 
         ]);
-        if($request->input('docType')){
-
-        
+        if($request->input('docType'))
+        {
             $newImageName = time() . '-' . $request->lastName . '.' . $request->firstName . '.' . $request->middleName . '.' .$request->image->extension();
-            
             $request->image->move(public_path('images/barangayId'), $newImageName);
             
-            $availedService = AvailedServices::create([
-                'userId' => $request->userId,
-                'smId' => $request->docType
+            $transId = Transactions::create([
+                'userId' => $userId,
+                // 'transMode' => $request->transMode,
+                'serviceId' => $serviceId,
+                // 'paymentMode' => $request->paymentMode,
+                'status' => 'Unpaid',               
             ]);
 
-            Transaction::create([
-                'availedServiceId' => $availedService->id,
-                'transMode' => $request->transMode,
+            DocumentsTransactions::create([
+                'transId' => $transId->id,
+                'dmId' => $request->docType,
                 'purpose' => $request->purpose,
-                'paymentMode' => $request->paymentMode,
-                'status' => 'Unpaid',
-                'barangayIdPath' => $newImageName
+                'barangayIdPath' => $newImageName,
             ]);
-
 
             return redirect('home')->with('success', 'Document requested successfully!');
-        }else{
+        }
+        else
+        {
             return redirect('home')->with('danger', 'Select document type!');
         }
     }
@@ -244,9 +287,9 @@ class DocumentsController extends Controller
 
     public function process($transId, $userId)
     {
-        $rtc = Transaction::where('id', $transId)->update(['status' => 'Ready to Claim']);
+        $rtc = Transactions::where('id', $transId)->update(['status' => 'Ready to Claim']);
 
-        $email = User::where('id',$userId)->pluck('email')->all();
+        $email = User::where('id', $userId)->pluck('email')->all();
         
         event(new ProcessRequestedDocument($email));
 
@@ -255,13 +298,22 @@ class DocumentsController extends Controller
 
     public function paid($transId, $userId)
     {
-        $paid = Transaction::where('id', $transId)->update(['status' => 'Paid']);
+        $paid = Transactions::where('id', $transId)->update(['status' => 'Paid']);
+
         return redirect('documents')->with('success', 'Document paid!');
+    }
+
+    public function cancel($transId)
+    {
+        $cancel = Transactions::where('id', $transId)->update(['status' => 'Cancelled']);
+
+        return redirect('home')->with('danger', 'Document Request Cancelled!');
     }
 
     public function disapproved($transId, $userId)
     {
-        $paid = Transaction::where('id', $transId)->update(['status' => 'Disapproved']);
+        $paid = Transactions::where('id', $transId)->update(['status' => 'Disapproved']);
+        
         return redirect('documents')->with('danger', 'Document diapproved!');
     }
 

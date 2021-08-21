@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row my-1">
+                            {{-- <div class="form-group row my-1">
                                 <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                 
                                 <div class="col-md-6">
@@ -105,22 +105,11 @@
                                 <div class="col-md-6">
                                     <input readonly="true" id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group row my-1">
                                 <label for="civilStatus" class="col-md-4 col-form-label text-md-right">{{ __('Civil Status') }}</label>
                                 <div class="col-md-6">
-                                {{--   <input @if (Auth::user()->civilStatus == 'Single') return checked @endif id="civilStatus" type="radio" value="Single" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                  <label for="Single">Single</label>
-                                
-                                  <input @if (Auth::user()->civilStatus == 'Married') return checked @endif id="civilStatus" type="radio" value="Married" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                  <label for="Married">Married</label>
-                                
-                                  <input @if (Auth::user()->civilStatus == 'Widowed') return checked @endif id="civilStatus" type="radio" value="Widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                  <label for="Widowed">Widowed</label>
-
-                                  <input @if (Auth::user()->civilStatus == 'Divorced') return checked @endif id="civilStatus" type="radio" value="Divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" required autocomplete="civilStatus">
-                                  <label for="Divorce">Divorced</label> --}}
                                     <input readonly="true" id="civilStatus" type="text" class="form-control" name="civilStatus" value="{{ Auth::user()->civilStatus }}">
                                 </div>
                             </div>
@@ -139,8 +128,8 @@
                                 <div class="col-md-6">
                                     <select class="form-select" name="docType" id="docType" required>
                                             <option value>--Select Document Type--</option>
-                                    @foreach ($data as $type) 
-                                            <option value="{{ $type->id }}">{{ $type->docType }}</option>
+                                    @foreach ($doctypes as $doctype) 
+                                            <option value="{{ $doctype->id }}">{{ $doctype->docType }}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -168,7 +157,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row py-1">
+                            {{-- <div class="form-group row py-1">
                                 <label for="transMode" class="col-md-4 col-form-label text-md-right">{{ __('Transaction Mode') }}</label>
                                 
                                 <div class="col-md-6">
@@ -184,12 +173,12 @@
                                 <div class="col-md-6">
                                     <select class="form-select" name="paymentMode" id="paymentMode" autofocus>
                                         <option>Over the Counter</option>
-                                        {{-- <option>Gcash</option> --}}
+                                        <option>Gcash</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                            {{-- <input type="hidden" name="userId" value="{{ Auth::user()->id }}"> --}}
                             
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4 ">

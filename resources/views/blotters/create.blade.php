@@ -69,7 +69,7 @@
                                     </div>
                                 </div>
             
-                                <div class="form-group row my-1">
+                                {{-- <div class="form-group row my-1">
                                     <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                     
                                     <div class="col-md-6">
@@ -83,7 +83,7 @@
                                     <div class="col-md-6">
                                         <input readonly="true" id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
                                     </div>
-                                </div>
+                                </div> --}}
             
                                 {{-- <div class="form-group row my-1">
                                     <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
@@ -94,18 +94,33 @@
                                 </div> --}}
 
                                 <div class="form-group row my-1">
-                                    <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Details') }}</label>
+                                    <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Respondents') }}</label>
                                     
                                     <div class="col-md-6">
-                                        <textarea class="form-control" name="blotterDetails" id="blotterDetails" cols="30" rows="10" placeholder="Enter details here..." required></textarea>
+                                        <input class="form-control" name="respondents" id="respondents"  placeholder="Enter Respondents here..." required>
+                                    </div>
+                                </div>
+                                <div class="form-group row my-1">
+                                    <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Respondents Address') }}</label>
+                                    
+                                    <div class="col-md-6">
+                                        <input class="form-control" name="respondentsAdd" id="respondentsAdd"  placeholder="Enter Respondent's Address here..." required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group row my-1">
+                                    <label for="blotterDetails" class="col-md-4 col-form-label text-md-right">{{ __('Blotter Details *') }}</label>
+                                    
+                                    <div class="col-md-6">
+                                        <textarea class="form-control" name="blotDetails" id="blotDetails" cols="30" rows="10" placeholder="Enter details here..." required></textarea>
                                     </div>
                                 </div>
 
-                                @foreach ($smId as $id) 
+                                {{-- @foreach ($smId as $id) 
                                     <input type="hidden" name="smId" value="{{ $id->id }}">
-                                @endforeach
+                                @endforeach --}}
 
-                                <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                                {{-- <input type="hidden" name="userId" value="{{ Auth::user()->id }}"> --}}
                                 
                                 <div class="form-group row my-1">
                                     <div class="col-md-6 offset-md-4 ">

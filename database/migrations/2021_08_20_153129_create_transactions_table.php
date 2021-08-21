@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAvailedServicesTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,21 @@ class CreateAvailedServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('availed_services', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('userId');
-            $table->unsignedInteger('smId');
+            $table->unsignedInteger('serviceId');
+            $table->string('status');
             $table->timestamps();
             $table->foreign('userId')
-                ->references('id') 
-                ->on('users') 
-                ->onDelete('cascade');
-            $table->foreign('smId')
-                ->references('id') 
-                ->on('service_maintenances') 
-                ->onDelete('cascade');
+            ->references('id') 
+            ->on('users') 
+            ->onDelete('cascade');
+            $table->foreign('serviceId')
+            ->references('id') 
+            ->on('services') 
+            ->onDelete('cascade');
+
         });
     }
 
@@ -36,6 +38,6 @@ class CreateAvailedServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('availed_services');
+        Schema::dropIfExists('transactions');
     }
 }

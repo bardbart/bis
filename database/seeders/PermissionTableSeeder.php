@@ -16,7 +16,7 @@ class PermissionTableSeeder extends Seeder
     {
         $permissions = [
             //admin only
-            'user-barangay-official-list',
+            'res-barangay-official-list',
             'barangay-official-create',
             'barangay-official-edit',
             'barangay-official-delete',
@@ -48,9 +48,9 @@ class PermissionTableSeeder extends Seeder
 
             //Modules/pages
 
-            'user-module-request-document',
-            'user-module-file-complaint',
-            'user-module-file-blotter',
+            'res-module-request-document',
+            'res-module-file-complaint',
+            'res-module-file-blotter',
 
             'module-service-management',
             

@@ -56,12 +56,12 @@ Route::get('documents/disapprove/{transId}/{userId}', [DocumentsController::clas
 Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'paid']);
 
 //Cancelling of Document
-Route::delete('home/document/cancel/{transId}', [HomeController::class,'cancel'])->name('home.destroy');
+Route::delete('documents/cancel/{transId}', [DocumentsController::class,'cancel']);
 
 //Processing of Complaint
 Route::get('complaints/settle/{transId}/{userId}', [ComplaintsController::class,'settle']);
 Route::get('complaints/escalate/{transId}/{userId}', [ComplaintsController::class,'escalate']);
-Route::get('complaints/reject/{transId}/{userId}', [ComplaintsController::class,'reject']);
+Route::get('complaints/dismiss/{transId}/{userId}', [ComplaintsController::class,'dismiss']);
 
 //Processing of Blotters
 Route::get('blotters/note/{transId}/{userId}', [BlottersController::class,'noted']);

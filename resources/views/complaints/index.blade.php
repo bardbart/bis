@@ -55,11 +55,11 @@
       </thead>
     @if ($data->count() > 0)
       @foreach ($data as $comp)
-      @if ($comp->complainType != null)
+      {{-- @if ($comp->complainType != null) --}}
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
-            <td>{{ $comp->houseNo . ' ' . $comp->street . ' ' . $comp->city . ' ' . $comp->province }}</td>
+            <td>{{ $comp->houseNo . ' ' . $comp->street }}</td>
             <td>{{ $comp->respondents }}</td>
             <td>{{ $comp->respondentsAdd }}</td>
             <td>
@@ -69,7 +69,7 @@
               <td class="text-success"><b>{{ $comp->status }}</b></td>
             @elseif ($comp->status == "Escalated")
               <td class="text-warning"><b>{{ $comp->status }}</b></td>
-            @elseif ($comp->status == "Rejected")
+            @elseif ($comp->status == "Dismissed")
               <td class="text-danger"><b>{{ $comp->status }}</b></td>
             @else
               <td class="text-dark"><b>{{ $comp->status }}</b></td>
@@ -78,9 +78,9 @@
               <div>
                 @if ($comp->status == "Unsettled")
                   {{-- <div class="btn-group" role="group"> --}}
-                    <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->id }}/{{ $comp->userId }}">Settle</a> 
-                    <a class="btn btn-warning my-2" href="complaints/escalate/{{ $comp->id }}/{{ $comp->userId }}">Escalate</a> 
-                    <a class="btn btn-danger my-2" href="complaints/reject/{{ $comp->id }}/{{ $comp->userId }}">Reject</a> 
+                    <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->transId }}/{{ $comp->userId }}">Settle</a> 
+                    <a class="btn btn-warning my-2" href="complaints/escalate/{{ $comp->transId }}/{{ $comp->userId }}">Escalate</a> 
+                    <a class="btn btn-danger my-2" href="complaints/dismiss/{{ $comp->transId }}/{{ $comp->userId }}">Dismiss</a> 
                     <a class="btn btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
                     <a class="btn btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
                   {{-- </div> --}}
@@ -95,7 +95,7 @@
               
             </td>
           </tr>
-      @endif
+      {{-- @endif --}}
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModal{{$comp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -109,7 +109,7 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
-                          <textarea disabled class="form-control" id="message-text">{{ $comp->complainDetails }}</textarea>   
+                          <textarea disabled class="form-control" id="message-text">{{ $comp->compDetails }}</textarea>   
                       </div>
                     </form>
                   </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\Transactions;
 use App\Models\User;
 use Illuminate\Http\Request;
 // use App\Models\Transaction;
@@ -51,8 +51,6 @@ class ReportController extends Controller
         ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
         ->get();
 
-
-    
         $data3['pieChart3'] = DB::table('transactions')
         ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
         ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')

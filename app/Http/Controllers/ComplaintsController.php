@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Transactions;
 use App\Models\User;
-use App\Models\AvailedServices;
+// use App\Models\AvailedServices;
+use App\Models\ComplaintsTransactions;
 use App\Models\ServiceMaintenances;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
@@ -23,7 +25,7 @@ class ComplaintsController extends Controller
     function __construct()
     {
         $this->middleware(['auth','verified']);
-        $this->middleware('permission:user-module-file-complaint', ['only' => ['create','store']]);
+        $this->middleware('permission:res-module-file-complaint', ['only' => ['create','store']]);
         $this->middleware('permission:module-filed-complaints', ['only' => 'index']);
         $this->middleware('permission:complaint-view-complaint-form', ['only' => 'pdfViewComplaint']);
         $this->middleware('permission:complaint-save-complaint-form', ['only' => 'pdfSaveComplaint']);
@@ -47,30 +49,35 @@ class ComplaintsController extends Controller
     public function index(Request $request)
     {
         if($request->input('term')){
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 2)
+            $data = DB::table('complaints_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 2)
+            ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
+            ->orderBy('complaints_transactions.id','DESC')
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
-            ->select('transactions.id', 'users.firstName', 'users.lastName', 
-                    'users.houseNo', 'users.street', 'users.city', 'users.province', 
-                    'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
-                    'availed_services.userId', 'service_maintenances.complainType')
+            ->select('complaints_transactions.id', 'complaints_transactions.transId', 'complaints_transactions.compDetails', 
+                    'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                    'users.firstName','users.lastName', 'users.houseNo', 'users.street', 
+                    'transactions.status','transactions.userId')
             ->paginate(5);
             $data->appends($request->all());
 
         }else if(!$request->input('term')){
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 2)
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', 'users.firstName', 'users.lastName', 
-                    'users.houseNo', 'users.street', 'users.city', 'users.province', 
-                    'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd','transactions.status', 
-                    'availed_services.userId', 'service_maintenances.complainType')
+            $data = DB::table('complaints_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 2)
+            ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
+            ->orderBy('complaints_transactions.id','DESC')
+            ->select('complaints_transactions.id', 'complaints_transactions.transId', 'complaints_transactions.compDetails', 
+                    'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                    'users.firstName','users.lastName', 'users.houseNo', 'users.street', 
+                    'transactions.status','transactions.userId')
             ->paginate(5);
         }
         
@@ -78,212 +85,259 @@ class ComplaintsController extends Controller
         ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
-    public function pdfViewComplaint($transId, $userId) 
+    public function getDocData($transId, $userId)
     {
-        // $users = User::find($userId);
-        $users = DB::table('users')
+        $td = DB::table('complaints_transactions')
+        ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
+        ->join('users', 'users.id', '=', 'transactions.userId')
         ->where('users.id', $userId)
+        ->where('complaints_transactions.id', $transId)
+        ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
+                'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                'complaints_transactions.compDetails','users.lastName', 'users.firstName', 'users.houseNo', 'users.street')
         ->first();
-
+        
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
         ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'),
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        return compact('td', 'officials');
+    }
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'houseNo' => $users->houseNo,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+    public function pdfViewComplaint($transId, $userId) 
+    {
+        // $users = User::find($userId);
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        return view('complaints.form', compact('data', 'td', 'officials'));
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
+
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'),
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
+
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'houseNo' => $users->houseNo,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+
+        return view('complaints.form')->with('td', $td)->with('officials', $officials);
     }
 
     public function pdfSaveComplaint($transId, $userId) 
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
 
-        $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].'-'.'Complaint-Form.pdf');
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+        // $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
+        $pdf = PDF::loadView('complaints.form', ['td' => $td,  'officials' => $officials]);
+        return $pdf->download($td->lastName.'-'.'Complaint-Form.pdf');
     }
 
     public function pdfViewEscalate($transId, $userId)
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
 
-        return view('complaints.escalate', compact('data', 'td', 'officials'));
+        return view('complaints.escalate')->with('td', $td)->with('officials', $officials);
+
+
+        // return view('complaints.escalate', compact('data', 'td', 'officials'));
     }
 
     public function pdfSaveEscalate($transId, $userId)
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
 
-        $pdf = PDF::loadView('complaints.escalate', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].$data['firstName'].'-'.'Escalation-Form.pdf');
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+        // $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
+        $pdf = PDF::loadView('complaints.escalate', ['td' => $td,  'officials' => $officials]);
+        return $pdf->download($td->lastName.$td->firstName.'-'.'Escalation-Form.pdf');
+
+        // $pdf = PDF::loadView('complaints.escalate', compact('data', 'td', 'officials'));
+        // return $pdf->download($data['lastName'].$data['firstName'].'-'.'Escalation-Form.pdf');
     }
 
     public function pdfViewSettle($transId, $userId)
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
 
-        return view('complaints.settle', compact('data', 'td', 'officials'));
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+
+        return view('complaints.settle')->with('td', $td)->with('officials', $officials);
     }
 
     public function pdfSaveSettle($transId, $userId)
     {
         // $users = User::find($userId);
-        $users = DB::table('users')
-        ->where('users.id', $userId)
-        ->first();
+        // $users = DB::table('users')
+        // ->where('users.id', $userId)
+        // ->first();
 
-        $officials = DB::table('barangay_officials')
-        ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        ->get();
+        // $officials = DB::table('barangay_officials')
+        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
+        // ->get();
 
-        $td = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->join('users', 'users.id', '=', 'availed_services.userId')
-        ->where('service_maintenances.serviceId', 2)
-        ->where('users.id', $userId)
-        ->where('transactions.id', $transId)
-        ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
-                'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
-        ->get();
+        // $td = DB::table('transactions')
+        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        // ->join('users', 'users.id', '=', 'availed_services.userId')
+        // ->where('service_maintenances.serviceId', 2)
+        // ->where('users.id', $userId)
+        // ->where('transactions.id', $transId)
+        // ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //         DB::raw('concat(users.houseNo, " ", users.street," ",users.city," ",users.province) as "address"'), 
+        //         'transactions.complainDetails', 'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType')
+        // ->get();
 
-        $data = [
-            'lastName' => $users->lastName,
-            'firstName' => $users->firstName,
-            'civilStatus' => $users->civilStatus,
-            'citizenship' => $users->citizenship,
-            'address' => $users->houseNo.' '.$users->street.' '.$users->city,
-        ];
+        // $data = [
+        //     'lastName' => $users->lastName,
+        //     'firstName' => $users->firstName,
+        //     'civilStatus' => $users->civilStatus,
+        //     'citizenship' => $users->citizenship,
+        //     'address' => $users->houseNo.' '.$users->street.' '.$users->city,
+        // ];
 
-        $pdf = PDF::loadView('complaints.settle', compact('data', 'td', 'officials'));
-        return $pdf->download($data['lastName'].$data['firstName'].'-'.'Settlement-Form.pdf');
+        $document = $this->getDocData($transId, $userId);
+        $td = $document['td'];
+        $officials = $document['officials'];
+        // $pdf = PDF::loadView('complaints.form', compact('data', 'td', 'officials'));
+        $pdf = PDF::loadView('complaints.settle', ['td' => $td,  'officials' => $officials]);
+        return $pdf->download($td->lastName.'-'.'Settlement-Form.pdf');
     }
 
     /**
@@ -293,9 +347,9 @@ class ComplaintsController extends Controller
      */
     public function create()
     {
-        $data = ServiceMaintenances::all()->where('serviceId','=', 2);
+        // $data = ServiceMaintenances::all()->where('serviceId','=', 2);
         // dd($data);
-        return view('complaints.create', ['data' => $data]);
+        return view('complaints.create');
     }
 
     /**
@@ -306,25 +360,26 @@ class ComplaintsController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = Auth::User()->id;
+        $serviceId = 2;
         $request->validate([
-            'complainType' => 'required', 'integer',
-            'complainDetails' => 'required', 'string',
+            // 'complainType' => 'required', 'integer',
+            'compDetails' => 'required', 'string',
             'respondents' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
-            'respondentsAdd' => 'required', 'string',
-            'userId' => 'required', 'integer',
+            'respondentsAdd' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
         ]);
         
-        $availedService = AvailedServices::create([
-            'userId' => $request->userId,
-            'smId' => $request->complainType
+        $transId = Transactions::create([
+            'userId' => $userId,
+            'serviceId' => $serviceId,
+            'status' => 'Unsettled',               
         ]);
-
-        Transaction::create([  
-            'complainDetails' => $request->complainDetails,
+        
+        ComplaintsTransactions::create([  
+            'transId' => $transId->id,
+            'compDetails' => $request->compDetails,
             'respondents' => $request->respondents,
             'respondentsAdd' => $request->respondentsAdd,
-            'status' => 'Unsettled',
-            'availedServiceId' => $availedService->id
         ]);
         
         return redirect('home')->with('success', 'Complaint filed successfully!');
@@ -366,20 +421,20 @@ class ComplaintsController extends Controller
 
     public function settle($transId, $userId)
     {
-        $settled = Transaction::where('id', $transId)->update(['status' => 'Settled']);
+        $settled = Transactions::where('id', $transId)->update(['status' => 'Settled']);
         return redirect('complaints')->with('success', 'Complaint Settled!');
     }
 
     public function escalate($transId, $userId)
     {
-        $settled = Transaction::where('id', $transId)->update(['status' => 'Escalated']);
-        return redirect('complaints')->with('success', 'Complaint Escalated');
+        $settled = Transactions::where('id', $transId)->update(['status' => 'Escalated']);
+        return redirect('complaints')->with('warning', 'Complaint Escalated');
     }
 
-    public function reject($transId, $userId)
+    public function dismiss($transId, $userId)
     {
-        $settled = Transaction::where('id', $transId)->update(['status' => 'Rejected']);
-        return redirect('complaints')->with('danger', 'Complaint Rejected!');
+        $settled = Transactions::where('id', $transId)->update(['status' => 'Dismissed']);
+        return redirect('complaints')->with('danger', 'Complaint Dismissed!');
     }
 
     /**

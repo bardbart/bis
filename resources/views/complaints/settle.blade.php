@@ -41,7 +41,7 @@
 </style>
 
 <body>
-    @foreach ($td as $trans_data )
+
         <div class="header" align="center">
             <p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
             <p><img id="qr-code" 
@@ -50,34 +50,34 @@
                 ->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>
             <p>Republic of the Philippines <br>
             Province of Metro Manila <br>
-            City of Taguig <br>
-            <b> Barangay Lower Bicutan</b> <br>
+            City of (city) <br>
+            <b> Barangay (barangay)</b> <br>
             OFFICE OF THE LUPONG TAGAPAMAYAPA</p>
         </div>
 
         <div class="cr">
-            <p><u><b>{{ $data['firstName'] }} {{ $data['lastName'] }}</b></u></p>
-            <p>{{ $data['address'] }}</p>
+            <p><u><b>{{ $td->firstName }} {{ $td->lastName }}</b></u></p>
+            <p>{{ $td->houseNo . ' ' . $td->street }}</p>
             <p>--against--</p>
-            <p><u><b>{{ $trans_data->respondents }}</b></u></p>
-            <p>{{ $trans_data->respondentsAdd }}</p>
+            <p><u><b>{{ $td->respondents }}</b></u></p>
+            <p>{{ $td->respondentsAdd }}</p>
             <p align="center"><b>AMICABLE SETTLEMENT</b></p>
         </div>
 
         <div class="body">
             <p>We, complainant/s and respondent/s in the above-captioned case, do hereby agree to settle our dispute as follows:<br><br>
-                {{ $trans_data->complainDetails }} <br><br>
+                {{ $td->compDetails }} <br><br>
                 and bind ourselves to comply honest and faithfully with the above terms of settlement.
             </p>
         </div>
 
         <div class="footer">
-            <p>Entered into this day <b>{{ $trans_data->date }}</b></p>
+            <p>Entered into this day <b>{{ $td->date }}</b></p>
             <p>Complainant/s</p>
-            <p id="name"><u>{{ $data['firstName'] }} {{ $data['lastName'] }}</u></p>
+            <p id="name"><u>{{ $td->firstName }} {{ $td->lastName }}</u></p>
             <p>Respondent/s</p>
-            <p id="name"><u>{{ $trans_data->respondents }}</u></p>
-            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b></p><br>
+            <p id="name"><u>{{ $td->respondents }}</u></p>
+            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('j F, Y') }}</b></p><br>
             <p><b>ATTESTATION</b></p>
             <p>I hereby certify that the following amicable settlement was entered into by the parties freely and voluntarily, after I had explained to them the nature and consequence of such settlement</p>
             @foreach ($officials as $chairman)
@@ -87,6 +87,6 @@
                 @endif
 		    @endforeach
         </div>
-    @endforeach
+
 </body>
 </html>

@@ -70,7 +70,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row my-1">
+                                {{-- <div class="form-group row my-1">
                                     <label for="province" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
                                     
                                     <div class="col-md-6">
@@ -84,17 +84,9 @@
                                     <div class="col-md-6">
                                         <input readonly="true" id="city" type="text" class="form-control" name="city" value="{{ Auth::user()->city }}" autofocus>
                                     </div>
-                                </div>
-            
-                                {{-- <div class="form-group row my-1">
-                                    <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
-                                    
-                                    <div class="col-md-6">
-                                        <input id="citizenship" type="text" class="form-control" name="city" value="{{ Auth::user()->citizenship }}" autofocus>
-                                    </div>
                                 </div> --}}
             
-                                <div class="form-group row my-1">
+                                {{-- <div class="form-group row my-1">
                                     <label for="docType" class="col-md-4 col-form-label text-md-right">{{ __('Complaint Type') }}</label>
                                     
                                     <div class="col-md-6">
@@ -105,7 +97,7 @@
                                         @endforeach
                                     </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group row my-1">
                                     <label for="respondents" class="col-md-4 col-form-label text-md-right">{{ __('Respondent') }}</label>
@@ -126,7 +118,7 @@
                                     <div class="col-md-6">
                                         <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
 
-                                        <textarea class="form-control" @error('respondents') is-invalid @enderror placeholder="Enter address here..." name="respondentsAdd" id="respondentsAdd" cols="30" rows="5" required></textarea>
+                                        <textarea class="form-control" @error('respondents') is-invalid @enderror placeholder="Enter Respondent's Address here..." name="respondentsAdd" id="respondentsAdd" cols="30" rows="5" required></textarea>
                                     </div>
                                 </div>
 
@@ -136,11 +128,11 @@
                                     <div class="col-md-6">
                                         <!-- <input id="complainDetails" type="text" class="form-control" name="complainDetails"  autofocus> -->
 
-                                        <textarea class="form-control" placeholder="Enter details here..." name="complainDetails" id="complainDetails" cols="30" rows="5" required></textarea>
+                                        <textarea class="form-control" placeholder="Enter details here..." name="compDetails" id="compDetails" cols="30" rows="5" required></textarea>
                                     </div>
                                 </div>
                                 
-                                <input type="hidden" name="userId" value="{{ Auth::user()->id }}">
+                                {{-- <input type="hidden" name="userId" value="{{ Auth::user()->id }}"> --}}
                                 
                                 <div class="form-group row">
                                     <div class="col-md-6 offset-md-4 ">

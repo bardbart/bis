@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
-use App\Models\Transaction;
+use App\Models\Transactions;
 use App\Models\User;
-use App\Models\AvailedServices;
+// use App\Models\AvailedServices;
+use App\Models\BlottersTransactions;
 use App\Models\ServiceMaintenances;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +24,7 @@ class BlottersController extends Controller
     function __construct()
     {
         $this->middleware(['auth','verified']);
-        $this->middleware('permission:user-module-file-blotter', ['only' => ['create','store']]);
+        $this->middleware('permission:res-module-file-blotter', ['only' => ['create','store']]);
         $this->middleware('permission:module-filed-blotters',['only' => 'index']);
         $this->middleware('permission:blotter-note',['only' => ['noted']]);
         
@@ -37,25 +39,25 @@ class BlottersController extends Controller
     public function index(Request $request)
     {
         if($request->input('term')){
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 3)
+            $data = DB::table('blotters_transactions')
+            ->join('transactions', 'blotters_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
+            ->orderBy('blotters_transactions.id','DESC')
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
+            ->select('blotters_transactions.id', 'blotters_transactions.transId', 'blotters_transactions.blotDetails', 
+                    'users.firstName','users.lastName','users.houseNo', 'users.street',
+                    'transactions.status', 'transactions.userId')
             ->paginate(5);
             $data->appends($request->all());
 
         }else if(!$request->input('term')){
-            $data = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 3)
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', 'users.firstName','users.lastName', 
-                    'users.houseNo', 'users.street', 'users.city', 'users.province',
-                    'transactions.blotterDetails','service_maintenances.blotterType', 'transactions.status', 'availed_services.userId')
+            $data = DB::table('blotters_transactions')
+            ->join('transactions', 'blotters_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
+            ->orderBy('blotters_transactions.id','DESC')
+            ->select('blotters_transactions.id', 'blotters_transactions.transId', 'blotters_transactions.blotDetails', 
+                    'users.firstName','users.lastName','users.houseNo', 'users.street',
+                    'transactions.status', 'transactions.userId')
             ->paginate(5);
         }
    
@@ -70,11 +72,11 @@ class BlottersController extends Controller
      */
     public function create()
     {
-        $smId = DB::table('service_maintenances')
-        ->where('serviceId', 3)
-        ->select('id')
-        ->get();
-        return view('blotters.create', compact('smId'));
+        // $smId = DB::table('service_maintenances')
+        // ->where('serviceId', 3)
+        // ->select('id')
+        // ->get();
+        return view('blotters.create');
     }
 
     /**
@@ -85,21 +87,38 @@ class BlottersController extends Controller
      */
     public function store(Request $request)
     {
+        $userId = Auth::User()->id;
+        $serviceId = 3;
         $request->validate([
-            'blotterDetails' => 'required', 'integer',
-            'userId' => 'required', 'integer',
-            'smId' => 'required', 'integer',
+            'blotDetails' => 'required',
+            'respondents' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'respondentsAdd' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            // 'userId' => 'required', 'integer',
+            // 'smId' => 'required', 'integer',
         ]);
         
-        $availedService = AvailedServices::create([
-            'userId' => $request->userId,
-            'smId' => $request->smId
-        ]);
+        // $availedService = AvailedServices::create([
+        //     'userId' => $request->userId,
+        //     'smId' => $request->smId
+        // ]);
 
-        Transaction::create([
-            'availedServiceId' => $availedService->id,
-            'blotterDetails' => $request->blotterDetails,
-            'status' => 'Unread',
+        // Transaction::create([
+        //     'availedServiceId' => $availedService->id,
+        //     'blotterDetails' => $request->blotterDetails,
+        //     'status' => 'Unread',
+        // ]);
+
+        $transId = Transactions::create([
+            'userId' => $userId,
+            'serviceId' => $serviceId,
+            'status' => 'Unread',               
+        ]);
+        
+        BlottersTransactions::create([  
+            'transId' => $transId->id,
+            'blotDetails' => $request->blotDetails,
+            'respondents' => $request->respondents,
+            'respondentsAdd' => $request->respondentsAdd,
         ]);
 
         return redirect('home')->with('success', 'Blotter filed successfully!');
@@ -141,7 +160,7 @@ class BlottersController extends Controller
 
     public function noted($transId, $userId)
     {   
-        $noted = Transaction::where('id', $transId)->update(['status' => 'Noted']);
+        $noted = Transactions::where('id', $transId)->update(['status' => 'Noted']);
         return redirect('blotters')->with('success', 'Blotter noted!');
     }
 

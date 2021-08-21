@@ -24,9 +24,9 @@ class CreateUsersTable extends Migration
             $table->bigInteger('contactNo');
             $table->string('houseNo');
             $table->string('street');
-            $table->string('zipCode');
-            $table->string('city');
-            $table->string('province');
+            // $table->string('zipCode');
+            // $table->string('city');
+            // $table->string('province');
             $table->date('dob');
             $table->string('gender');
             $table->string('civilStatus');

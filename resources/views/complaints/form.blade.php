@@ -41,7 +41,7 @@
 </style>
 
 <body>
-    @foreach ($td as $trans_data )
+
         <div class="header" align="center">
             <p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
             <p><img id="qr-code" 
@@ -50,39 +50,39 @@
                 ->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>
             <p>Republic of the Philippines <br>
             Province of Metro Manila <br>
-            City of Taguig <br>
-            <b> Barangay Lower Bicutan</b> <br>
+            City of (barangay) <br>
+            <b> Barangay (barangay)</b> <br>
             OFFICE OF THE LUPONG TAGAPAMAYAPA</p>
         </div>
 
         <div class="cr">
-            <p><u><b>{{ $data['firstName'] }} {{ $data['lastName'] }}</b></u></p>
-            <p>{{ $data['address'] }}</p>
+            <p><u><b>{{ $td->firstName }} {{ $td->lastName }}</b></u></p>
+            <p>{{ $td->houseNo . ' ' . $td->street }}</p>
             <p>--against--</p>
-            <p><u><b>{{ $trans_data->respondents }}</b></u></p>
-            <p>{{ $trans_data->respondentsAdd }}</p>
+            <p><u><b>{{ $td->respondents }}</b></u></p>
+            <p>{{ $td->respondentsAdd }}</p>
             <p align="center"><b>C O M P L A I N T</b></p>
         </div>
 
         <div class="body">
             <p>I hereby complain against the above named respondent for violating my rights and interest in the following manner: <br><br>
-                {{ $trans_data->complainDetails }}
+                {{ $td->compDetails }}
             </p>
         </div>
 
         <div class="footer">
             <br>
-            <p>Made this day <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b> </p> <br>
-            <p id="name"><u>{{ $data['firstName'] }} {{ $data['lastName'] }}</u></p>
+            <p>Made this day <b>{{ Carbon\Carbon::now()->format('j F, Y') }}</b> </p> <br>
+            <p id="name"><u>{{ $td->firstName }} {{ $td->lastName }}</u></p>
             <p>Complainant's Signature</p> <br>
-            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b></p> <br>
-            @foreach ($officials as $chairman)
-                @if($chairman->position == 'Chairman')
-                    <p><u style="text-transform: uppercase">{{ $chairman->name }}</u><br>
+            <p>Recieved and filed this <b>{{ Carbon\Carbon::now()->format('j F, Y') }}</b></p> <br>
+            @foreach ($officials as $official)
+                @if($official->position == 'Chairman')
+                    <p><u style="text-transform: uppercase">{{ $official->name }}</u><br>
                     <b>Punong Barangay</b></p>
                 @endif
-		    @endforeach
+            @endforeach
         </div>
-    @endforeach
+
 </body>
 </html>

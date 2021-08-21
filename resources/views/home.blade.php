@@ -18,7 +18,7 @@
                         @endif
                         <h4>{{ __('Welcome '. Auth::user()->firstName .'!') }}</h4>
 
-                    @role('User')
+                    {{-- @role('Resident') --}}
                         <hr>
                         <h5 class="text-center">See your transactions for each module</h5>
                         {{-- Collapse Buttons --}}
@@ -55,7 +55,7 @@
                                             <td>{{ $docu->purpose }}</td>
                                             @if ($docu->status == "Unpaid")
                                                 <td class="text-danger"><b>{{ $docu->status }}</b></td>
-                                                <form action="{{ route('home.destroy', $docu->id) }}" method="POST">
+                                                <form action="documents/cancel/{{ $docu->transId }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <td><button onclick="return confirm('Are you sure you want to cancel?')" class="btn btn-danger">Cancel</button></td>
@@ -79,41 +79,39 @@
                         {{-- Complaints --}}
                         <div class="collapse" id="complaints">
                             <div class="card-header"><b>All Filed Complaints</b></div>
-                            <div class="card card-body">
-                                
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Date Filed</th>
-                                                <th>Complain Type</th>
-                                                <th>Complain Details</th>
-                                                <th>Respondents</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if($complaints->count() > 0)   
-                                            @foreach ($complaints as $comp)
-                                            <tr>
-                                                <td>{{ $comp->date }}</td>
-                                                <td>{{ $comp->complainType }}</td>
-                                                <td>{{ $comp->complainDetails }}</td>
-                                                <td>{{ $comp->respondents }}</td>
-                                                @if ($comp->status == "Settled")
-                                                    <td class="text-success"><b>{{ $comp->status }}</b></td>
-                                                @elseif ($comp->status == "Escalated")
-                                                    <td class="text-warning"><b>{{ $comp->status }}</b></td>
-                                                @else
-                                                    <td class="text-danger"><b>{{ $comp->status }}</b></td>
-                                                @endif 
-                                            </tr>
-                                            @endforeach
+                            <div class="card card-body">       
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date Filed</th>
+                                            {{-- <th>Complain Type</th> --}}
+                                            <th>Complain Details</th>
+                                            <th>Respondents</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if($complaints->count() > 0)   
+                                        @foreach ($complaints as $comp)
+                                        <tr>
+                                            <td>{{ $comp->date }}</td>
+                                            {{-- <td>{{ $comp->complainType }}</td> --}}
+                                            <td>{{ $comp->compDetails }}</td>
+                                            <td>{{ $comp->respondents }}</td>
+                                            @if ($comp->status == "Settled")
+                                                <td class="text-success"><b>{{ $comp->status }}</b></td>
+                                            @elseif ($comp->status == "Escalated")
+                                                <td class="text-warning"><b>{{ $comp->status }}</b></td>
                                             @else
-                                                <p style="color: rgb(255, 0, 0)">No available data</p>
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                
+                                                <td class="text-danger"><b>{{ $comp->status }}</b></td>
+                                            @endif 
+                                        </tr>
+                                        @endforeach
+                                        @else
+                                            <p style="color: rgb(255, 0, 0)">No available data</p>
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
                         </div> 
                         {{-- Blotters --}}
@@ -133,7 +131,7 @@
                                         @foreach ($blotters as $blot)
                                         <tr>
                                             <td>{{ $blot->date }}</td>
-                                            <td>{{ $blot->blotterDetails }}</td>
+                                            <td>{{ $blot->blotDetails }}</td>
                                             @if ($blot->status == "Unread")  
                                                 <td class="text-danger"><b>{{ $blot->status }}</b></td>
                                             @else
@@ -148,6 +146,7 @@
                                 </table>
                             </div>
                         </div>
+                        {{-- Cancelled Requests --}}
                         <div class="collapse" id="xdocuments">
                             <div class="card-header"><b>Cancelled Document Requests</b></div>
                             <div class="card card-body">
@@ -180,7 +179,7 @@
                             </div>
                         </div>
                     </div>
-                    @endrole    
+                    {{-- @endrole     --}}
                         
                     </div>
                 </div>

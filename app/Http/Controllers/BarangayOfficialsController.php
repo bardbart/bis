@@ -18,7 +18,7 @@ class BarangayOfficialsController extends Controller
     function __construct()
     {
         $this->middleware(['auth','verified']);
-        $this->middleware('permission:user-barangay-official-list', ['only' => ['index']]);
+        $this->middleware('permission:res-barangay-official-list', ['only' => ['index']]);
         $this->middleware('permission:barangay-official-create', ['only' => ['create','store']]);
         $this->middleware('permission:barangay-official-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:barangay-official-delete', ['only' => ['destroy']]);

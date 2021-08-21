@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Transaction;
+use App\Models\Transactions;
 use App\Models\User;
 use App\Models\AvailedServices;
 use App\Models\ServiceMaintenances;
@@ -28,58 +28,86 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request, Transaction $transaction)
+    public function index(Request $request, Transactions $transaction)
     {   
             $userId = Auth::user()->id;
     
-            $documents = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 1)
+            $documents = DB::table('documents_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 1)
+            ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+            ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+            ->join('users', 'transactions.userId', '=', 'users.id')
             ->where('users.id', $userId)
-            ->whereNull('transactions.deleted_at')
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
-                        'transactions.purpose', 'service_maintenances.docType', 'transactions.status')
+            ->where('transactions.status', '<>', 'Cancelled')
+            // ->whereNull('transactions.deleted_at')
+            ->orderBy('documents_transactions.id','DESC')
+            ->select('documents_transactions.id', DB::raw('date(documents_transactions.created_at) as "date"'), 
+                    'documents_transactions.purpose', 'documents_transactions.transId', 'document_types.docType', 
+                    'transactions.status')
             ->get();
+            // dd($documents);
     
-            $complaints = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 2)
+        //     $complaints = DB::table('transactions')
+        //     ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        //     ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        //     ->join('users', 'users.id', '=', 'availed_services.userId')
+        //     ->where('service_maintenances.serviceId', 2)
+        //     ->where('users.id', $userId)
+        //     ->orderBy('transactions.id','DESC')
+        //     ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 'transactions.complainDetails', 
+        //             'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType',
+        //             'transactions.status')
+        //     ->get();
+            $complaints = DB::table('complaints_transactions')
+            ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'users.id', '=', 'transactions.userId')
             ->where('users.id', $userId)
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"), 'transactions.complainDetails', 
-                    'transactions.respondents', 'transactions.respondentsAdd', 'service_maintenances.complainType',
+            ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
+                    'complaints_transactions.respondents','complaints_transactions.compDetails', 
                     'transactions.status')
             ->get();
     
-            $blotters = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 3)
+        //     $blotters = DB::table('transactions')
+        //     ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+        //     ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+        //     ->join('users', 'users.id', '=', 'availed_services.userId')
+        //     ->where('service_maintenances.serviceId', 3)
+        //     ->where('users.id', $userId)
+        //     ->orderBy('transactions.id','DESC')
+        //     ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
+        //             'transactions.blotterDetails', 'transactions.status')
+        //     ->get();
+            $blotters = DB::table('blotters_transactions')
+            ->join('transactions', 'blotters_transactions.transId', '=', 'transactions.id')
+            ->join('users', 'users.id', '=', 'transactions.userId')
             ->where('users.id', $userId)
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', DB::raw("date(transactions.created_at) as 'date'"),
-                    'transactions.blotterDetails', 'transactions.status')
+            ->select('blotters_transactions.id', DB::raw('date(blotters_transactions.created_at) as "date"'), 
+                    'blotters_transactions.respondents','blotters_transactions.blotDetails', 
+                    'transactions.status')
             ->get();
             
-            $xdocus = DB::table('transactions')
-            ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            ->join('users', 'users.id', '=', 'availed_services.userId')
-            ->where('service_maintenances.serviceId', 1)
+            $xdocus = DB::table('documents_transactions')
+            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
+            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
+            // ->join('users', 'users.id', '=', 'availed_services.userId')
+            // ->where('service_maintenances.serviceId', 1)
+            ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
+            ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
+            ->join('users', 'users.id', '=', 'transactions.userId')
             ->where('users.id', $userId)
-            ->whereNotNull('transactions.deleted_at')
-            ->orderBy('transactions.id','DESC')
-            ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'),
-                    DB::raw('date(transactions.deleted_at) as "cancelDate"'),
-                    'transactions.purpose', 'service_maintenances.docType', 'transactions.status')
+            ->where('transactions.status', 'Cancelled')
+            ->orderBy('documents_transactions.id','DESC')
+            ->select('documents_transactions.id', 
+                    DB::raw('date(documents_transactions.created_at) as "date"'), 
+                    DB::raw('date(documents_transactions.updated_at) as "cancelDate"'), 
+                    'documents_transactions.purpose', 'documents_transactions.transId', 'document_types.docType', 
+                    'transactions.status')
             ->get();
 
+        // return view('home', compact('documents', 'complaints', 'blotters', 'xdocus'));
         return view('home', compact('documents', 'complaints', 'blotters', 'xdocus'));
     }
 
@@ -103,13 +131,4 @@ class HomeController extends Controller
     //     }
     // }
 
-    public function cancel($transId)
-    {
-        $cancel = Transaction::where('id', $transId)->update(['status' => 'Cancelled']);
-        $docu = Transaction::where('id', $transId)->first();
-        if($docu->delete())
-            return redirect()->route('home');
-        else
-            abort(404);
-    }
 }

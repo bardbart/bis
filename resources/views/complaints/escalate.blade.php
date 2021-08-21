@@ -41,7 +41,7 @@
 </style>
 
 <body>
-    @foreach ($td as $trans_data )
+
         <div class="header" align="center">
             <p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
             <p><img id="qr-code" 
@@ -57,11 +57,11 @@
 
         <div class="cr">
             <p align="center"><b>CERTIFICATION TO FILE CASE</b></p>
-            <p><u><b>{{ $data['firstName'] }} {{ $data['lastName'] }}</b></u></p>
-            <p>{{ $data['address'] }}</p>
+            <p><u><b>{{ $td->firstName }} {{ $td->lastName }}</b></u></p>
+            <p>{{ $td->houseNo . ' ' . $td->street }}</p>
             <p>--against--</p>
-            <p><u><b>{{ $trans_data->respondents }}</b></u></p>
-            <p>{{ $trans_data->respondentsAdd }}</p>
+            <p><u><b>{{ $td->respondents }}</b></u></p>
+            <p>{{ $td->respondentsAdd }}</p>
         </div>
 
         <div class="body">
@@ -72,7 +72,7 @@
 
         <div class="footer">
             <br>
-            <p>This day <b>{{ Carbon\Carbon::now()->format('Y-m-d') }}</b></p><br>
+            <p>This day <b>{{ Carbon\Carbon::now()->format('j F, Y') }}</b></p><br>
             <p><b>ATTESTED:</b></p> <br>
             @foreach ($officials as $chairman)
                 @if($chairman->position == 'Chairman')
@@ -81,6 +81,6 @@
                 @endif
 		    @endforeach
         </div>
-    @endforeach
+
 </body>
 </html>

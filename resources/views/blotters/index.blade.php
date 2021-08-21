@@ -48,11 +48,11 @@
         </thead>
     @if ($data->count() > 0)  
         @foreach ($data as $blot)
-          @if ($blot->blotterType != null)
+          {{-- @if ($blot->blotterType != null) --}}
             <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $blot->firstName . ' ' . $blot->lastName }}</td>
-                <td>{{ $blot->houseNo . ' ' . $blot->street . ' ' . $blot->city . ' ' . $blot->province }}</td>
+                <td>{{ $blot->houseNo . ' ' . $blot->street}}</td>
                 <td>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $blot->id }}">Show</button>
                 </td>
@@ -63,13 +63,13 @@
                 @endif
                 <td>
                   @if ($blot->status == "Noted")
-                    <a class="btn disabled btn-success" href="blotters/note/{{ $blot->id }}/{{ $blot->userId }}">Note</a>
+                    <a class="btn disabled btn-success" href="blotters/note/{{ $blot->transId }}/{{ $blot->userId }}">Note</a>
                   @else
-                    <a class="btn btn-success" href="blotters/note/{{ $blot->id }}/{{ $blot->userId }}">Note</a> 
+                    <a class="btn btn-success" href="blotters/note/{{ $blot->transId }}/{{ $blot->userId }}">Note</a> 
                   @endif
                 </td>
             </tr>
-          @endif
+          {{-- @endif --}}
             <!-- Modal -->
             <div class="modal fade" id="exampleModal{{ $blot->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -81,7 +81,7 @@
                   <div class="modal-body">
                     <form>
                       <div class="form-group">
-                          <textarea disabled class="form-control" id="message-text">{{ $blot->blotterDetails }}</textarea>   
+                          <textarea disabled class="form-control" id="message-text">{{ $blot->blotDetails }}</textarea>   
                         </div>
                     </form>
                   </div>
