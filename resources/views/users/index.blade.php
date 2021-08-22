@@ -12,35 +12,36 @@
         <div class="float-start">
             <h2>Users Management</h2>
         </div>
-        {{-- <div class="float-end">
-            <a class="btn btn-success text-light" data-toggle="modal" id="largeButton" data-target="#largeModal"
+
+        <div class="float-end">
+            {{-- <a class="btn btn-success text-light" data-toggle="modal" id="extralargeButton" data-target="#extralargeModal"
             data-attr="{{ route('users.create') }}" title="create">
             <i class="fas fa-plus-circle" ></i>
-           </a>
-        </div> --}}
-        <div class="mx-auto float-end">
-            <div class="">
-                <form style="display: inline" action="{{ route('users.index') }}" method="GET" role="search">
+           </a> --}}
 
-                    <div class="input-group">
-                        <span class="input-group-btn mr-5 mt-1">
-                            <button class="btn btn-primary me-3 px-3" type="submit" title="Search user">
-                                <span class="fas fa-search"></span>
-                            </button>
-                        </span>
-                        <div class="form-outline">
-                            <input size="30" type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
-                        </div>
-                            <span class="input-group-btn mr-5 mt-1">
-                                <a href="{{ route('users.index') }}" class=" mt-1">
-                                    <button class="btn btn-success ms-3 px-3 " type="button" title="Refresh page">
-                                        <span class="fas fa-sync-alt"></span>
-                                    </button>
-                                </a>
-                            </span>
+           <a class="btn btn-success text-light" href="{{ route('users.create') }}"><i class="fas fa-plus-circle"></i></a>
+        </div>
+        
+        <div class="float-end "style="padding-right: 50px;">
+            <form style="display: inline" action="{{ route('users.index') }}" method="GET" role="search">
+                <div class="input-group">
+                    <span class="input-group-btn mr-5 mt-1">
+                        <button class="btn btn-primary me-3 px-3" type="submit" title="Search user">
+                            <span class="fas fa-search"></span>
+                        </button>
+                    </span>
+                    <div class="form-outline">
+                        <input size="30" type="text" class="form-control mr-2" name="term" placeholder="Search user" id="term">
                     </div>
-                </form>
-            </div>
+                    <span class="input-group-btn mr-5 mt-1">
+                        <a href="{{ route('users.index') }}" class=" mt-1">
+                            <button class="btn btn-success ms-3 px-3 " type="button" title="Refresh page">
+                                <span class="fas fa-sync-alt"></span>
+                            </button>
+                        </a>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -137,6 +138,23 @@
 <p class="text-center text-primary"><small>By Team Bard</small></p>
 
 
+<!-- extra large modal -->
+{{-- <div class="modal fade" id="extralargeModal" tabindex="-1" role="dialog" aria-labelledby="extralargeModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add User</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="extralargeBody">
+            <div>
+                <!-- the result to be displayed apply here -->       
+            </div>
+        </div>
+    </div>
+</div>
+</div> --}}
 <!-- large modal -->
 <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModalLabel"
 aria-hidden="true">
@@ -176,6 +194,31 @@ aria-hidden="true">
 
 
 <script>
+// display a modal (extra large modal)
+// $(document).on('click', '#extralargeButton', function(event) {
+//     event.preventDefault();
+//     let href = $(this).attr('data-attr');
+//     $.ajax({
+//         url: href,
+//         beforeSend: function() {
+//             $('#loader').show();
+//         },
+//         // return the result
+//         success: function(result) {
+//             $('#extralargeModal').modal("show");
+//             $('#extralargeBody').html(result).show();
+//         },
+//         complete: function() {
+//             $('#loader').hide();
+//         },
+//         error: function(jqXHR, testStatus, error) {
+//             console.log(error);
+//             alert("Page " + href + " cannot open. Error:" + error);
+//             $('#loader').hide();
+//         },
+//         timeout: 8000
+//     })
+// });
 // display a modal (large modal)
 $(document).on('click', '#largeButton', function(event) {
     event.preventDefault();
