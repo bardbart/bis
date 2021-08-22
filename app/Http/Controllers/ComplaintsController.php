@@ -391,9 +391,21 @@ class ComplaintsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($transId, $userId)
     {
-        //
+        $td = DB::table('complaints_transactions')
+        ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
+        ->join('users', 'users.id', '=', 'transactions.userId')
+        ->where('users.id', $userId)
+        ->where('complaints_transactions.id', $transId)
+        ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
+                'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                'complaints_transactions.compDetails','users.lastName', 'users.firstName', 'users.houseNo', 'users.street',
+                'transactions.status', 'transactions.userId')
+        ->first();
+        // dd($td);
+        
+        return view('complaints.show')->with('td', $td);
     }
 
     /**

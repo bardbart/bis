@@ -63,6 +63,9 @@ Route::get('complaints/settle/{transId}/{userId}', [ComplaintsController::class,
 Route::get('complaints/escalate/{transId}/{userId}', [ComplaintsController::class,'escalate']);
 Route::get('complaints/dismiss/{transId}/{userId}', [ComplaintsController::class,'dismiss']);
 
+//Showing of a Complaint
+Route::get('complaints/show/{transId}/{userId}', [ComplaintsController::class,'show']);
+
 //Processing of Blotters
 Route::get('blotters/note/{transId}/{userId}', [BlottersController::class,'noted']);
 

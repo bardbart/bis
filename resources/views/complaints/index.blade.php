@@ -45,10 +45,10 @@
           <tr>
           <th>No.</th>
           <th>Complainant</th>
-          <th>Complainant's Address</th>
+          {{-- <th>Complainant's Address</th> --}}
           <th>Respondent</th>
-          <th>Respondent's Address</th>
-          <th>Complaint Details</th>
+          {{-- <th>Respondent's Address</th> --}}
+          {{-- <th>Complaint Details</th> --}}
           <th>Status</th>
           <th width="450px">Action</th>
           </tr>
@@ -59,12 +59,12 @@
         <tr>
             <td>{{ ++$i }}</td>
             <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
-            <td>{{ $comp->houseNo . ' ' . $comp->street }}</td>
+            {{-- <td>{{ $comp->houseNo . ' ' . $comp->street }}</td> --}}
             <td>{{ $comp->respondents }}</td>
-            <td>{{ $comp->respondentsAdd }}</td>
-            <td>
+            {{-- <td>{{ $comp->respondentsAdd }}</td> --}}
+            {{-- <td>
                 <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">Show Details</button>
-            </td>
+            </td> --}}
             @if ($comp->status == "Settled") 
               <td class="text-success"><b>{{ $comp->status }}</b></td>
             @elseif ($comp->status == "Escalated")
@@ -75,24 +75,8 @@
               <td class="text-dark"><b>{{ $comp->status }}</b></td>
             @endif
             <td>
-              <div>
-                @if ($comp->status == "Unsettled")
-                  {{-- <div class="btn-group" role="group"> --}}
-                    <a class="btn btn-success my-2" href="complaints/settle/{{ $comp->transId }}/{{ $comp->userId }}">Settle</a> 
-                    <a class="btn btn-warning my-2" href="complaints/escalate/{{ $comp->transId }}/{{ $comp->userId }}">Escalate</a> 
-                    <a class="btn btn-danger my-2" href="complaints/dismiss/{{ $comp->transId }}/{{ $comp->userId }}">Dismiss</a> 
-                    <a class="btn btn-secondary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Complaint Form</a>
-                    <a class="btn btn-primary my-2" href="generate-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Complaint Form</a> 
-                  {{-- </div> --}}
-                @elseif ($comp->status == "Settled") 
-                  <a class="btn btn-secondary my-2" href="view-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Settle Form</a>
-                  <a class="btn btn-primary my-2" href="generate-settle-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Settle Form</a> 
-                @elseif ($comp->status == "Escalated")
-                  <a class="btn btn-secondary my-2" href="view-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}" target="_blank">View Escalation Form</a>
-                  <a class="btn btn-primary my-2" href="generate-escalate-pdf/{{ $comp->id }}/{{ $comp->userId }}">Save Escalation Form</a> 
-                @endif
-              </div>
-              
+                <a class="btn btn-primary my-2" href="complaints/show/{{ $comp->id }}/{{ $comp->userId }}">View</a> 
+                <a class="btn btn-primary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">View Complaint Form</a> 
             </td>
           </tr>
       {{-- @endif --}}
