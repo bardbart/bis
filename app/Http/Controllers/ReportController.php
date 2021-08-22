@@ -29,36 +29,22 @@ class ReportController extends Controller
     public function index()
     {
 
-
-
-        $data['pieChart'] = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->where('service_maintenances.serviceId', 1)
-        // ->whereYear('transactions.created_at', date('Y'))
+        $data['pieChart'] = DB::table('documents_transactions')
         ->groupBy('day_name')
         ->orderBy('count')
-        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
+        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(created_at) as 'day_name'"))
         ->get();
 
-        $data2['pieChart2'] = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->where('service_maintenances.serviceId', 2)
-        // ->whereYear('transactions.created_at', date('Y'))
+        $data2['pieChart2'] = DB::table('complaints_transactions')
         ->groupBy('day_name')
         ->orderBy('count')
-        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
+        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(created_at) as 'day_name'"))
         ->get();
 
-        $data3['pieChart3'] = DB::table('transactions')
-        ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        ->where('service_maintenances.serviceId', 3)
-        // ->whereYear('transactions.created_at', date('Y'))
+        $data3['pieChart3'] = DB::table('blotters_transactions')
         ->groupBy('day_name')
         ->orderBy('count')
-        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(transactions.created_at) as 'day_name'"))
+        ->select(DB::raw("COUNT(*) as count"), DB::raw("DAYNAME(created_at) as 'day_name'"))
         ->get();
     
 

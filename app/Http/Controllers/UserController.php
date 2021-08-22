@@ -55,14 +55,14 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function create()
-    // {
-    //     $roles = Role::pluck('name','name')->all();
+    public function create()
+    {
+        $roles = Role::pluck('name','name')->all();
 
-    //     // dd(compact('roles'));
-    //     // exit();
-    //     return view('users.create',compact('roles'));
-    // }
+        // dd(compact('roles'));
+        // exit();
+        return view('users.create',compact('roles'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -70,36 +70,37 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'lastName' => ['required', 'string', 'max:255'],
-    //         'firstName' => ['required', 'string', 'max:255'],
-    //         // 'middleName' => ['required', 'string', 'max:255'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-    //         'contactNo' => ['integer'],
-    //         'houseNo' => ['required', 'string'],
-    //         'street' => ['required', 'string'],
-    //         'zipCode' => ['required', 'integer'],
-    //         'province' => ['required', 'string'],
-    //         'city' => ['required', 'string'],
-    //         'dob' => ['required', 'date'],  
-    //         'gender' => ['required', 'string'],
-    //         'civilStatus' => ['required', 'string'],
-    //         'citizenship' => ['required', 'string'],
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'lastName' => ['required', 'regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'firstName' => ['required','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
+            'middleName' => ['nullable','regex:/^[a-zA-ZñÑ\s]+$/', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // 'contactNo' => ['required','regex:/^([0-9\s\-\+\(\)]*)$/','min:11'],
+            'contactNo' => ['required','digits:11'],
+            'houseNo' => ['required', 'string'],
+            'street' => ['required', 'string'],
+            // 'zipCode' => ['required', 'integer'],
+            // 'province' => ['required', 'string'],
+            // 'city' => ['required', 'string'],
+            'dob' => ['required', 'date'],  
+            'gender' => ['required', 'string'],
+            'civilStatus' => ['required', 'string'],
+            'citizenship' => ['required','regex:/^[a-zA-ZñÑ\s]+$/', 'string'],
 
-    //     ]);
+        ]);
     
-    //     $input = $request->all();
-    //     $input['password'] = Hash::make($input['password']);
-    
-    //     $user = User::create($input);
-    //     $user->assignRole($request->input('roles'));
-    
-    //     return redirect()->route('users.index')
-    //                     ->with('success','User created successfully');
-    // }
+        $input = $request->all();
+        $input['password'] = Hash::make($input['password']);
+        // dd($input);
+        $user = User::create($input);
+        $user->assignRole($request->input('roles'));
+        
+        return redirect()->route('users.index')
+                        ->with('success','User created successfully');
+    }
 
     /**
      * Display the specified resource.

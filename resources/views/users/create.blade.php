@@ -1,15 +1,15 @@
-{{-- @extends('layouts.app')
-@section('content')
+<x-layout>
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Create New User') }}</div>
-
-                    <div class="card-body"> --}}
+                    <div class="card-header"style="background-color: rgb(253, 135, 155);">{{ __('Create New User') }}</div>
+    
+                    <div class="card-body">
                         <form method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
                             @csrf
-
+    
                             
                             <div class="form-group row my-1">
                                 <label for="lastName" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
@@ -93,7 +93,7 @@
                                 <label for="contactNo" class="col-md-4 col-form-label text-md-right">{{ __('Contact Number') }}</label>
                                 
                                 <div class="col-md-6">
-                                    <input id="contactNo" type="tel" pattern="[0-9]{10}" placeholder="9123456789" class="form-control @error('contactNo') is-invalid @enderror" name="contactNo" value="{{ old('contactNo') }}" required autocomplete="contactNo">
+                                    <input id="contactNo" type="tel" pattern="[0-9]{11}" placeholder="09123456789" class="form-control @error('contactNo') is-invalid @enderror" name="contactNo" value="{{ old('contactNo') }}" required autocomplete="contactNo">
                                     
                                     @error('contactNo')
                                     <span class="invalid-feedback" role="alert">
@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group row my-1">
+                            {{-- <div class="form-group row my-1">
                                 <label for="zipCode" class="col-md-4 col-form-label text-md-right">{{ __('Zip Code') }}</label>
                                 
                                 <div class="col-md-6">
@@ -157,9 +157,9 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             
-                            <div class="form-group row my-1">
+                            {{-- <div class="form-group row my-1">
                                 <label for="city" class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
                                 
                                 <div class="col-md-6">
@@ -171,7 +171,7 @@
                                     </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
                             
                             <div class="form-group row my-1">
                                 <label for="dob" class="col-md-4 col-form-label text-md-right">{{ __('Date of birth') }}</label>
@@ -219,12 +219,12 @@
                                     
                                       <input id="civilStatus" type="radio" value="widowed" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="widowed">Widowed</label><br>
-
+    
                                       <input id="civilStatus" type="radio" value="divorced" class=" @error('civilStatus') is-invalid @enderror" name="civilStatus" value="{{ old('civilStatus') }}" required autocomplete="civilStatus">
                                       <label for="divorce">Divorced</label>
                                 </div>
                             </div>
-
+    
                             <div class="form-group row my-1">
                                 <label for="citizenship" class="col-md-4 col-form-label text-md-right">{{ __('Citizenship') }}</label>
                                 
@@ -252,7 +252,7 @@
                                 </div>
                                 
                             </div>
-
+    
                             <div class="form-group row my-1">
                                 <div class="col-md-6 offset-md-4 ">
                                     <button  type="submit" class="btn btn-primary" >
@@ -260,13 +260,12 @@
                                     </button>
                                 </div>
                             </div>
-
+    
                             
                         </form>
-                    {{-- </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-@endsection --}}
+</x-layout>

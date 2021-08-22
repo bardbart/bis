@@ -16,7 +16,7 @@ class CreateComplaintsTransactionsTable extends Migration
         Schema::create('complaints_transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('transId');
-            $table->string('compType');
+            $table->string('compType')->nullable();
             $table->string('compDetails');
             $table->string('respondents')->nullable();
             $table->string('respondentsAdd')->nullable();
