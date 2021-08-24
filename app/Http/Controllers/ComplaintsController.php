@@ -449,6 +449,11 @@ class ComplaintsController extends Controller
         return redirect('complaints')->with('danger', 'Complaint Dismissed!');
     }
 
+    public function recordHearing ()
+    {
+        //
+    }
+
     /**
      * Remove the specified resource from storage.
      *

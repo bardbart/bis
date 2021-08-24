@@ -19,21 +19,15 @@
         <thead class="table-dark">
             <tr>
                 <th>No.</th>
-                <th>Name of Service</th>
-                <th>Type of Service</th>
+                <th>Name of Document</th>
+                {{-- <th>Type of Service</th> --}}
                 {{-- <th width="280px">Action</th> --}}
             </tr>
         </thead>
-        @foreach ($services as $service)
+        @foreach ($docTypes as $docType)
             <tr>
-                <td>{{ $service->id }}</td>
-                @if($service->serviceId == 1)
-                    <td>{{ $service->docType }}</td>
-                    <td>Document</td>
-                @elseif($service->serviceId == 2)
-                    <td>{{ $service->complainType }}</td>
-                    <td>Complaint</td> 
-                @endif
+                <td>{{ $docType->id }}</td>
+                <td>{{ $docType->docType }}</td>
             </tr>
         @endforeach
     </table>

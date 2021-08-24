@@ -11,12 +11,12 @@
                                 {{ session('status') }}
                             </div>
                         @endif
+                        <h4>{{ __('Welcome '. Auth::user()->firstName .'!') }}</h4>
                         @if ($message = Session::get('success'))
                             <div class="alert alert-success" >
                                 <p>{{ $message }}</p>
                             </div>
                         @endif
-                        <h4>{{ __('Welcome '. Auth::user()->firstName .'!') }}</h4>
 
                     {{-- @role('Resident') --}}
                         <hr>

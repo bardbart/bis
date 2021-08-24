@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ServiceMaintenances;
+use App\Models\DocumentTypes;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
 
@@ -30,8 +30,9 @@ class ServicesController extends Controller
      */
     public function index()
     {
-        $services = ServiceMaintenances::all()->where('serviceId', '!=', 3);
-        return view('services.index', compact('services'));
+        $docTypes = DocumentTypes::all();
+        // dd($docTypes);
+        return view('services.index', ['docTypes' => $docTypes]);
     }
 
     /**
@@ -41,8 +42,7 @@ class ServicesController extends Controller
      */
     public function create()
     {
-        $serviceTypes = Services::all()->where('id', '!=', 3);
-        return view('services.create', compact('serviceTypes'));
+        return view('services.create');
     }
 
     /**

@@ -40,7 +40,7 @@
             </form>
         </div>
       </div>
-  <table class="table table-bordered table-hover">
+  <table class="table table-bordered table-hover"> 
       <thead class="table-dark">
           <tr>
           <th>No.</th>
@@ -50,7 +50,7 @@
           {{-- <th>Respondent's Address</th> --}}
           {{-- <th>Complaint Details</th> --}}
           <th>Status</th>
-          <th width="450px">Action</th>
+          <th width="200px">Action</th>
           </tr>
       </thead>
     @if ($data->count() > 0)
@@ -76,7 +76,6 @@
             @endif
             <td>
                 <a class="btn btn-primary my-2" href="complaints/show/{{ $comp->id }}/{{ $comp->userId }}">View</a> 
-                <a class="btn btn-primary my-2" href="view-complaint-pdf/{{ $comp->id }}/{{ $comp->userId }}">View Complaint Form</a> 
             </td>
           </tr>
       {{-- @endif --}}
