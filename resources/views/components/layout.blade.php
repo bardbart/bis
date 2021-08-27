@@ -54,11 +54,10 @@
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
+                                    @role('Admin')
                                       <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
-                                      {{-- @if (Auth::user()->hasRole('Admin'))
-                                        <li><a class="dropdown-item" href="{{ route('services.index') }}">Service Management</a></li>
-                                      @endif --}}
+                                    @endrole
                                     </ul>
                                   </li>
 
@@ -70,9 +69,9 @@
                                       Transactions
                                     </a>
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="{{ route('documents.index') }}">Requested Documents</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('complaints.index') }}">Filed Complaints</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('blotters.index') }}">Filed Blotters</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('documents.index') }}">Documents Management</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('complaints.index') }}">Complaints Management</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('blotters.index') }}">Blotters Management</a></li>
                                     </ul>
                                   </li>
                                 

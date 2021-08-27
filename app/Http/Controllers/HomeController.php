@@ -44,9 +44,9 @@ class HomeController extends Controller
             ->where('transactions.status', '<>', 'Cancelled')
             // ->whereNull('transactions.deleted_at')
             ->orderBy('documents_transactions.id','DESC')
-            ->select('documents_transactions.id', DB::raw('date(documents_transactions.created_at) as "date"'), 
+            ->select('documents_transactions.id',  'documents_transactions.transId', DB::raw('date(documents_transactions.created_at) as "date"'), 
                     'documents_transactions.purpose', 'documents_transactions.transId', 'document_types.docType', 
-                    'transactions.status')
+                    'documents_transactions.reason', 'transactions.status', 'transactions.userId')
             ->get();
             // dd($documents);
     
@@ -65,9 +65,10 @@ class HomeController extends Controller
             ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
             ->join('users', 'users.id', '=', 'transactions.userId')
             ->where('users.id', $userId)
+            ->orderBy('complaints_transactions.id','DESC')
             ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
                     'complaints_transactions.respondents','complaints_transactions.compDetails', 
-                    'transactions.status')
+                    'transactions.status', 'transactions.userId')
             ->get();
     
         //     $blotters = DB::table('transactions')
@@ -84,6 +85,7 @@ class HomeController extends Controller
             ->join('transactions', 'blotters_transactions.transId', '=', 'transactions.id')
             ->join('users', 'users.id', '=', 'transactions.userId')
             ->where('users.id', $userId)
+            ->orderBy('blotters_transactions.id','DESC')
             ->select('blotters_transactions.id', DB::raw('date(blotters_transactions.created_at) as "date"'), 
                     'blotters_transactions.respondents','blotters_transactions.blotDetails', 
                     'transactions.status')
@@ -103,8 +105,8 @@ class HomeController extends Controller
             ->select('documents_transactions.id', 
                     DB::raw('date(documents_transactions.created_at) as "date"'), 
                     DB::raw('date(documents_transactions.updated_at) as "cancelDate"'), 
-                    'documents_transactions.purpose', 'documents_transactions.transId', 'document_types.docType', 
-                    'transactions.status')
+                    'documents_transactions.purpose', 'documents_transactions.transId', 'documents_transactions.reason',
+                    'document_types.docType','transactions.status')
             ->get();
 
         // return view('home', compact('documents', 'complaints', 'blotters', 'xdocus'));

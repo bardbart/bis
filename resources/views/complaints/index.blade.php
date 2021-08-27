@@ -7,7 +7,6 @@
           </div>
       </div>
   </div>
-
   @if ($message = Session::get('success'))
     <div class="alert alert-success" >
       <p>{{ $message }}</p>
@@ -17,6 +16,7 @@
     <div class="alert alert-danger" >
       <p>{{ $message }}</p>
     </div>
+  
   @endif
   <div class="mx-auto float-end">
       <div class="">
@@ -44,30 +44,26 @@
       <thead class="table-dark">
           <tr>
           <th>No.</th>
+          <th>Date Filed</th>
           <th>Complainant</th>
           {{-- <th>Complainant's Address</th> --}}
           <th>Respondent</th>
           {{-- <th>Respondent's Address</th> --}}
           {{-- <th>Complaint Details</th> --}}
           <th>Status</th>
-          <th width="200px">Action</th>
+          <th>Action</th>
           </tr>
       </thead>
     @if ($data->count() > 0)
       @foreach ($data as $comp)
-      {{-- @if ($comp->complainType != null) --}}
         <tr>
             <td>{{ ++$i }}</td>
+            <td>{{ $comp->date }}</td>
             <td>{{ $comp->firstName. ' ' .$comp->lastName }}</td>
-            {{-- <td>{{ $comp->houseNo . ' ' . $comp->street }}</td> --}}
             <td>{{ $comp->respondents }}</td>
-            {{-- <td>{{ $comp->respondentsAdd }}</td> --}}
-            {{-- <td>
-                <button type="button" class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#exampleModal{{$comp->id}}">Show Details</button>
-            </td> --}}
             @if ($comp->status == "Settled") 
               <td class="text-success"><b>{{ $comp->status }}</b></td>
-            @elseif ($comp->status == "Escalated")
+            @elseif ($comp->status == "Escalated" || $comp->status == "On Going")
               <td class="text-warning"><b>{{ $comp->status }}</b></td>
             @elseif ($comp->status == "Dismissed")
               <td class="text-danger"><b>{{ $comp->status }}</b></td>
@@ -78,31 +74,6 @@
                 <a class="btn btn-primary my-2" href="complaints/show/{{ $comp->id }}/{{ $comp->userId }}">View</a> 
             </td>
           </tr>
-      {{-- @endif --}}
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal{{$comp->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Complaint Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-  
-                  <div class="modal-body">
-                    <form>
-                      <div class="form-group">
-                          <textarea disabled class="form-control" id="message-text">{{ $comp->compDetails }}</textarea>   
-                      </div>
-                    </form>
-                  </div>
-  
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
       @endforeach
     @else
       <h5 style="color: rgb(255, 0, 0)">No available data</h5> 

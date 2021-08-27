@@ -241,6 +241,7 @@ class DocumentsController extends Controller
                 'dmId' => $request->docType,
                 'purpose' => $request->purpose,
                 'barangayIdPath' => $newImageName,
+                'reason' => 'Still in Review'
             ]);
 
             return redirect('home')->with('success', 'Document requested successfully!');
@@ -282,7 +283,43 @@ class DocumentsController extends Controller
      */
     public function update($id, $userId)
     {
-        
+        //
+    }
+
+    public function reason(Request $request, $docId, $transId, $userId)
+    {
+        $request->validate([
+            'reason' => 'string',
+            'otherReason' => 'nullable',
+            'submit' => 'string',
+        ]);
+
+        // dd($transId);
+
+        if($request->otherReason == null)
+        {
+            DocumentsTransactions::where('id', $docId)->update(['reason' => $request->reason]);       
+        }
+        else    
+        {
+            DocumentsTransactions::where('id', $docId)->update(['reason' => $request->otherReason]);  
+        }
+
+        if($request->submit == 'process')
+        {
+            $this->process($transId, $userId);
+            return redirect('documents')->with('success', 'Document is ready to claim and user emailed!');
+        }
+        else if($request->submit == 'disapprove')
+        {
+            $this->disapproved($transId);
+            return redirect('documents')->with('danger', 'Document diapproved!');
+        }
+        else if($request->submit == 'cancel')
+        {
+            $this->cancel($transId);
+            return redirect('home')->with('danger', 'Document Request Cancelled!');
+        } 
     }
 
     public function process($transId, $userId)
@@ -292,30 +329,25 @@ class DocumentsController extends Controller
         $email = User::where('id', $userId)->pluck('email')->all();
         
         event(new ProcessRequestedDocument($email));
-
-        return redirect('documents')->with('success', 'Document ready to claim and user emailed!');       
     }
-
-    public function paid($transId, $userId)
+    
+    public function disapproved($transId)
     {
-        $paid = Transactions::where('id', $transId)->update(['status' => 'Paid']);
-
-        return redirect('documents')->with('success', 'Document paid!');
+        $paid = Transactions::where('id', $transId)->update(['status' => 'Disapproved']);
     }
-
+    
     public function cancel($transId)
     {
         $cancel = Transactions::where('id', $transId)->update(['status' => 'Cancelled']);
-
-        return redirect('home')->with('danger', 'Document Request Cancelled!');
     }
 
-    public function disapproved($transId, $userId)
+    public function paid($transId)
     {
-        $paid = Transactions::where('id', $transId)->update(['status' => 'Disapproved']);
-        
-        return redirect('documents')->with('danger', 'Document diapproved!');
+        $paid = Transactions::where('id', $transId)->update(['status' => 'Paid']);
+        return redirect('documents')->appends()->with('success', 'Document paid!');
     }
+
+
 
     /**
      * Remove the specified resource from storage.
