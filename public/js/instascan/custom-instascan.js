@@ -1,4 +1,4 @@
-let scanner = new Instascan.Scanner({ video: document.getElementById('preview')});
+let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: true});
 
 function getCameras()
 {
