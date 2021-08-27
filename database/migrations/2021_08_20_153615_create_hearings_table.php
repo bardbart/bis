@@ -17,6 +17,10 @@ class CreateHearingsTable extends Migration
             $table->unsignedInteger('compId');
             $table->string('details');
             $table->timestamps();
+            $table->foreign('compId')
+                ->references('id') 
+                ->on('complaints_transactions') 
+                ->onDelete('cascade');
         });
     }
 

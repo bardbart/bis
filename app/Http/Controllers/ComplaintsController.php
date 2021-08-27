@@ -8,6 +8,7 @@ use App\Models\Transactions;
 use App\Models\User;
 // use App\Models\AvailedServices;
 use App\Models\ComplaintsTransactions;
+use App\Models\Hearings;
 use App\Models\ServiceMaintenances;
 use App\Models\Services;
 use Illuminate\Support\Facades\DB;
@@ -58,8 +59,11 @@ class ComplaintsController extends Controller
             ->join('users', 'transactions.userId', '=', 'users.id')
             ->orderBy('complaints_transactions.id','DESC')
             ->where('users.lastName', 'Like', '%' . request('term') . '%')
+            ->orWhere('users.firstName', 'Like', '%' . request('term') . '%')
+            ->orWhere('complaints_transactions.respondents', 'Like', '%' . request('term') . '%')
             ->select('complaints_transactions.id', 'complaints_transactions.transId', 'complaints_transactions.compDetails', 
                     'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                    DB::raw('date(complaints_transactions.created_at) as "date"'),
                     'users.firstName','users.lastName', 'users.houseNo', 'users.street', 
                     'transactions.status','transactions.userId')
             ->paginate(5);
@@ -76,6 +80,7 @@ class ComplaintsController extends Controller
             ->orderBy('complaints_transactions.id','DESC')
             ->select('complaints_transactions.id', 'complaints_transactions.transId', 'complaints_transactions.compDetails', 
                     'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
+                    DB::raw('date(complaints_transactions.created_at) as "date"'),
                     'users.firstName','users.lastName', 'users.houseNo', 'users.street', 
                     'transactions.status','transactions.userId')
             ->paginate(5);
@@ -366,7 +371,7 @@ class ComplaintsController extends Controller
             // 'complainType' => 'required', 'integer',
             'compDetails' => 'required', 'string',
             'respondents' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
-            'respondentsAdd' => ['required','regex:/^[a-zA-ZñÑ\s]+$/','string', 'max:255'],
+            'respondentsAdd' => 'required','string',
         ]);
         
         $transId = Transactions::create([
@@ -391,21 +396,34 @@ class ComplaintsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($transId, $userId)
+    public function show($compId, $userId)
     {
         $td = DB::table('complaints_transactions')
         ->join('transactions', 'complaints_transactions.transId', '=', 'transactions.id')
         ->join('users', 'users.id', '=', 'transactions.userId')
         ->where('users.id', $userId)
-        ->where('complaints_transactions.id', $transId)
+        ->where('complaints_transactions.id', $compId)
         ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
                 'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
-                'complaints_transactions.compDetails','users.lastName', 'users.firstName', 'users.houseNo', 'users.street',
+                'complaints_transactions.compDetails', 'complaints_transactions.transId', 
+                'users.lastName', 'users.firstName', 'users.houseNo', 'users.street',
                 'transactions.status', 'transactions.userId')
         ->first();
-        // dd($td);
+
+        $hearings = DB::table('hearings')
+        ->join('complaints_transactions', 'hearings.compId', '=', 'complaints_transactions.id')
+        ->where('hearings.compId', $compId)
+        ->select('hearings.details', DB::raw('date(hearings.created_at) as "date"'))
+        ->get();
+        // dd($hearings[0]);
+
+        $hearingCounts = $hearings->count();
         
-        return view('complaints.show')->with('td', $td);
+        
+        return view('complaints.show')
+        ->with('td', $td)
+        ->with(['hearings' => $hearings])
+        ->with('hearingCounts', $hearingCounts);
     }
 
     /**
@@ -431,27 +449,38 @@ class ComplaintsController extends Controller
         //
     }
 
-    public function settle($transId, $userId)
+    public function settle($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Settled']);
         return redirect('complaints')->with('success', 'Complaint Settled!');
     }
 
-    public function escalate($transId, $userId)
+    public function escalate($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Escalated']);
         return redirect('complaints')->with('warning', 'Complaint Escalated');
     }
 
-    public function dismiss($transId, $userId)
+    public function dismiss($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Dismissed']);
         return redirect('complaints')->with('danger', 'Complaint Dismissed!');
     }
 
-    public function recordHearing ()
+    public function recordHearing(Request $request, $compId, $transId)
     {
-        //
+        $request->validate([
+            'details' => 'required',
+        ]);
+
+        Hearings::create([
+            'compId' => $compId,
+            'details' => $request->details,
+        ]);
+
+        $onGoing = Transactions::where('id', $transId)->update(['status' => 'On Going']);
+
+        return redirect()->back()->with('success', 'Hearing Details Recorded!');
     }
 
     /**

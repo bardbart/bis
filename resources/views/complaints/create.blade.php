@@ -141,6 +141,11 @@
                                         </button>
                                     </div>
                                 </div>
+                                @if ($errors->any()) 
+                                    @foreach ($errors->all() as $error)
+                                        {{ $error }}
+                                    @endforeach
+                                @endif
                             </form>
                         </div>
                 </div>
