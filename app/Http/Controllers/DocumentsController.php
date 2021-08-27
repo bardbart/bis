@@ -348,15 +348,9 @@ class DocumentsController extends Controller
     }
     public function scan()
     {
-
-<<<<<<< HEAD
-
-
-=======
         $instascanJS = true;
         return view('scanner.scanView', compact('instascanJS'));
     }
->>>>>>> 74f66983730af8a565d22cc996cd902062f6f7c4
     /**
      * Remove the specified resource from storage.
      *

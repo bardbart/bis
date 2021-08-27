@@ -57,14 +57,11 @@
                                     @role('Admin')
                                       <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
-<<<<<<< HEAD
                                     @endrole
-=======
                                       <li><a class="dropdown-item" href="/documents/scan">Document Scanner</a></li>
                                       {{-- @if (Auth::user()->hasRole('Admin'))
                                         <li><a class="dropdown-item" href="{{ route('services.index') }}">Service Management</a></li>
                                       @endif --}}
->>>>>>> 74f66983730af8a565d22cc996cd902062f6f7c4
                                     </ul>
                                   </li>
 

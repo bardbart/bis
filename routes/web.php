@@ -40,6 +40,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 //Documents
 Route::get('documents/view-document-pdf/{transId}/{userId}',[DocumentsController::class, 'pdfViewDocument']);
 Route::get('documents/generate-document-pdf/{transId}/{userId}',[DocumentsController::class, 'pdfSaveDocument']);
+
 //Complaints
 Route::get('complaints/show/view-complaint-pdf/{transId}/{userId}',[ComplaintsController::class, 'pdfViewComplaint']);
 Route::get('complaints/show/generate-complaint-pdf/{transId}/{userId}',[ComplaintsController::class, 'pdfSaveComplaint']);
@@ -52,17 +53,16 @@ Route::get('complaints/show/generate-escalate-pdf/{transId}/{userId}',[Complaint
 
 //Processing of Document
 Route::get('documents/process/{transId}/{userId}', [DocumentsController::class,'process']);
-<<<<<<< HEAD
 Route::get('documents/disapprove/{transId}', [DocumentsController::class,'disapproved']);
 Route::get('documents/paid/{transId}', [DocumentsController::class,'paid']);
 
 //Reason for Documents
 Route::post('documents/process/{docId}/{transId}/{userId}', [DocumentsController::class,'reason']);
-=======
 Route::get('documents/disapprove/{transId}/{userId}', [DocumentsController::class,'disapproved']);
 Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'paid']);
+
+//Scan Documents
 Route::get('documents/scan', [DocumentsController::class,'scan']);
->>>>>>> 74f66983730af8a565d22cc996cd902062f6f7c4
 
 //Cancelling of Document
 Route::delete('documents/cancel/{transId}', [DocumentsController::class,'cancel']);
