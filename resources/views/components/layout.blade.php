@@ -56,6 +56,7 @@
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
                                       <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
+                                      <li><a class="dropdown-item" href="/documents/scan">Document Scanner</a></li>
                                       {{-- @if (Auth::user()->hasRole('Admin'))
                                         <li><a class="dropdown-item" href="{{ route('services.index') }}">Service Management</a></li>
                                       @endif --}}
@@ -109,4 +110,6 @@
             {{ $slot }}
         </div>
     </main>
+
+    @yield('custom-scripts')
 </html>

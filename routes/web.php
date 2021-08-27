@@ -54,6 +54,7 @@ Route::get('generate-escalate-pdf/{transId}/{userId}',[ComplaintsController::cla
 Route::get('documents/process/{transId}/{userId}', [DocumentsController::class,'process']);
 Route::get('documents/disapprove/{transId}/{userId}', [DocumentsController::class,'disapproved']);
 Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'paid']);
+Route::get('documents/scan', [DocumentsController::class,'scan']);
 
 //Cancelling of Document
 Route::delete('documents/cancel/{transId}', [DocumentsController::class,'cancel']);

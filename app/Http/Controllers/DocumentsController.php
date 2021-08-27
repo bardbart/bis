@@ -316,7 +316,12 @@ class DocumentsController extends Controller
         
         return redirect('documents')->with('danger', 'Document diapproved!');
     }
+    public function scan()
+    {
 
+        $instascanJS = true;
+        return view('scanner.scanView', compact('instascanJS'));
+    }
     /**
      * Remove the specified resource from storage.
      *
