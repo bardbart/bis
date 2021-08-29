@@ -57,13 +57,13 @@
                     </div>
                   <!-- End of Modal -->    
                   <hr>
-                  <a disable class="btn @if ( $hearingCounts == 3 || $td->status == 'Dismissed' || $td->status == 'Escalated' || $td->status == 'Settled') return disabled @endif btn-success float-start" data-bs-toggle="modal" data-bs-target="#record-hearing">Record Hearing</a>
+                  <a class="btn @if ( $hearingCounts == 3 || $td->status == 'Dismissed' || $td->status == 'Escalated' || $td->status == 'Settled') return disabled @endif btn-success float-start" data-bs-toggle="modal" data-bs-target="#record-hearing">Record Hearing</a>
                   <a onclick="history.back()" class="btn btn-primary float-end">Back</a>
                 </div>
               </div>
               {{-- Modal for Record Hearing --}}
               <div class="modal fade" id="record-hearing" tabindex="-1" aria-labelledby="recordhearingLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="recordhearingLabel">Hearing Details</h5>
@@ -74,7 +74,7 @@
                         @csrf
                         <div class="my-1">
                           <label for="details" class="col-form-label"><b>Input Hearing Details:</b></label>
-                          <textarea class="form-control" name="details" id="details" rows="10" placeholder="Input details here..."></textarea>
+                          <textarea class="form-control summernote" name="details" id="details" rows="10" placeholder="Input details here..."></textarea>
                         </div>
                         <div class="float-end my-3">
                           <button type="submit" class="btn btn-primary">Save Details</button>
@@ -122,7 +122,7 @@
                   @endif
                   @for ($ctr = 1; $ctr <= $hearingCounts; $ctr++)
                     <button type="button" class="btn btn-outline-info my-2" data-bs-toggle="modal" data-bs-target="#hearing-{{$ctr}}">Hearing No. {{ $ctr }}</button><br>
-                      <!-- Modal -->
+                      <!-- Hearing View Modal -->
                       <div class="modal fade" id="hearing-{{$ctr}}" tabindex="-1" aria-labelledby="hearingLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -147,7 +147,7 @@
                         </div>
                       </div>
                       </div>
-                    <!-- End of Modal -->
+                    <!-- End of Hearing View Modal -->
                   @endfor
                 </div>
               </div>

@@ -61,7 +61,7 @@ class DocumentsController extends Controller
             ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
                     'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
                     'transactions.status', 'transactions.userId', 'document_types.docType')
-            ->paginate(8);
+            ->paginate(6);
             $data->appends($request->all());
             // dd($data);
         }
@@ -79,11 +79,11 @@ class DocumentsController extends Controller
             ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
                     'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
                     'transactions.status', 'transactions.userId', 'document_types.docType')
-            ->paginate(5);
+            ->paginate(6);
         }
            
         return view('documents.index', compact('data'))
-        ->with('i', ($request->input('page', 1) - 1) * 5);
+        ->with('i', ($request->input('page', 1) - 1) * 6);
     }
 
     public function getDocData($transId, $userId)
