@@ -15,5 +15,6 @@ class Transactions extends Model
         'userId',
         'serviceId',
         'status',
+        'unique_code',
     ];
 }

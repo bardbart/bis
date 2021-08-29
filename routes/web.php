@@ -63,6 +63,7 @@ Route::get('documents/paid/{transId}/{userId}', [DocumentsController::class,'pai
 
 //Scan Documents
 Route::get('documents/scan', [DocumentsController::class,'scan']);
+Route::get('documents/checkDoc', [DocumentsController::class,'checkDoc']);
 
 //Cancelling of Document
 Route::delete('documents/cancel/{transId}', [DocumentsController::class,'cancel']);

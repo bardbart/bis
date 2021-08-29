@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->unsignedInteger('serviceId');
             $table->string('status');
             $table->timestamps();
+            $table->string('unique_code');
             $table->foreign('userId')
             ->references('id') 
             ->on('users') 

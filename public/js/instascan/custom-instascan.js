@@ -43,21 +43,21 @@ function isCodeValid(valid, result)
 {
     let code = document.getElementById('code');
     let codeIndicator = document.getElementById('codeIndicator');
-    let orderRedirect = document.getElementById('orderRedirect');
+    let detailsRedirect = document.getElementById('detailsRedirect');
 
     if(valid)
     {
         code.value = result;
         codeIndicator.style.color = 'green';
-        orderRedirect.href = result;
-        orderRedirect.style.display = 'block';
+        detailsRedirect.href = result;
+        detailsRedirect.style.display = 'block';
     }
     else
     {
         code.value = 'Invalid Code';
         codeIndicator.style.color = 'red';
-        orderRedirect.href = '#';
-        orderRedirect.style.display = 'none';
+        detailsRedirect.href = '#';
+        detailsRedirect.style.display = 'none';
     }
 }
 function openCamera()
@@ -66,7 +66,7 @@ function openCamera()
     let select = document.getElementById('videoSource');
     let cameraName = document.getElementById('cameraName');
     let cameraId = document.getElementById('cameraId');
-    let urlformat = /^(http:\/\/127\.0\.0\.1\:8000\/orders\/o\/)[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}$/;
+    // let urlformat = /^(http:\/\/127\.0\.0\.1\:8000\/details\/o\/)[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}$/;
     /* Video Constraints */
     let videoConstraints = {};
     videoConstraints.deviceId = {exact: select.value};
@@ -108,10 +108,10 @@ function openCamera()
     {
         if(result != null)
         {
-            if(urlformat.test(result))
+            // if(urlformat.test(result))
                 isCodeValid(true, result);
-            else
-                isCodeValid(false, result);
+            // else
+            //     isCodeValid(false, result);
         }
         else
             document.getElementById('code').value = '';
