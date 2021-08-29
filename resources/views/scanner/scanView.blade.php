@@ -8,6 +8,7 @@
 
         
     </x-section>
+    @section('title', 'QR Scanner')
     <div class="container" style="margin-top: 100px;" id="main-container">
         <div class="row justify-content-center">
             <div class="col-md-8">

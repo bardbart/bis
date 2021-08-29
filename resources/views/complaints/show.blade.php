@@ -7,6 +7,16 @@
               <p>{{ $message }}</p>
             </div>
            @endif
+          @if ($message = Session::get('warning'))
+            <div class="alert alert-warning" >
+              <p>{{ $message }}</p>
+            </div>
+           @endif
+          @if ($message = Session::get('danger'))
+            <div class="alert alert-danger" >
+              <p>{{ $message }}</p>
+            </div>
+           @endif
           <div class="col-sm-6">
               <div class="card">
                 <div style="background-color: rgb(253, 135, 155);" class="card-header">Complaint Details</div>
@@ -92,11 +102,11 @@
                 <div class="card-body">
                   <h5 class="card-title">Status</h5>
                   @if ($td->status == "Settled")
-                    <a class="btn btn-secondary my-2" href="/view-settle-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Settle Form</a><br>
-                    <a class="btn btn-primary my-2" href="/generate-settle-pdf/{{ $td->id }}/{{ $td->userId }}">Save Settle Form</a><br>
+                    <a class="btn btn-secondary my-2" href="/complaints/show/view-settle-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Settle Form</a><br>
+                    <a class="btn btn-primary my-2" href="/complaints/show/generate-settle-pdf/{{ $td->id }}/{{ $td->userId }}">Save Settle Form</a><br>
                   @elseif ($td->status == "Escalated")
-                    <a class="btn btn-secondary my-2" href="/view-escalate-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Escalation Form</a><br>
-                    <a class="btn btn-primary my-2" href="/generate-escalate-pdf/{{ $td->id }}/{{ $td->userId }}">Save Escalation Form</a><br>
+                    <a class="btn btn-secondary my-2" href="/complaints/show/view-escalate-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Escalation Form</a><br>
+                    <a class="btn btn-primary my-2" href="/complaints/show/generate-escalate-pdf/{{ $td->id }}/{{ $td->userId }}">Save Escalation Form</a><br>
                   @elseif ($td->status == "Dismissed") 
                     <b class="text-danger">No Actions Required</b>
                   @elseif ($hearingCounts == 3)

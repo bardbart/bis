@@ -60,7 +60,8 @@ class DocumentsController extends Controller
             ->orWhere('document_types.docType', 'Like', '%' . request('term') . '%')
             ->orderBy('documents_transactions.id','DESC')
             ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
-                    'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
+                    'documents_transactions.barangayIdPath', DB::raw('date(documents_transactions.created_at) as "date"'),
+                    'users.firstName', 'users.lastName', 'users.email', 
                     'transactions.status', 'transactions.userId', 'document_types.docType')
             ->paginate(6);
             $data->appends($request->all());
@@ -78,7 +79,8 @@ class DocumentsController extends Controller
             ->join('users', 'users.id', '=', 'transactions.userId')
             ->orderBy('documents_transactions.id','DESC')
             ->select('documents_transactions.id', 'documents_transactions.transId', 'documents_transactions.purpose', 
-                    'documents_transactions.barangayIdPath', 'users.firstName', 'users.lastName', 'users.email', 
+                    'documents_transactions.barangayIdPath', DB::raw('date(documents_transactions.created_at) as "date"'),
+                    'users.firstName', 'users.lastName', 'users.email', 
                     'transactions.status', 'transactions.userId', 'document_types.docType')
             ->paginate(6);
         }
@@ -346,7 +348,7 @@ class DocumentsController extends Controller
     public function paid($transId)
     {
         $paid = Transactions::where('id', $transId)->update(['status' => 'Paid']);
-        return redirect('documents')->appends()->with('success', 'Document paid!');
+        return redirect('documents')->with('success', 'Document paid!');
     }
 
     public function checkDoc(Request $request)

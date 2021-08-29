@@ -453,19 +453,19 @@ class ComplaintsController extends Controller
     public function settle($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Settled']);
-        return redirect('complaints')->with('success', 'Complaint Settled!');
+        return redirect()->back()->with('success', 'Complaint Settled!');
     }
 
     public function escalate($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Escalated']);
-        return redirect('complaints')->with('warning', 'Complaint Escalated');
+        return redirect()->back()->with('warning', 'Complaint Escalated!');
     }
 
     public function dismiss($transId)
     {
         $settled = Transactions::where('id', $transId)->update(['status' => 'Dismissed']);
-        return redirect('complaints')->with('danger', 'Complaint Dismissed!');
+        return redirect()->back()->with('danger', 'Complaint Dismissed!');
     }
 
     public function recordHearing(Request $request, $compId, $transId)

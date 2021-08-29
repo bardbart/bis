@@ -51,11 +51,12 @@
             <tr>
             <th onclick="sortTable(0)">No.</th>
             <th onclick="sortTable(1)">Name</th>
-            <th onclick="sortTable(2)">Email</th>
-            <th onclick="sortTable(3)">Document</th>
-            <th onclick="sortTable(4)">Purpose</th>
-            <th onclick="sortTable(5)">Barangay ID</th>
-            <th onclick="sortTable(6)">Status</th>
+            <th onclick="sortTable(2)">Date Requested</th>
+            <th onclick="sortTable(3)">Email</th>
+            <th onclick="sortTable(4)">Document</th>
+            <th onclick="sortTable(5)">Purpose</th>
+            <th onclick="sortTable(6)">Barangay ID</th>
+            <th onclick="sortTable(7)">Status</th>
             <th width="280px">Action</th>
             </tr>
         </thead>
@@ -65,6 +66,7 @@
                 <tr>
                     <td>{{ ++$i }}</td>
                     <td>{{ $trans->firstName. ' ' .$trans->lastName}}</td>
+                    <td>{{ $trans->date}}</td>
                     <td>{{ $trans->email }}</td>
                     <td>{{ $trans->docType }}</td>
                     <td>{{ $trans->purpose }}</td>
