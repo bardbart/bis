@@ -14,6 +14,7 @@ use App\Models\Services;
 use App\Models\BarangayOfficials;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade;
+use Illuminate\Support\Facades\Hash;
 use PDF;
 
 class DocumentsController extends Controller
@@ -96,13 +97,12 @@ class DocumentsController extends Controller
         ->where('documents_transactions.id', $transId)
         ->select('documents_transactions.id', DB::raw('date(documents_transactions.created_at) as "date"'), 
                 'documents_transactions.purpose', 'document_types.docType',
-                'users.lastName', 'users.firstName', 'users.civilStatus', 'users.citizenship', 'users.houseNo')
+                'users.lastName', 'users.firstName', 'users.civilStatus', 'users.citizenship', 'users.houseNo','transactions.unique_code')
         ->first();
-        
         $officials = DB::table('barangay_officials')
         ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
         ->get();
-
+        
         return compact('td', 'officials');
     }
 
@@ -233,7 +233,9 @@ class DocumentsController extends Controller
                 // 'transMode' => $request->transMode,
                 'serviceId' => $serviceId,
                 // 'paymentMode' => $request->paymentMode,
-                'status' => 'Unpaid',               
+                'status' => 'Unpaid',
+                'unique_code' => sha1(time()),
+
             ]);
 
             DocumentsTransactions::create([
@@ -346,11 +348,18 @@ class DocumentsController extends Controller
         $paid = Transactions::where('id', $transId)->update(['status' => 'Paid']);
         return redirect('documents')->appends()->with('success', 'Document paid!');
     }
+
+    public function checkDoc(Request $request)
+    {
+        $result = Transactions::where('unique_code',$request->input('code'))->pluck('unique_code')->toArray();
+        return view('scanner.resultView', ['result' => $result]);
+    }
     public function scan()
     {
         $instascanJS = true;
         return view('scanner.scanView', compact('instascanJS'));
     }
+
     /**
      * Remove the specified resource from storage.
      *

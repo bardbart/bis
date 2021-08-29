@@ -99,7 +99,7 @@ class ComplaintsController extends Controller
         ->where('complaints_transactions.id', $transId)
         ->select('complaints_transactions.id', DB::raw('date(complaints_transactions.created_at) as "date"'), 
                 'complaints_transactions.respondents', 'complaints_transactions.respondentsAdd',
-                'complaints_transactions.compDetails','users.lastName', 'users.firstName', 'users.houseNo', 'users.street')
+                'complaints_transactions.compDetails','users.lastName', 'users.firstName', 'users.houseNo', 'users.street','transactions.unique_code')
         ->first();
         
         $officials = DB::table('barangay_officials')
@@ -377,7 +377,8 @@ class ComplaintsController extends Controller
         $transId = Transactions::create([
             'userId' => $userId,
             'serviceId' => $serviceId,
-            'status' => 'Unsettled',               
+            'status' => 'Unsettled',
+            'unique_code' => sha1(time()),               
         ]);
         
         ComplaintsTransactions::create([  

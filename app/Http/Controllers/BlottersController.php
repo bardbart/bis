@@ -111,7 +111,8 @@ class BlottersController extends Controller
         $transId = Transactions::create([
             'userId' => $userId,
             'serviceId' => $serviceId,
-            'status' => 'Unread',               
+            'status' => 'Unread', 
+            'unique_code' => sha1(time()),              
         ]);
         
         BlottersTransactions::create([  

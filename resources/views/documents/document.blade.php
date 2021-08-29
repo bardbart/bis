@@ -56,7 +56,7 @@
 			<p><img id="qr-code" 
 				src="data:image/png;base64,{!! base64_encode(QrCode::format('png')
 				->size(100)
-				->generate($qr = "Issued on: " . Carbon\Carbon::now() . " | Issued by: " . Auth::user()->firstName . " " . Auth::user()->lastName)) !!}"></p>	
+				->generate($td->unique_code)) !!}"></p>	
 			<p>Republic of the Philippines <br>
 			Province of (province) <br>
 			City of (city)<br>
