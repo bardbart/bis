@@ -1,5 +1,5 @@
 <x-layout>
-
+    @section('title', 'Create New User')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -244,7 +244,7 @@
                                 
                                 <div class="col-md-6">
                                     {{-- {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!} --}}
-                                    <select name="roles" class="custom-select custom-select-md mb-3">
+                                    <select name="roles" class="form-select custom-select custom-select-md mb-3">
                                         @foreach ($roles as $role)
                                             <option value="{{ $role }}">{{ $role }}</option>
                                         @endforeach

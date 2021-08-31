@@ -49,10 +49,6 @@ class DocumentsController extends Controller
         if($request->input('term'))
         {
             $data = DB::table('documents_transactions')
-            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            // ->join('users', 'users.id', '=', 'availed_services.userId')
-            // ->where('service_maintenances.serviceId', 1)
             ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
             ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
             ->join('users', 'transactions.userId', '=', 'users.id')
@@ -65,15 +61,10 @@ class DocumentsController extends Controller
                     'transactions.status', 'transactions.userId', 'document_types.docType')
             ->paginate(6);
             $data->appends($request->all());
-            // dd($data);
         }
         else if(!$request->input('term'))
         {
             $data = DB::table('documents_transactions')
-            // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-            // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-            // ->join('users', 'users.id', '=', 'availed_services.userId')
-            // ->where('service_maintenances.serviceId', 1)
             ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
             ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
             ->join('users', 'users.id', '=', 'transactions.userId')
@@ -110,40 +101,6 @@ class DocumentsController extends Controller
 
     public function pdfViewDocument($transId, $userId) 
     {
-        // $users = User::find($userId);
-        // $users = DB::table('users')
-        // ->where('users.id', $userId)
-        // ->first();
-        // dd($users);
-
-        // $officials = DB::table('barangay_officials')
-        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        // ->get();
-
-        // $td = DB::table('documents_transactions')
-        // // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        // // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        // // ->join('users', 'users.id', '=', 'availed_services.userId')
-        // // ->where('service_maintenances.serviceId', 1)
-        // ->join('transactions', 'documents_transactions.transId', '=', 'transactions.id')
-        // ->join('document_types', 'documents_transactions.dmId', '=', 'document_types.id')
-        // ->join('users', 'users.id', '=', 'transactions.userId')
-        // ->where('users.id', $userId)
-        // ->where('documents_transactions.id', $transId)
-        // ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
-        //         'transactions.purpose', 'service_maintenances.docType')
-        // ->get();
-
-        // $data = [
-        //     'lastName' => $users->lastName,
-        //     'firstName' => $users->firstName,
-        //     'civilStatus' => $users->civilStatus,
-        //     'citizenship' => $users->citizenship,
-        //     'houseNo' => $users->houseNo,
-        //     'city' => $users->city,
-        //     'province' => $users->province
-        // ];
-
         $document = $this->getDocData($transId, $userId);
         $td = $document['td'];
         $officials = $document['officials'];
@@ -152,38 +109,6 @@ class DocumentsController extends Controller
 
     public function pdfSaveDocument($transId, $userId) 
     {
-        // $users = User::find($userId);
-        // $users = DB::table('users')
-        // ->where('users.id', $userId)
-        // ->first();
-
-        // $officials = DB::table('barangay_officials')
-        // ->select(DB::raw('concat(firstName, " ", lastName) as "name"'), 'position')
-        // ->get();
-        
-        // $td = DB::table('transactions')
-        // ->join('availed_services', 'transactions.availedServiceId', '=', 'availed_services.id')
-        // ->join('service_maintenances', 'availed_services.smId', '=', 'service_maintenances.id')
-        // ->join('users', 'users.id', '=', 'availed_services.userId')
-        // ->where('service_maintenances.serviceId', 1)
-        // ->where('users.id', $userId)
-        // ->where('transactions.id', $transId)
-        // ->select('transactions.id', DB::raw('date(transactions.created_at) as "date"'), 
-        //             'transactions.purpose', 'service_maintenances.docType')
-        // ->get();
-
-        // $type = $td->pluck('docType');
-
-        // $data = [
-        //     'lastName' => $users->lastName,
-        //     'firstName' => $users->firstName,
-        //     'civilStatus' => $users->civilStatus,
-        //     'citizenship' => $users->citizenship,
-        //     'houseNo' => $users->houseNo,
-        //     'city' => $users->city,
-        //     'province' => $users->province
-        // ];
-
         $document = $this->getDocData($transId, $userId);
         $td = $document['td'];
         $officials = $document['officials'];
@@ -201,8 +126,6 @@ class DocumentsController extends Controller
     public function create()
     {  
         $doctypes = DocumentTypes::select('id','docType')->get();
-        // dd($data);
-        // exit;
         return view('documents.create', compact('doctypes'));
     }
 

@@ -103,7 +103,7 @@
                             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#process{{ $trans->id }}">Process</a>
                             <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#disapprove{{ $trans->id }}">Disapprove</a>
                         @elseif($trans->status == 'Ready to Claim')
-                            <a class="btn btn-primary" href="documents/paid/{{ $trans->transId }}">Paid</a>
+                            <a class="btn btn-primary" onclick="return confirm('Are your sure to proceed?')" href="documents/paid/{{ $trans->transId }}">Paid</a>
                             <a class="btn btn-secondary" href="documents/view-document-pdf/{{ $trans->id }}/{{ $trans->userId }}" target="_blank">View</a>
                             <a class="btn btn-success" href="documents/generate-document-pdf/{{ $trans->id }}/{{ $trans->userId }}">Save PDF</a>
                         @elseif($trans->status == 'Paid')

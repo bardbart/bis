@@ -12,6 +12,8 @@
 
 	#brgy-logo{
 		float: left;
+		height: 100px; 
+		width: auto;
 	}
 
 	#qr-code{
@@ -52,11 +54,13 @@
 <body>
 	
 		<div class="header" align="center">
-			<p><img id="brgy-logo" src="{{ asset('images/brgy-logo.png') }}" style="height: 100px; width: auto;"></p>
-			<p><img id="qr-code" 
+			<img id="brgy-logo" src="{{ asset('/images/brgy-logo.png') }}">
+			{{-- <img id="brgy-logo" src="./images/brgy-logo.png"> --}}
+			{{-- <img id="brgy-logo" src="data:image/png;base64, ./images/brgy-logo.png"> --}}
+			<img id="qr-code" 
 				src="data:image/png;base64,{!! base64_encode(QrCode::format('png')
 				->size(100)
-				->generate($td->unique_code)) !!}"></p>	
+				->generate($td->unique_code)) !!}">
 			<p>Republic of the Philippines <br>
 			Province of (province) <br>
 			City of (city)<br>
@@ -112,7 +116,7 @@
 				<br><br>
 				This Certification is being issued upon the request of the interested party connection with the requirement for whatever legal purposes that may serve them best, in this case it is a {{ $td->purpose }} requirement.
 				<br><br>
-				Issued on this date <b>{{ Carbon\Carbon::now()->format('j F, Y') }}</b>, from the Barangay Information System, Brgy. (barangay), (city), (province), Philippines.
+				Issued on this date <b>{{ Carbon\Carbon::now()->format('jS F, Y') }}</b>, from the Barangay Information System, Brgy. (barangay), (city), (province), Philippines.
 				</p>
 			</div>
 		@elseif ($td->docType = "Clearance")
@@ -140,7 +144,6 @@
 			@endif
 		@endforeach
     </div>
-
 
 </body>
 </html>

@@ -55,7 +55,7 @@
                                       <textarea readonly class="form-control" id="message-text" rows="10">{{ $td->compDetails }}</textarea>   
                                   </div>
                               </form> --}}
-                              <b>Hearing Details:</b><br>
+                              <b>Complaint Details:</b><br>
                               <p>{{ $td->compDetails }}</p>
                             </div>
             
@@ -111,16 +111,16 @@
                     <b class="text-danger">No Actions Required</b>
                   @elseif ($hearingCounts == 3)
                     @role('Admin')
-                      <a class="btn btn-outline-success my-2" title="Settle the Complaint" href="/complaints/show/settle/{{ $td->transId }}">Settle</a>
-                      <a class="btn btn-outline-warning my-2" title="Escalate the Complaint" href="/complaints/show/escalate/{{ $td->transId }}">Escalate</a>
-                      <a class="btn btn-outline-danger my-2" title="Dismiss the Complaint" href="/complaints/show/reject/{{ $td->transId }}">Dismiss</a><br>
+                      <a class="btn btn-outline-success my-2" onclick="return confirm('Are your sure to proceed?')" title="Settle the Complaint" href="/complaints/show/settle/{{ $td->transId }}">Settle</a>
+                      <a class="btn btn-outline-warning my-2" onclick="return confirm('Are your sure to proceed?')" title="Escalate the Complaint" href="/complaints/show/escalate/{{ $td->transId }}">Escalate</a>
+                      <a class="btn btn-outline-danger my-2" onclick="return confirm('Are your sure to proceed?')" title="Dismiss the Complaint" href="/complaints/show/reject/{{ $td->transId }}">Dismiss</a><br>
                     @endrole 
                     <a class="btn btn-outline-primary my-2" href="/complaints/show/view-complaint-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Complaint Form</a><br> 
                     <a class="btn btn-outline-secondary my-2" href="/complaints/show/generate-complaint-pdf/{{ $td->id }}/{{ $td->userId }}">Save Complaint Form</a><br> 
                   @else
                     @role('Admin')
-                      <a class="btn btn-outline-success my-2" title="Settle the Complaint" href="/complaints/show/settle/{{ $td->transId }}">Settle</a> 
-                      <a class="btn btn-outline-danger my-2" title="Dismiss the Complaint" href="/complaints/show/dismiss/{{ $td->transId }}">Dismiss</a><br>
+                      <a class="btn btn-outline-success my-2" onclick="return confirm('Are your sure to proceed?')" title="Settle the Complaint" href="/complaints/show/settle/{{ $td->transId }}">Settle</a> 
+                      <a class="btn btn-outline-danger my-2" onclick="return confirm('Are your sure to proceed?')" title="Dismiss the Complaint" href="/complaints/show/dismiss/{{ $td->transId }}">Dismiss</a><br>
                     @endrole 
                     <a class="btn btn-outline-primary my-2" href="/complaints/show/view-complaint-pdf/{{ $td->id }}/{{ $td->userId }}" target="_blank">View Complaint Form</a><br> 
                     <a class="btn btn-outline-secondary my-2" href="/complaints/show/generate-complaint-pdf/{{ $td->id }}/{{ $td->userId }}">Save Complaint Form</a><br> 
@@ -149,7 +149,7 @@
                             <b>Hearing Details:</b><br>
                             <p>{{ $hearings[$ctr - 1]->details }}</p><br>
                             <b>Date Hearing Recorded:</b><br>
-                            <p>{{ Carbon\Carbon::parse($hearings[$ctr - 1]->date)->format('jS F, Y')}}</b>
+                            <p>{{ Carbon\Carbon::parse($hearings[$ctr - 1]->date)->format('l - jS F, Y')}}</b>
                           </div>          
                           <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

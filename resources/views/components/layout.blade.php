@@ -23,7 +23,6 @@
 
 </head>
 
-    <header class="header-wrapper">
         <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               
@@ -55,7 +54,7 @@
                                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDarkDropdownMenuLink">
                                       <li><a class="dropdown-item" href="{{ route('documents.create') }}">Request Document</a></li>
                                     @role('Admin')
-                                      <li><a class="dropdown-item" href="{{ route('complaints.create') }}">File Complaint</a></li>
+                                      <li><a class="dropdown-item" href="{{ route('complaints.create') }}">Record Complaint</a></li>
                                       <li><a class="dropdown-item" href="{{ route('blotters.create') }}">File Blotter</a></li>
                                     @endrole
                                       <li><a class="dropdown-item" href="/documents/scan">Document Scanner</a></li>
@@ -103,8 +102,6 @@
             </div>
             
         </nav>
-
-    </header>
     
     
     <main class="py-4">

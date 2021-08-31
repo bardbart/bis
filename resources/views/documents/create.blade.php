@@ -21,7 +21,7 @@
                             <h2>Request Documents</h2>
                         </div>
                         <div class="float-end">
-                            <a class="btn btn-primary" href="{{ route('home') }}"> Back</a>
+                            <a class="btn btn-primary" href="{{ route('home') }}">Back</a>
                         </div>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
                                 
                                 <div class="col-md-6">
                                     <select class="form-select" name="docType" id="docType" required>
-                                            <option value>--Select Document Type--</option>
+                                        <option value>--Select Document Type--</option>
                                     @foreach ($doctypes as $doctype) 
                                             <option value="{{ $doctype->id }}">{{ $doctype->docType }}</option>
                                     @endforeach

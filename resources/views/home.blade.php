@@ -35,10 +35,10 @@
                         {{-- Collapse Buttons --}}
                         <div class="d-flex justify-content-center">
                             {{-- <button class="btn btn-outline-primary me-2">All Transactions</button> --}}
-                            <button class="btn btn-outline-primary me-2" data-bs-toggle="collapse" href="#documents" role="button" aria-expanded="false" aria-controls="documents">Requested Documents</button>
-                            <button class="btn btn-outline-warning me-2" data-bs-toggle="collapse" href="#complaints" role="button" aria-expanded="false" aria-controls="complaints">Complaints Filed</button>
-                            <button class="btn btn-outline-success me-2" data-bs-toggle="collapse" href="#blotters" role="button" aria-expanded="false" aria-controls="blotters">Blotters Filed</button>
-                            <button class="btn btn-outline-danger me-2" data-bs-toggle="collapse" href="#xdocuments" role="button" aria-expanded="false" aria-controls="xdocuments">Cancelled Requests</button>
+                            <button class="btn btn-outline-primary mx-2" data-bs-toggle="collapse" href="#documents" role="button" aria-expanded="false" aria-controls="documents">Requested Documents</button>
+                            <button class="btn btn-outline-warning mx-2" data-bs-toggle="collapse" href="#complaints" role="button" aria-expanded="false" aria-controls="complaints">Complaints Filed</button>
+                            <button class="btn btn-outline-success mx-2" data-bs-toggle="collapse" href="#blotters" role="button" aria-expanded="false" aria-controls="blotters">Blotters Filed</button>
+                            <button class="btn btn-outline-danger mx-2" data-bs-toggle="collapse" href="#xdocuments" role="button" aria-expanded="false" aria-controls="xdocuments">Cancelled Requests</button>
                         </div>
                         <hr>
                         <p><b>Results</b></p>
@@ -92,7 +92,7 @@
 
                                                                     <div class="form-group my-1"> 
                                                                         <input type="radio" name="reason" value="Changed my mind" onclick="cancelOthers{{ $docu->id }}()">
-                                                                        <label>Change my mind</label>
+                                                                        <label>Changed my mind</label>
                                                                     </div>
 
                                                                     <div class="form-group my-1">

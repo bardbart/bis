@@ -48,6 +48,7 @@ Route::get('complaints/show/view-settle-pdf/{transId}/{userId}',[ComplaintsContr
 Route::get('complaints/show/generate-settle-pdf/{transId}/{userId}',[ComplaintsController::class, 'pdfSaveSettle']);
 Route::get('complaints/show/view-escalate-pdf/{transId}/{userId}',[ComplaintsController::class, 'pdfViewEscalate']);
 Route::get('complaints/show/generate-escalate-pdf/{transId}/{userId}',[ComplaintsController::class, 'pdfSaveEscalate']);
+Route::get('/autocomplete-search', [ComplaintsController::class, 'autocompleteSearch'])->name('autocomplete');
 
 // Route::get('generate-pdf/{id}', [PDFController::class, 'generatePDF']);
 
