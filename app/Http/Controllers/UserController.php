@@ -97,7 +97,13 @@ class UserController extends Controller
         // dd($input);
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
-        
+
+        if($request->input('roles')== 'Resident'){
+            $user->syncPermissions(DB::table('permissions')->where('name', 'like', '%res%')->pluck('name'));
+        } else {
+            $user->syncPermissions(DB::table('permissions')->pluck('name'));
+        }
+
         return redirect()->route('users.index')
                         ->with('success','User created successfully');
     }

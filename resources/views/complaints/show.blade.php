@@ -1,22 +1,22 @@
 <x-layout>
     @section('title', 'Complaint Details')
     <div class="container">
+        @if ($message = Session::get('success'))
+          <div class="alert alert-success" >
+              <p>{{ $message }}</p>
+          </div>
+         @endif
+        @if ($message = Session::get('warning'))
+          <div class="alert alert-warning" >
+              <p>{{ $message }}</p>
+          </div>
+         @endif
+        @if ($message = Session::get('danger'))
+          <div class="alert alert-danger" >
+              <p>{{ $message }}</p>
+          </div>
+         @endif
         <div class="row justify-content-center">
-          @if ($message = Session::get('success'))
-            <div class="alert alert-success" >
-              <p>{{ $message }}</p>
-            </div>
-           @endif
-          @if ($message = Session::get('warning'))
-            <div class="alert alert-warning" >
-              <p>{{ $message }}</p>
-            </div>
-           @endif
-          @if ($message = Session::get('danger'))
-            <div class="alert alert-danger" >
-              <p>{{ $message }}</p>
-            </div>
-           @endif
           <div class="col-sm-6">
               <div class="card">
                 <div style="background-color: rgb(253, 135, 155);" class="card-header">Complaint Details</div>
@@ -67,7 +67,9 @@
                     </div>
                   <!-- End of Modal -->    
                   <hr>
-                  <a class="btn @if ( $hearingCounts == 3 || $td->status == 'Dismissed' || $td->status == 'Escalated' || $td->status == 'Settled') return disabled @endif btn-success float-start" data-bs-toggle="modal" data-bs-target="#record-hearing">Record Hearing</a>
+                  @role('Admin')
+                    <a class="btn @if ( $hearingCounts == 3 || $td->status == 'Dismissed' || $td->status == 'Escalated' || $td->status == 'Settled') return disabled @endif btn-success float-start" data-bs-toggle="modal" data-bs-target="#record-hearing">Record Hearing</a>
+                  @endrole
                   <a onclick="history.back()" class="btn btn-primary float-end">Back</a>
                 </div>
               </div>
@@ -147,7 +149,8 @@
                                 </div>
                             </form> --}}
                             <b>Hearing Details:</b><br>
-                            <p>{{ $hearings[$ctr - 1]->details }}</p><br>
+                            {{-- <p>{{ $hearings[$ctr - 1]->details }}</p><br> --}}
+                            <p>{!! nl2br(e($hearings[$ctr - 1]->details)) !!}</p><br>
                             <b>Date Hearing Recorded:</b><br>
                             <p>{{ Carbon\Carbon::parse($hearings[$ctr - 1]->date)->format('l - jS F, Y')}}</b>
                           </div>          

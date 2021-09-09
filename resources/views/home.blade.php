@@ -121,7 +121,7 @@
                                             @else
                                                 <td class="text-success"><b>{{ $docu->status }}</b></td>
                                                 <td><b>None</b></td>
-                                                <td class="text-success"><b>Done</b></td>
+                                                <td class="text-success"><b>{{ $docu->reason }}</b></td>
                                             @endif
                                         </tr>
                                         <script>

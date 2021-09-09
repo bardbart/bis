@@ -38,7 +38,7 @@
                                 {{-- <div id="complainant" style="display: none"> --}}
                                     {{-- <b>Inside</b><br> --}}
                                     <div class="form-group row my-1">
-                                        <label for="complainant" class="col-md-4 col-form-label text-md-right">{{ __('Complainant Name*') }}</label>
+                                        <label for="complainantId" class="col-md-4 col-form-label text-md-right">{{ __('Complainant Name*') }}</label>
                                         
                                         <div class="col-md-6">
                                             {{-- <input type="text" id="complainant" name="complainant" placeholder="Search" class="form-control"> --}}

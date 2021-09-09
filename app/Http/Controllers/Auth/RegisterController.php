@@ -97,9 +97,9 @@ class RegisterController extends Controller
             'citizenship' => $data['citizenship'],
         ]);
 
-        $user->assignRole('User');
+        $user->assignRole('Resident');
 
-        $user->syncPermissions(DB::table('permissions')->where('name', 'like', '%user%')->pluck('name'));
+        $user->syncPermissions(DB::table('permissions')->where('name', 'like', '%res%')->pluck('name'));
 
         return $user;
 
